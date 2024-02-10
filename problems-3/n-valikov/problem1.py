@@ -80,7 +80,7 @@ class Table:
 
     def __str__(self):
         return (f'Rows: {self.rows}\nColumns: {self.columns} \n' +
-                '\n'.join(map(lambda row: str(row), self.content)))
+                f'{'\n'.join(map(lambda row: str(row), self.content))}\n')
 
 
 if __name__ == '__main__':
@@ -90,16 +90,12 @@ if __name__ == '__main__':
 
     table_1.merge_rows(table_2)
     print(table_1)
-    print()
 
     table_2.merge_columns(table_1_1)
     print(table_2)
-    print()
 
     print(table_2.head(2))
-    print()
 
     print(table_2.tail(2))
-    print()
 
     print(table_2.get_by_row_and_column(1, 1))
