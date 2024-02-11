@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 import os.path
-from functools import reduce
 
 if __name__ == '__main__':
     filenames = list(filter(os.path.isfile, os.listdir(path='.')))
