@@ -8,7 +8,7 @@ def cum_sum_sequence(numbers: list) -> list:
     return result
 
 
-class CumSumSequenceTestCase(unittest.TestCase):
+class TestCumSumSequence(unittest.TestCase):
     def test_cum_sum_sequence(self):
         res = cum_sum_sequence([1, 2, 3])
         self.assertEqual(res, [0, 1, 3, 6])
