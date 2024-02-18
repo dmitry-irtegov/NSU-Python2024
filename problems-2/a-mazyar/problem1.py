@@ -1,4 +1,5 @@
 import unittest
+from timeit import Timer
 
 def pythag_triples(n):
     return [(x,y,z) for x in range(1,n+1)
@@ -19,4 +20,10 @@ class TestPythagTriplets(unittest.TestCase):
         self.assertEqual(len(unique_pythag_triples(50)), 20)
 
 if __name__ == '__main__':
+    t = Timer(lambda: pythag_triples(200))
+    print(t.timeit(number=1))
+
+    t = Timer(lambda: unique_pythag_triples(200))
+    print(t.timeit(number=1))
+
     unittest.main()
