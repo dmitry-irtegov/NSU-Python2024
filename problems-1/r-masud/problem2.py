@@ -1,14 +1,15 @@
 import unittest
 
 def cut_numbers(numbers, a, b):
-    modified_numbers = []
-    for num in numbers:
+    modified_numbers = [0]*len(numbers)
+
+    for i, num in enumerate(numbers):
         if num < a:
-            modified_numbers.append(a)
+            modified_numbers[i] = a
         elif num > b:
-            modified_numbers.append(b)
+            modified_numbers[i] = b
         else:
-            modified_numbers.append(num)
+            modified_numbers[i]= num
     return modified_numbers
 
 class TestCutNumbers(unittest.TestCase):
