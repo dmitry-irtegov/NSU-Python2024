@@ -1,4 +1,5 @@
 # problems-1/assignment-2
+#! /usr/bin/python
 def cut_numbers(arr, a, b):
     for i in range(len(arr)):
         if arr[i] < a:
@@ -9,4 +10,3 @@ def cut_numbers(arr, a, b):
 
 
 print(cut_numbers([1, 2, 3, 13, 20, 30, 50, 60, 70], 12, 34))
-
