@@ -1,14 +1,14 @@
 import unittest
 
 def trim_sequence(seq, a, b):
-    trimmed_seq = []
-    for num in seq:
-        if num < a:
-            trimmed_seq.append(a)
-        elif num > b:
-            trimmed_seq.append(b)
+    trimmed_seq = [0]*len(seq)
+    for i in range(len(seq)):
+        if seq[i] < a:
+            trimmed_seq[i] = a
+        elif seq[i] > b:
+            trimmed_seq[i] = b
         else:
-            trimmed_seq.append(num)
+            trimmed_seq[i] = seq[i]
     return trimmed_seq
 
 class TestTrimSequence(unittest.TestCase):
