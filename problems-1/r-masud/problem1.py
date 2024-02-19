@@ -1,12 +1,12 @@
 import unittest
 
 def cumulative_sums(seq):
-    cum = [0]
+    cum = [0]*(len(seq)+1)
     total_sum = 0
 
-    for num in seq:
+    for i, num in enumerate(seq):
         total_sum += num
-        cum.append(total_sum)
+        cum[i+1]= total_sum
     return cum
 
 class TestCumulativeSums(unittest.TestCase):
