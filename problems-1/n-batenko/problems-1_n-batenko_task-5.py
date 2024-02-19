@@ -36,4 +36,4 @@ def get_primes_powers_naive(n):
 
     return result
 
-print(get_primes_powers_naive(14))
+print(get_primes_powers_naive(1235788))

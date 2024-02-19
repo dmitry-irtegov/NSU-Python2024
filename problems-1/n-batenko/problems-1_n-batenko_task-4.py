@@ -4,7 +4,7 @@ def green_bottles():
     numbers = ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one', 'no']
 
     green_bottle = "green bottle"
-    all = "all,"
+    all = "all,\n"
     filler1 = " " + green_bottle + "s hanging on the w"
     filler2_1 = "And if " 
     filler2_2 = " " + green_bottle + " should accidentally f"
