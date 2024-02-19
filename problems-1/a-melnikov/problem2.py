@@ -1,8 +1,7 @@
-from typing import List
 import unittest
 
 
-def cut_list(seq: List[float], lo: float, hi: float) -> List[float]:
+def cut_list(seq: list[float], lo: float, hi: float) -> list[float]:
     return [elem if lo <= elem <= hi else lo if elem < lo else hi for elem in seq]
 
 
