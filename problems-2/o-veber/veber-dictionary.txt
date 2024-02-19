@@ -1,0 +1,10 @@
+punishment - malum, multa
+apple - malum, pomum, popula
+fruit - baca, bacca, popum
+interior - interior
+inferior - inferior
+lower - inferior
+inner - interior
+small - parvus
+subtle - parvus
+liver - hepar,jecur
