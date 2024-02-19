@@ -1,36 +1,14 @@
-def number_to_words(num):
-    words_dict = {
-        0: "Zero",
-        1: "One",
-        2: "Two",
-        3: "Three",
-        4: "Four",
-        5: "Five",
-        6: "Six",
-        7: "Seven",
-        8: "Eight",
-        9: "Nine",
-        10: "Ten"
-    }
-    return words_dict.get(num, str(num))
+from num2words import num2words
 
 def bottles(n):
-    if n == 1:
-        return "One green bottle"
-    else:
-        return f"{number_to_words(n)} green bottles"
+    return f"{num2words(n, lang='en')} green bottle{'s' if n != 1 else ''}"
 
 def main():
     for i in range(10, 0, -1):
         for j in range(2):
-            print(bottles(i), "hanging on the wall,")
+            print(f"{bottles(i).capitalize()} hanging on the wall,")
         print("And if one green bottle should accidentally fall,")
-        print("There’ll be ", end = '')
-        if i == 1:
-            print("no green bottles ", end = '')
-        else:
-            print(f"{bottles(i-1)} ", end = '')
-        print("hanging on the wall. \n")
+        print(f"There’ll be {bottles(i-1) if i > 1 else 'no'} green bottle{'s' if i-1 != 1 else ''} hanging on the wall.\n")
 
 if __name__ == "__main__":
     main()
