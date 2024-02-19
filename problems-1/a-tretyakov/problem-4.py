@@ -17,7 +17,8 @@ def ten_green_bottles_lyrics(count=10):
     if count == 0:
         return
 
-    phrase_postfix = "green bottles hanging on the wall"
+    word_end = "" if count == 1 else "s"
+    phrase_postfix = f"green bottle{word_end} hanging on the wall"
 
     for i in range(2):
         print(f"{numbers_dict[count]} {phrase_postfix},")
