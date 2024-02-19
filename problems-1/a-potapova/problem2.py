@@ -3,7 +3,7 @@ import unittest
 
 def trim_sequence(numbers: list, a, b):
     if a > b:
-        raise ArithmeticError("a is greater than b")
+        raise ValueError("a is greater than b")
     for i, num in enumerate(numbers):
         numbers[i] = min(max(num, a), b)
 
