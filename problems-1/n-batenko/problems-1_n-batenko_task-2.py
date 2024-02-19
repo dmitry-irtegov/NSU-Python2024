@@ -1,15 +1,16 @@
 
 def substitution_function(seq, a, b):
-    result = []
+    result = [0 for i in range(len(seq) + 1)]
     if a > b:
         raise Exception('Lower bound is higher than Higher bound.')
-    for num in seq:
+    for i in range(len(seq) + 1):
+        num = seq[i]
         temp = num
         if num < a:
             temp = a
         elif num > b:
             temp = b
-        result.append(temp)
+        result[i] = temp
     return result
 
 def simple_tests():

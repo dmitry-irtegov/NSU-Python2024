@@ -1,8 +1,7 @@
 import sys
 
 def cumulative_sum(seq):
-    result = [0]
-    result.extend(seq)
+    result = [0 for i in range(0, len(seq) + 1)]
     for i in range(0, len(seq) + 1):
         result[i] = sum(seq[0:i])
     return result
