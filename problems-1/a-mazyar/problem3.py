@@ -1,15 +1,25 @@
-def check_collatz(n):
-    print(n, end="")
-    if(n == 1):
-        print()
-        return
-    print(" -> ", end="")
-    if(n%2 == 0):
-        check_collatz(n//2)
-    else:
-        check_collatz(3*n + 1)
+def get_collatz_list(n):
+    res = [n]
+    while True:
+        if(n%2 == 0):
+            n = n // 2
+        else:
+            n = 3*n + 1
 
-check_collatz(3)
-check_collatz(5)
-check_collatz(10)
-check_collatz(15)
+        res.append(n)
+        if n == 1:
+            break
+
+    return res
+
+def print_arrows(arr):
+    for x in arr[:-1]:
+        print(x, end=" -> ")
+    print(arr[-1])
+
+def print_collatz(n):
+    print_arrows(get_collatz_list(n))
+
+if __name__ == '__main__':
+    n = int(input())
+    print_arrows(get_collatz_list(n))
