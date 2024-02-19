@@ -3,7 +3,7 @@ import re
 
 def parse_thes_entry(thesaurus, entry):
     words = re.split(r'[,-]', entry)
-    words = list(map(lambda s: s.strip(), words))
+    words = tuple(map(lambda s: s.strip(), words))
     thesaurus[words[0]] = words[1:]
 
 def read_file_thes(file_name):
