@@ -5,7 +5,12 @@ def trim_list(data, lower_bound, upper_bound):
     def trim_fn(elem, lb, ub):
         return lb if elem < lb else ub
 
-    return [trim_fn(elem, lower_bound, upper_bound) for elem in data]
+    allocated_arr = [0] * len(data)
+
+    for index, value in enumerate(data):
+        allocated_arr[index] = trim_fn(value, lower_bound, upper_bound)
+
+    return allocated_arr
 
 
 class TestTrimList(unittest.TestCase):
