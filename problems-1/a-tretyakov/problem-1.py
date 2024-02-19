@@ -3,7 +3,10 @@ import unittest
 
 
 def cumulative_sum(data):
-    return reduce(lambda acc, x: [*acc, acc[-1] + x], data, [0])
+    allocated_arr = [0] * (len(data) + 1)
+    for index in range(len(data) + 1):
+        allocated_arr[index] = sum(data[:index])
+    return allocated_arr
 
 
 class TestCumulativeSum(unittest.TestCase):
