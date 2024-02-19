@@ -1,6 +1,15 @@
 from collections.abc import Mapping
 from threading import Lock
-from typing import Any, Generic, ItemsView, Iterator, KeysView, TypeVar, ValuesView, overload
+from typing import (
+    Any,
+    Generic,
+    ItemsView,
+    Iterator,
+    KeysView,
+    TypeVar,
+    ValuesView,
+    overload,
+)
 
 KT = TypeVar("KT")
 VT = TypeVar("VT")
