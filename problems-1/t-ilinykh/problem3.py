@@ -15,7 +15,9 @@ def main():
             print("Число должно быть положительным.")
             return
         sequence = collatz(num)
-        print("Цепочка преобразований:", sequence)
+        print("Цепочка преобразований:")
+        for seq in sequence:
+            print(seq)
     except ValueError:
         print("Ошибка: введите целое число.")
 
