@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def check_collatz_hypothesis(number):
     history = [str(number)]
     while number != 1:
