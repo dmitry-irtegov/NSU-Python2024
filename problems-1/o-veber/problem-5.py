@@ -1,8 +1,11 @@
+from math import ceil, sqrt
+
+
 def get_primes_to_powers(digit):
     resulted_list = []
-    for i in range(2, digit + 1):
+    for i in range(2, ceil(sqrt(digit)) + 1):
         result = 0
-        while digit % i == 0 and i != 1:
+        while digit != 1 and digit % i == 0:
             digit /= i
             result += 1
         if result > 0:
