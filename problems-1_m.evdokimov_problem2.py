@@ -3,13 +3,13 @@ a, b = input().split()
 a = int(a)
 b = int(b)
 
-resultList = []
-for i in inputList:
-    x = int(i)
+resultList = [None] * len(inputList)
+for i in range(len(inputList)):
+    x = int(inputList[i])
     if x > b:
         x = b
     if x < a:
         x = a
-    resultList.append(x)
+    resultList[i] = x
     
 print(resultList)
