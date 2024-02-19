@@ -2,6 +2,8 @@ class TenGreenBottles:
 
     _bottle: str = "green bottle"
 
+    _hanging: str = "hanging on the wall"
+
     _numbers: dict[int, str] = {
         0: "no",
         1: "one",
@@ -21,13 +23,21 @@ class TenGreenBottles:
 
     def form_stanza(self, n: int) -> str:
         return (
-            "%s %s hanging on the wall,\n"
-            % (self._numbers[n].title(), self._form_noun(self._bottle, n))
+            "%s %s %s,\n"
+            % (
+                self._numbers[n].title(),
+                self._form_noun(self._bottle, n),
+                self._hanging,
+            )
             * 2
             + "And if %s %s should accidentally fall,\n"
             % (self._numbers[1], self._bottle)
-            + "There’ll be %s %s hanging on the wall."
-            % (self._numbers[n - 1], self._form_noun(self._bottle, n - 1))
+            + "There’ll be %s %s %s."
+            % (
+                self._numbers[n - 1],
+                self._form_noun(self._bottle, n - 1),
+                self._hanging,
+            )
         )
 
 
