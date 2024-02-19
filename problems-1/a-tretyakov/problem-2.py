@@ -1,3 +1,6 @@
+import unittest
+
+
 def trim_list(data, lower_bound, upper_bound):
     def trim_fn(elem, lb, ub):
         return lb if elem < lb else ub
@@ -5,7 +8,17 @@ def trim_list(data, lower_bound, upper_bound):
     return [trim_fn(elem, lower_bound, upper_bound) for elem in data]
 
 
+class TestTrimList(unittest.TestCase):
+
+    def test_sample_case(self):
+        self.assertEquals([5, 12, 12, 5], trim_list([4, 13, 25, 1], 5, 12))
+
+    def test_lower_numbers(self):
+        self.assertEquals([0, 0, 0, 0], trim_list([-1, -2, -3, -4], 0, 100))
+
+    def test_bigger_numbers(self):
+        self.assertEquals([15, 15, 15, 15], trim_list([20, 2000, 20000, 2000000], 0, 15))
+
+
 if __name__ == "__main__":
-    data = list(map(int, input().split()))
-    lower_bound, upper_bound = map(int, input().split())
-    print(trim_list(data, lower_bound, upper_bound))
+    unittest.main()
