@@ -61,5 +61,5 @@ class TestThesaurusReverser(unittest.TestCase):
         self.assertEqual(reverse_thesaurus(thes), thes)
 
 if __name__ == "__main__":
-    print(format_thesaurus(reverse_thesaurus(read_file_thes('pip-log.txt'))))
+    print(format_thesaurus(reverse_thesaurus(read_file_thes('thesaurus.txt'))))
     unittest.main()
