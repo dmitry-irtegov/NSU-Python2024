@@ -1,7 +1,7 @@
 import unittest
 
 def get_collatz_list(n):
-    res = [n]
+    res = (n, )
     while True:
         if n <= 1:
             break
@@ -10,7 +10,7 @@ def get_collatz_list(n):
         else:
             n = 3*n + 1
 
-        res.append(n)
+        res += (n, )
 
     return res
 
@@ -24,8 +24,8 @@ def print_collatz(n):
 
 class TestCollatzCheck(unittest.TestCase):
     def test_simple_examples(self):
-        self.assertEqual(get_collatz_list(5), [5,16,8,4,2,1])
-        self.assertEqual(get_collatz_list(0), [0])
+        self.assertEqual(get_collatz_list(5), (5,16,8,4,2,1))
+        self.assertEqual(get_collatz_list(0), (0,))
 
 if __name__ == '__main__':
     n = int(input())
