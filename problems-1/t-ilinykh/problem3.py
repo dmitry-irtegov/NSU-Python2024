@@ -17,7 +17,9 @@ def main():
         sequence = collatz(num)
         print("Цепочка преобразований:")
         for seq in sequence:
-            print(seq)
+            print(seq, end = ' ')
+            if seq != sequence[len(sequence)-1]:
+                print("->", end = ' ')
     except ValueError:
         print("Ошибка: введите целое число.")
 
