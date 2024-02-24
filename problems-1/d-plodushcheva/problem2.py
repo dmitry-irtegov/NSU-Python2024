@@ -3,7 +3,7 @@ import unittest
 
 def cut_numbers(numbers, a, b):
     if a > b:
-        return
+        raise ValueError("A must be less than B")
     return [min(max(num, a), b) for num in numbers]
 
 
@@ -16,7 +16,8 @@ class TestCutNumbers(unittest.TestCase):
         self.assertEqual(cut_numbers([1, 2, 3], 1, 3), [1, 2, 3])
 
     def test_wrong_borders(self):
-        self.assertEqual(cut_numbers([1, 2, 3], 10, 0), None)
+        with self.assertRaises(ValueError):
+            cut_numbers([1, 2, 3], 10, 0)
 
     def test_borders(self):
         self.assertEqual(cut_numbers([0, 20, 40], 10, 30), [10, 20, 30])
