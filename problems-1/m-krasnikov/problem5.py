@@ -16,7 +16,7 @@ def prime_factorization(number):
     return factors
 
 
-class TestTrimSequenceFunction(unittest.TestCase):
+class TestPrimeFactorizationFunction(unittest.TestCase):
     def test_one(self):
         self.assertEqual(prime_factorization(1), [])
 
