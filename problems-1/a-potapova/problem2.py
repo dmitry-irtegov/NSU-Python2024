@@ -16,7 +16,7 @@ class TestTrimSequence(unittest.TestCase):
         seq = []
         trim_sequence(seq, 0, 0)
         self.assertEqual(seq, [])
-        with self.assertRaises(ArithmeticError):
+        with self.assertRaises(ValueError):
             trim_sequence([0, 1, 2, 3], 3, 0)
 
 
