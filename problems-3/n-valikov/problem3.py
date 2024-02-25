@@ -21,11 +21,7 @@ class Vector(Number):
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        new_vector_content: List[Number] = list(self._content)
-        for index, value in enumerate(other):
-            new_vector_content[index] += value
-
-        return Vector((*new_vector_content,))
+        return Vector((*[a + b for a, b in zip(self, other)],))
 
     def __sub__(self, other) -> 'Vector':
         return self + (-other)
@@ -41,22 +37,16 @@ class Vector(Number):
 
         return Vector((*new_vector_content,))
 
-    def __iter__(self):
-        return self
-
     def __next__(self) -> Number:
-        if self._iter_counter >= len(self._content):
-            self._iter_counter = 0
-            raise StopIteration
-        else:
-            self._iter_counter += 1
-            return self._content[self._iter_counter - 1]
+        length = len(self)
+        index = 0
+        while index < length:
+            yield self[index]
+            index += 1
 
     def __getitem__(self, item: int) -> Number:
         if not isinstance(item, int):
             raise TypeError('item must be an integer')
-        if item < 0 or item > len(self._content):
-            raise ValueError('item must be between 0 and vector length')
 
         return self._content[item]
 
@@ -140,8 +130,6 @@ class TestVector(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             self.vector_1["hehe"]
-        with self.assertRaises(ValueError):
-            self.vector_1[4]
 
     def test_len(self):
         self.assertEqual(len(self.vector_1), len(self.vector_1._content))
