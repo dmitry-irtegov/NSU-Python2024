@@ -1,7 +1,7 @@
 import unittest
 from numbers import Number
 from itertools import starmap
-from typing import List, Tuple
+from typing import Tuple
 
 
 class Vector(Number):
@@ -21,7 +21,7 @@ class Vector(Number):
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        return Vector((*[a + b for a, b in zip(self, other)],))
+        return Vector((*[first + second for first, second in zip(self, other)],))
 
     def __sub__(self, other) -> 'Vector':
         return self + (-other)
