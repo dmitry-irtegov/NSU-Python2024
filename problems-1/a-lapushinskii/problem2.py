@@ -6,7 +6,7 @@ def cut_fun(numbers, min_border, max_border):
     return numbers
 
 
-class TestCalculator(unittest.TestCase):
+class TestCutFunction(unittest.TestCase):
     def test_normal(self):
         self.assertEqual(cut_fun([1, 2, 3], 1, 3), [1, 2, 3])
     def test_min(self):
