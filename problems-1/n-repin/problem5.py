@@ -1,5 +1,6 @@
-from math import ceil, sqrt
+import unittest
 
+from math import ceil, sqrt
 
 def first_divisor(num: int) -> int | None:
     bound = ceil(sqrt(num))
@@ -41,6 +42,22 @@ def format_primes_list(map: list[tuple[int, int]]) -> str:
     return " * ".join(terms)
 
 
+class TestPrimes(unittest.TestCase):
+
+    def test_base_case(self):
+        self.assertEqual(primes(2), [(2, 1)])
+
+    def test_prime(self):
+        self.assertEqual(primes(31), [(31, 1)])
+
+    def test_non_trivial(self):
+        self.assertEqual(primes(30), [(2, 1), (3, 1), (5, 1)])
+
+    def test_powers(self):
+        self.assertEqual(primes(1280), [(2, 8), (5, 1)])
+
+    def test_big(self):
+        self.assertEqual(primes(7468834), [(2, 1), (29, 1), (131, 1), (983, 1)])
+
 if __name__ == "__main__":
-    for i in range(2, 100):
-        print(i, format_primes_list(primes(i)))
+    unittest.main()
