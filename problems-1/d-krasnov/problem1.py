@@ -2,11 +2,11 @@ import unittest
 
 
 def cumulative_sums(numbers):
-    result = [0]
+    result = [0] * (len(numbers) + 1)
     total = 0
-    for num in numbers:
+    for i, num in enumerate(numbers):
         total += num
-        result.append(total)
+        result[i + 1] = total
     return result
 
 
