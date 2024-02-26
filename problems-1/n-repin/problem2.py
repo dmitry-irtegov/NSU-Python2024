@@ -5,7 +5,7 @@ def limit(numbers: list[int], lower: int, upper: int) -> list[int]:
     return [ num if lower < num < upper else (lower if num <= lower else upper) for num in numbers ]
 
 
-class TestStringMethods(unittest.TestCase):
+class TestLimit(unittest.TestCase):
 
     def test_zero(self):
         self.assertEqual(limit([], 3, 6), [])
