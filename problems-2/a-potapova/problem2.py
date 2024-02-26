@@ -4,29 +4,29 @@ def parse_line(line: str):
     return english_word, latin_words
 
 
-def reverse_dictionary(input_filename: str, output_filename: str):
-    dictionary = {}
+def reverse_dictionary(input_filename: str):
+    result_dictionary = {}
     with open(input_filename, 'r') as file:
-        line = file.readline().strip("\n")
-        while line:
-            english_word, latin_words = parse_line(line)
-
+        for line in file:
+            english_word, latin_words = parse_line(line.strip("\n"))
             for latin_word in latin_words:
-                if latin_word in dictionary:
-                    dictionary[latin_word].append(english_word)
+                if latin_word in result_dictionary:
+                    result_dictionary[latin_word].append(english_word)
                 else:
-                    dictionary[latin_word] = [english_word]
+                    result_dictionary[latin_word] = [english_word]
+    keys = list(result_dictionary.keys())
+    for key in keys:
+        result_dictionary[key].sort()
+    return result_dictionary
 
-            line = file.readline().strip("\n")
 
+def save_dictionary(dictionary: dict, output_filename: str):
     with open(output_filename, 'w') as file:
         keys = list(dictionary.keys())
         keys.sort()
         for key in keys:
             file.write(key + " - ")
-            words = dictionary[key]
-            words.sort()
-            for i, word in enumerate(words):
+            for i, word in enumerate(dictionary[key]):
                 if i != 0:
                     file.write(", ")
                 file.write(word)
@@ -34,4 +34,5 @@ def reverse_dictionary(input_filename: str, output_filename: str):
 
 
 if __name__ == '__main__':
-    reverse_dictionary('english-latin-dictionary.txt', 'latin-english-dictionary.txt')
+    latin_dictionary = reverse_dictionary('english-latin-result_dictionary.txt')
+    save_dictionary(latin_dictionary,  'latin-english-result_dictionary.txt')
