@@ -1,19 +1,25 @@
 PI_FILENAME = "pi.txt"
+SEQUENCE_MULTIPLIER = 10
 
 
 def search_sequence(sequence: str):
     indexes = []
     block_index = 0
     offset = len(sequence) - 1
+    block_size = SEQUENCE_MULTIPLIER * len(sequence)
+    block = ""
     with open(PI_FILENAME, "r") as file:
-        line = file.readline().strip("\n")
-        while len(line) != offset:
-            index = line.find(sequence)
+        for line in file:
+            block = block + line.strip("\n")
+            if len(block) < block_size:
+                continue
+            index = block.find(sequence)
             while index != -1:
                 indexes.append(block_index + index - 2)
-                index = line.find(sequence, index + 1, len(line))
-            block_index += len(line) - offset
-            line = line[-offset:] + file.readline().strip("\n")
+                index = block.find(sequence, index + 1, len(block))
+
+            block_index += len(block) - offset
+            block = block[-offset:]
     return indexes
 
 
