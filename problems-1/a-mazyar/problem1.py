@@ -26,6 +26,7 @@ class TestCumulativeSum(unittest.TestCase):
 
     def test_single_number(self):
         self.assertEqual(cumulative_sum([5]), [0, 5])
+        
 
 if __name__ == '__main__':
     unittest.main()
