@@ -34,5 +34,5 @@ def save_dictionary(dictionary: dict, output_filename: str):
 
 
 if __name__ == '__main__':
-    latin_dictionary = reverse_dictionary('english-latin-result_dictionary.txt')
-    save_dictionary(latin_dictionary,  'latin-english-result_dictionary.txt')
+    latin_dictionary = reverse_dictionary('english-latin-dictionary.txt')
+    save_dictionary(latin_dictionary,  'latin-english-dictionary.txt')
