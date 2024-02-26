@@ -1,7 +1,7 @@
 import unittest
 
 def cumulative(a):
-    res = [0]
+    res = [0]*(len(a) + 1)
     sum = 0
     for i in a:
         sum += i
