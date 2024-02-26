@@ -23,6 +23,7 @@ class TestPruneArray(unittest.TestCase):
 
     def test_floats(self):
         self.assertEqual(prune_array([0.3,1.3,2.3,3.3,4.3,5.3], 2.1, 3.4), [2.1,2.1,2.3,3.3,3.4,3.4])
+        
 
 if __name__ == "__main__":
     unittest.main()
