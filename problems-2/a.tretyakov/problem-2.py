@@ -1,34 +1,60 @@
 import unittest
 
 
-def translate_dict(filename):
+def write_lat_eng_dict(output_name, input_dict):
+    with open(f"{output_name}", "w") as output:
+        for key, values in input_dict.items():
+            pretty_values = ", ".join(values)
+            output.write(f"{key} - {pretty_values}\n")
+
+
+def generate_lat_eng_dict(input_dict, key, values):
+    for value in values.split(", "):
+        if value not in input_dict:
+            input_dict[value] = [key]
+        else:
+            input_dict[value].append(key)
+
+
+def translate_dict(filename, output_name):
     lat_eng_dict = {}
-
-    def write_lat_eng_dict(dict):
-        output_name = filename.split('.')[0]
-        with open(f"{output_name}.out", "w") as output:
-            for key, values in dict.items():
-                pretty_values = ", ".join(values)
-                output.write(f"{key} - {pretty_values}\n")
-
-    def generate_lat_eng_dict(key, values):
-        for value in values.split(", "):
-            if value not in lat_eng_dict:
-                lat_eng_dict[value] = [key]
-            else:
-                lat_eng_dict[value].append(key)
-
     try:
-        with open(filename, mode="r") as input:
-            for line in input.readlines():
+        with open(filename, mode="r") as file:
+            for line in file.readlines():
                 key, values = line.strip().split(" - ")
-                generate_lat_eng_dict(key, values)
+                generate_lat_eng_dict(lat_eng_dict, key, values)
     except FileNotFoundError:
         raise Exception(f"File with filename {filename} doesn't' exist")
 
     sorted_dict = dict(sorted(lat_eng_dict.items(), key=lambda items: items[0]))
-    write_lat_eng_dict(sorted_dict)
+    write_lat_eng_dict(output_name, sorted_dict)
+
+
+class TestLatinEnglishDict(unittest.TestCase):
+    def test_example(self):
+        translate_dict(
+            "test/latin-english-dict.txt",
+            "test/latin-english-dict-test.out")
+        self.assertListEqual(
+            list(open("test/latin-english-dict-test.out")),
+            list(open("test/latin-english-dict.out")))
+
+    def test_empty_file(self):
+        translate_dict(
+            "test/empty-dict.txt",
+            "test/empty-dict-test.out")
+        self.assertListEqual(
+            list(open("test/empty-dict-test.out")),
+            list(open("test/empty-dict.out")))
+
+    def test_another_dict(self):
+        translate_dict(
+            "test/another-dict.txt",
+            "test/another-dict-test.out")
+        self.assertListEqual(
+            list(open("test/another-dict-test.out")),
+            list(open("test/another-dict.out")))
 
 
 if __name__ == "__main__":
-    translate_dict("latin-english-dict.txt")
+    unittest.main()
