@@ -2,10 +2,10 @@ from typing import Generator
 
 
 def cumulative_sum_list(numbers: list[int]) -> list[int]:
-    sums = [ 0 ]
+    sums = [ 0 ] * (len(numbers) + 1)
 
-    for number in numbers:
-        sums.append(sums[-1] + number)
+    for (i, number) in enumerate(numbers):
+        sums[i + 1] = sums[i] + number
 
     return sums
 
