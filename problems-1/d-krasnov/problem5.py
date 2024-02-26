@@ -4,14 +4,17 @@ import unittest
 def factorize_number(num):
     factors = []
     divisor = 2
-    while divisor <= num:
+    while divisor * divisor <= num:
         if num % divisor == 0:
             count = 0
             while num % divisor == 0:
-                num = num / divisor
+                num //= divisor
                 count += 1
             factors.append([divisor, count])
         divisor += 1
+
+    if num > 1:
+        factors.append([num, 1])
     return factors
 
 
