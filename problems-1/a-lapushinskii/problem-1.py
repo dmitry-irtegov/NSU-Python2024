@@ -1,3 +1,4 @@
+import unittest
 
 def sum_cumulative (arr):
     result = [0] * (len(arr)+1)
@@ -8,8 +9,6 @@ def sum_cumulative (arr):
 print(sum_cumulative([1, 2, 3]))
 
 ###
-
-import unittest
 
 class TestCumulativeSum(unittest.TestCase):
     def test_examples(self):
