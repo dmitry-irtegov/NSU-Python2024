@@ -1,0 +1,1 @@
+exclude = [".venv","problems-1/v-khlebnikov/problem[12].py"]
