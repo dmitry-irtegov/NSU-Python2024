@@ -26,6 +26,8 @@ class TestCollatzRow(unittest.TestCase):
         self.assertEqual(collatz_row(3), [3, 10, 5, 16, 8, 4, 2, 1])
     def test(self):
         self.assertEqual(collatz_row(4), [4, 2, 1])
+    def test_minus(self):
+        self.assertEqual(collatz_row(-1), [-1])
 
 if __name__ == '__main__':
     unittest.main()
