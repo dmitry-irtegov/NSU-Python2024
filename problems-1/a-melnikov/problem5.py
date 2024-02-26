@@ -1,10 +1,11 @@
 import unittest
 
 
-def factorize_number(n: int) -> list[list[int]]:
+def factorize_number(num: int) -> list[list[int]]:
     factors: list[list[int]] = []
     i: int = 2
-    while n > 1:
+    n: int = num
+    while n > 1 and i * i <= num:
         count: int = 0
         while n % i == 0:
             n //= i
@@ -13,6 +14,10 @@ def factorize_number(n: int) -> list[list[int]]:
             factors.append([i, count])
 
         i += 1
+
+    if n > 1:
+        factors.append([num, 1])
+
     return factors
 
 
@@ -48,6 +53,9 @@ class TestFactorNumber(unittest.TestCase):
                 [37, 1],
             ],
         )
+
+    def test_big_prime(self):
+        self.assertEqual(factorize_number(789456126163), [[789456126163, 1]])
 
 
 if __name__ == "__main__":
