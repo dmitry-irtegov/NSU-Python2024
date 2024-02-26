@@ -2,6 +2,15 @@ import unittest
 
 
 def cumulative_sums(numbers):
+    """
+    Calculate the cumulative sums of the given list of numbers.
+
+    Args:
+        numbers (list): A list of numbers.
+
+    Returns:
+        list: A list containing the cumulative sums of the input numbers.
+    """
     result = [0] * (len(numbers) + 1)
     total = 0
     for i, num in enumerate(numbers):
