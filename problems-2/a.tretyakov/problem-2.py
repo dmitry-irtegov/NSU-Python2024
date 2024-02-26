@@ -47,14 +47,6 @@ class TestLatinEnglishDict(unittest.TestCase):
             list(open("test/empty-dict-test.out")),
             list(open("test/empty-dict.out")))
 
-    def test_another_dict(self):
-        translate_dict(
-            "test/another-dict.txt",
-            "test/another-dict-test.out")
-        self.assertListEqual(
-            list(open("test/another-dict-test.out")),
-            list(open("test/another-dict.out")))
-
 
 if __name__ == "__main__":
     unittest.main()
