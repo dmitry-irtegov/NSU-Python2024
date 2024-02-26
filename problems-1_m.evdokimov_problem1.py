@@ -1,10 +1,14 @@
-inputList = input().split()
+def cumulativeSum():
 
-l = len(inputList)
-resultList = [None] * (l + 1)
-resultList[0] = 0
+    inputList = input().split()
 
-for i in range(l):
-    resultList[i+1] = resultList[i] + int(inputList[i])
+    l = len(inputList)
+    resultList = [None] * (l + 1)
+    resultList[0] = 0
+
+    for i in range(l):
+        resultList[i+1] = resultList[i] + int(inputList[i])
     
-print(resultList)
+    print(resultList)
+    
+cumulativeSum()
