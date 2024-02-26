@@ -2,6 +2,7 @@ import unittest
 import re
 from timeit import Timer
 from bisect import bisect_left
+from random import randrange
 
 def parse_thes_entry(thesaurus, entry):
     words = re.split(r'[,-]', entry)
@@ -16,41 +17,47 @@ def read_file_thes(file_name):
 
     return thesaurus
 
-def push_sorted_old(arr, new_entry):
-    if arr:
+def push_sorted_old():
+    arr = []
+    for _ in range(10000):
+        new_entry = randrange(0,100000)
         for i, entry in enumerate(arr):
             if new_entry < entry:
                 arr.insert(i, new_entry)
-                return
-    
-    arr.append(new_entry)
+                break
+        else: # only executed if condition was never met
+            arr.append(new_entry)    
 
 def sorted_post_test():
     arr = []
-    for x in range(10000):
-        arr.append(x)
+    for _ in range(10000):
+        arr.append(randrange(0, 100000))
 
     return sorted(arr)
 
-def push_sorted(arr, new_entry):
-    arr.insert(bisect_left(arr, new_entry), new_entry)
+def push_sorted_bs():
+    arr = []
+    for _ in range(10000):
+        new_entry = randrange(0,100000)
+        arr.insert(bisect_left(arr, new_entry), new_entry) 
 
 def reverse_thes_pair(thesaurus, word, translation):
     if translation in thesaurus:
-        push_sorted(thesaurus[translation], word)
+        thesaurus[translation].append(word)
     else:
         thesaurus[translation] = [word]
 
 def reverse_thesaurus(thesaurus):
     rev_thes = {}
     for word, translations in thesaurus.items():
-       for translation in translations:
-           reverse_thes_pair(rev_thes, word, translation)
+        for translation in translations:
+            reverse_thes_pair(rev_thes, word, translation)
+            rev_thes[translation] = sorted(rev_thes[translation])
     return rev_thes
 
 def format_thesaurus(thesaurus):
     str_thes = ""
-    for word, trans in sorted(thesaurus.items()):
+    for word, trans in thesaurus.items():
         str_thes += word
         str_thes += " - "
         str_thes += ", ".join(trans)
@@ -77,11 +84,11 @@ if __name__ == "__main__":
     print(format_thesaurus(reverse_thesaurus(read_file_thes('thesaurus.txt'))))
 
     test_arr = []
-    t = Timer(lambda: [push_sorted_old(test_arr, x) for x in range(10000)])
+    t = Timer(lambda: push_sorted_old())
     print("My linear insert:", t.timeit(number=1))
 
     test_arr = []
-    t = Timer(lambda: [push_sorted(test_arr, x) for x in range(10000)])
+    t = Timer(lambda: push_sorted_bs())
     print("Lib binary search insert:", t.timeit(number=1))
     
     t = Timer(lambda: sorted_post_test())
