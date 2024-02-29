@@ -29,7 +29,7 @@ def bound_seq(
     - else the element remains in its place.
 
     Note:
-        `lower` should be less than `upper`.
+        `lower` should be less or equal to `upper`.
 
     Raises:
         ValueError:
