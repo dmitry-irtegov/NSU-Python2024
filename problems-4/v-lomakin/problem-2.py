@@ -19,7 +19,7 @@ def tr(string, replace_from, replace_to, delete_chars=None):
     res = ""
     for i in string:
         ch = translate_char(i)
-        if ch != None :
+        if ch is not None :
             res += ch
     return res
 
