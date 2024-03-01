@@ -1,4 +1,4 @@
-def triples(n: int) -> list[tuple[int, int, int]]:
+def pythagorean_triples(n: int) -> list[tuple[int, int, int]]:
     return [
         (a, b, c)
         for c in range(1, n + 1)
