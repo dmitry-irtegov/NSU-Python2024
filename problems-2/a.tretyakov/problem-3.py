@@ -1,6 +1,6 @@
 import os
 import sys
-from os.path import isfile, isdir, join
+from os.path import isfile, join
 from os import listdir, stat
 
 
