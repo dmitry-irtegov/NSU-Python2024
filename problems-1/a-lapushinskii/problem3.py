@@ -10,14 +10,14 @@ def collatz_row(n):
         row.append(n)
     return row
 
-def get_row_string(row):
-    ans = str(row.pop(0))
-    for i in row:
-        ans += " -> " + str(i)
-    return ans
-
+def print_row_string(row):
+    for i in row[:-1]:
+        print(str(i), end = " -> ")
+    if row:
+        print(row[-1])
+    
 n = int(input())
-print(get_row_string(collatz_row(n)))
+print_row_string(collatz_row(n))
 
 ###
     
