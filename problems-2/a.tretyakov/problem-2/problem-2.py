@@ -21,7 +21,7 @@ def translate_dict(filename, output_name):
     try:
         with open(filename, mode="r") as file:
             for line in file.readlines():
-                key, values = line.strip().split(" - ")
+                key, values = line.replace('\n', '').split(" - ")
                 generate_lat_eng_dict(lat_eng_dict, key, values)
     except FileNotFoundError:
         raise Exception(f"File with filename {filename} doesn't' exist")
@@ -36,8 +36,16 @@ class TestLatinEnglishDict(unittest.TestCase):
             "test/latin-english-dict.txt",
             "test/latin-english-dict-test.out")
         self.assertListEqual(
-            list(open("test/latin-english-dict-test.out")),
-            list(open("test/latin-english-dict.out")))
+            [line.replace('\n', '') for line in open("test/latin-english-dict-test.out").readlines()],
+            [line.replace('\n', '') for line in open("test/latin-english-dict.out").readlines()])
+
+    def test_another_file(self):
+        translate_dict(
+            "test/another-dict.txt",
+            "test/another-dict-test.out")
+        self.assertListEqual(
+            [line.replace('\n', '') for line in open("test/another-dict-test.out").readlines()],
+            [line.replace('\n', '') for line in open("test/another-dict.out").readlines()])
 
     def test_empty_file(self):
         translate_dict(
