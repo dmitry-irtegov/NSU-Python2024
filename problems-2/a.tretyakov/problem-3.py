@@ -1,3 +1,4 @@
+import os
 import sys
 from os.path import isfile, isdir, join
 from os import listdir, stat
@@ -19,9 +20,13 @@ def main():
         return
 
     directory = sys.argv[1]
-    if not isdir(directory):
-        print("Error: Directory not found.")
-        return
+
+    if not os.access(directory, os.F_OK):
+        raise Exception("Directory doesn't exist")
+    elif not os.access(directory, os.R_OK):
+        raise Exception("Directory doesn't readable")
+    elif not os.access(directory, os.X_OK):
+        raise Exception("Directory doesn't executable")
 
     files = list_files_by_size(directory)
     for file in files:
