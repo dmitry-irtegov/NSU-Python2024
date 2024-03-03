@@ -14,27 +14,32 @@ def revers_dict(input_dict):
     return sorted_dict
 
 def read_dict_file(file_path):
-    input_dict = {}
-    with open(file_path, 'r', encoding='utf-8') as file:
-        for line in file:
-            english, latin_translations = line.strip().split(' - ')
-            input_dict[english] = latin_translations.split(', ')
-    return input_dict
+    try:
+        input_dict = {}
+        with open(file_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                english, latin_translations = line.strip().split(' - ')
+                input_dict[english] = latin_translations.split(', ')
+        return input_dict
+    except Exception:
+        print("Ошибка при открытии файла")
+        return {}
     
-def print_dict(some_dict):
-    for english, latin_words in some_dict.items():
-        print(english, end = " - ")
-        for latin in latin_words[:-1]:
-            print(latin, end = ", ")
-        if latin_words: 
-            print(latin_words[-1])
+def print_dict_to_file(some_dict, filename):
+    try:
+        with open(filename, 'w') as file:
+            for english, latin_words in some_dict.items():
+                file.write(f"{english} - ")
+                for latin in latin_words[:-1]:
+                    file.write(f"{latin}, ")
+                if latin_words: 
+                    file.write(f"{latin_words[-1]}\n")
+    except Exception:
+        print("Ошибка при сохранении результата")
+        return {}
    
 latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
-print_dict(latin_english_dict)
-
-inp_dict = {'fruit': []}
-prog_ans = revers_dict(inp_dict)
-print_dict(prog_ans)
+print_dict_to_file(latin_english_dict, 'output_task_2.txt')
 
 ###
 
@@ -45,10 +50,9 @@ class TestDictRevers(unittest.TestCase):
             'baca': ['fruit'],
             'bacca': ['fruit'],
             'malum': ['apple', 'punishment'],
-            'mult': ['punishment'],
+            'multa': ['punishment'],
             'pomum': ['apple'],
             'popula': ['apple'],
-            'mult': ['punishment'],
             'popum': ['fruit'],
             }
         self.assertEqual(prog_ans, correct_ans)
