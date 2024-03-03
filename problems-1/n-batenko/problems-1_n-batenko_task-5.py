@@ -38,7 +38,8 @@ def decompose_to_primes(n):
                 primes.append(factor)
                 result.append((factor, power))
 
-            if factor == 3: k += 1
+            if factor == 3: 
+                k += 1
     else:
         result.append((num, 1))
 
