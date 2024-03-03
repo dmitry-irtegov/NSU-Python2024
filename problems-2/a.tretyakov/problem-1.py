@@ -5,23 +5,9 @@ def pythagorean_triples(limits):
     if limits <= 0:
         raise ValueError("Limit cannot be less or equal zero.")
 
-    c, m = 0, 2
-    triples = []
-
-    while c < limits:
-
-        for n in range(1, m):
-            a = m * m - n * n
-            b = 2 * m * n
-            c = m * m + n * n
-
-            if c > limits:
-                break
-
-            triples.append((a, b, c))
-
-        m = m + 1
-    return triples
+    return [(a, b, c) for m in range(2, limits) for n in range(1, m)
+            for a, b, c in [(m * m - n * n, 2 * m * n, m * m + n * n)]
+            if c <= limits]
 
 
 class TestPythagoreanTriples(unittest.TestCase):
@@ -37,7 +23,7 @@ class TestPythagoreanTriples(unittest.TestCase):
                   (27, 36, 45), (20, 48, 52), (11, 60, 61), (48, 14, 50),
                   (45, 28, 53), (40, 42, 58), (33, 56, 65), (24, 70, 74), (13, 84, 85),
                   (63, 16, 65), (60, 32, 68), (55, 48, 73), (48, 64, 80), (39, 80, 89),
-                  (28, 96, 100)]
+                  (28, 96, 100), (80, 18, 82), (77, 36, 85), (72, 54, 90), (65, 72, 97)]
         self.assertEquals(answer, pythagorean_triples(100))
 
     def test_zero(self):
