@@ -3,8 +3,8 @@ import time
 
 class Timer:
     def __init__(self, block_name=None):
-        if not block_name is None and not isinstance(block_name, str):
-            raise TypeError("block_name can be only None or str type")
+        if block_name is not None and not isinstance(block_name, str):
+            raise TypeError('block_name can be only None or str type')
         self.block_name = block_name
 
     def __enter__(self):
@@ -17,7 +17,7 @@ class Timer:
         else:
             print(f'Time elapsed in block \'{self.block_name}\': {elapsed} s')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     with Timer():
         time.sleep(1)
 
