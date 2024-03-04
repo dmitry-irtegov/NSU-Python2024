@@ -1,6 +1,6 @@
 import pytest
 
-from problem1 import pythagorean_triples
+from sol import pythagorean_triples
 
 
 @pytest.mark.parametrize(
