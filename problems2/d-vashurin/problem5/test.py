@@ -1,6 +1,6 @@
 import pytest
 
-from problem5 import primes
+from sol import primes
 
 
 @pytest.mark.parametrize(
