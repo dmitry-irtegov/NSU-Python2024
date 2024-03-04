@@ -1,7 +1,15 @@
 import math
+import unittest
+
 
 def prime_divisors(num):
     result = []
+    if num == 0:
+        return result
+    elif num < 0:
+        num = abs(num)
+    elif num == 1:
+        return [1]
     idx = 0
     divisor = 2
     while num != 1:
@@ -23,5 +31,12 @@ def is_simple(num):
         if num % i == 0:
             return False
     return True
+class PrimeDivisorsTest(unittest.TestCase):
 
-print("Ex5 output: ", prime_divisors(123))
+    def test(self):
+        self.assertEqual(prime_divisors(0), [])
+        self.assertEqual(prime_divisors(1), [1])
+        self.assertEqual(prime_divisors(-123), [[3, 1], [41, 1]])
+        self.assertEqual(prime_divisors(123), [[3, 1], [41, 1]])
+        self.assertEqual(prime_divisors(562), [[2, 1], [281, 1]])
+        self.assertEqual(prime_divisors(12), [[2, 2], [3, 1]])
