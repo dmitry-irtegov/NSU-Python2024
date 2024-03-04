@@ -1,6 +1,6 @@
 import pytest
 
-from problem3 import collatz_conjecture
+from sol import collatz_conjecture
 
 
 @pytest.mark.parametrize(
