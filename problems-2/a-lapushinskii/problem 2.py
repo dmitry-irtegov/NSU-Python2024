@@ -21,8 +21,8 @@ def read_dict_file(file_path):
                 english, latin_translations = line.strip().split(' - ')
                 input_dict[english] = latin_translations.split(', ')
         return input_dict
-    except Exception:
-        print("Ошибка при открытии файла")
+    except Exception as e:
+        print("Ошибка при открытии файла: ", e)
         return {}
     
 def print_dict_to_file(some_dict, filename):
@@ -34,8 +34,8 @@ def print_dict_to_file(some_dict, filename):
                     file.write(f"{latin}, ")
                 if latin_words: 
                     file.write(f"{latin_words[-1]}\n")
-    except Exception:
-        print("Ошибка при сохранении результата")
+    except Exception as e:
+        print("Ошибка при сохранении результата: ", e)
         return {}
    
 latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
