@@ -32,6 +32,7 @@ def seek_philosopy(article: str) -> str:
         
         soup = BeautifulSoup(response.content, 'html.parser')
         
+        link_found: bool = False
         for paragraph in soup.find(id="mw-content-text").find_all("p"):
             # we create artificial paragraph where all parantheses and their contents were removed
             psoup = BeautifulSoup()
@@ -42,9 +43,10 @@ def seek_philosopy(article: str) -> str:
             links = list(filter(is_wiki_normal, psoup.find_all("a")))
             if len(links) != 0:
                 article = links[0]['href'][6:] # remove 'wiki/' part
+                link_found = True
                 break
 
-        if article == result[0]:
+        if not link_found:
             raise Exception("Philosophy wasn't reached: No more links to follow")
         
         if article in result:
