@@ -1,4 +1,5 @@
-import math, unittest
+import math
+import unittest
 
 
 class Vector:
