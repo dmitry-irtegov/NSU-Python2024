@@ -25,7 +25,6 @@ def init_parser():
 def replace_words(text: str, mode: Mode) -> str:
     mixer = MODE_MIXERS.get(mode)
     result_text = text
-    print(f'"{text}" - {mode.value}')
     words = re.findall(r"[\w']+", text)
     for word in words:
         new_word = word[0] + mixer(word[1:-1]) + word[-1]
