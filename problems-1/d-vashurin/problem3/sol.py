@@ -1,4 +1,5 @@
 from collections.abc import Iterator
+from sys import stderr
 
 
 def _collatz_iter(start: int) -> Iterator[int]:
@@ -16,9 +17,27 @@ def collatz_conjecture(start: int) -> Iterator[int]:
     return _collatz_iter(start)
 
 
-def main() -> None:
-    print(*collatz_conjecture(int(input())), sep=" -> ")
+def main() -> int:
+    try:
+        line = input()
+    except EOFError:
+        return 0
+
+    try:
+        start = int(line)
+    except ValueError:
+        print(f"Failed to convert '{line}' to integer", file=stderr)
+        return 1
+
+    try:
+        conj = collatz_conjecture(start)
+    except ValueError as exc:
+        print(f"{exc}, while '{start}' was passed", file=stderr)
+        return 2
+
+    print(*conj, sep=" -> ")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())
