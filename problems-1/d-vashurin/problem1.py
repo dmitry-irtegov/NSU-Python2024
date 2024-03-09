@@ -10,8 +10,8 @@ if TYPE_CHECKING:
     A = TypeVar("A", bound=SupportsAdd)
 
 
-def cumulative_sums(nums: "Iterable[A]") -> "list[A]":
-    """Returns the cumulative sum of the `nums` iterable.
+def cumulative_sums(addable: "Iterable[A]") -> "list[A]":
+    """Returns the cumulative sum of the `addable` iterable.
 
     >>> cumulative_sums((1, 2, 3))
     [1, 3, 6]
@@ -26,7 +26,7 @@ def cumulative_sums(nums: "Iterable[A]") -> "list[A]":
     ['Hello', 'Hello, ', 'Hello, World', 'Hello, World!']
     """
 
-    iterator = iter(nums)
+    iterator = iter(addable)
 
     try:
         current = next(iterator)
