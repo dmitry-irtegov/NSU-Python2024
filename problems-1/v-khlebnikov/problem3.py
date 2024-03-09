@@ -12,9 +12,9 @@ def collatz_hypothesis(x):
     return result
 
 
-def print_collatz(l):
-    for i, elem in enumerate(l):
-        if i == len(l) - 1:
+def print_collatz(L):
+    for i, elem in enumerate(L):
+        if i == len(L) - 1:
             print(elem)
         else:
             print(elem, "->", end=" ")
