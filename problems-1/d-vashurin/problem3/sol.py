@@ -40,4 +40,9 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    exit(main())
+    try:
+        code = main()
+    except KeyboardInterrupt:
+        code = 0
+
+    exit(code)
