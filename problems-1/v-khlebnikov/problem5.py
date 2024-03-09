@@ -23,7 +23,9 @@ def get_primes(x):
 def factorize(x, use_primes=True):
     multipliers = []
     for i in (get_primes(x) if use_primes else range(2, x + 1)):
-        if x == 1:
+        if x < i ** 2:
+            if x != 1:
+                multipliers.append([x, 1])
             break
         m = [i, 0]
         while x % i == 0:
@@ -36,30 +38,30 @@ def factorize(x, use_primes=True):
 
 class TestForFactorization(unittest.TestCase):
     def test_init_condition(self):
-        self.assertEqual(factorize(12, use_primes=False), [[2, 2], [3, 1]])
+        self.assertEqual([[2, 2], [3, 1]], factorize(12, use_primes=False))
 
     def test_init_condition_using_primes(self):
-        self.assertEqual(factorize(12), [[2, 2], [3, 1]])
+        self.assertEqual([[2, 2], [3, 1]], factorize(12))
 
     def test_prime_number(self):
-        self.assertEqual(factorize(236627, use_primes=False), [[236627, 1]])
+        self.assertEqual([[236627, 1]], factorize(236627, use_primes=False))
 
     def test_prime_number_using_primes(self):
-        self.assertEqual(factorize(236627), [[236627, 1]])
+        self.assertEqual([[236627, 1]], factorize(236627))
 
     # Из-за необходимости вычисления всех простых чисел до искомого числа,
-    # использование метода с простыми числами приведёт к долгому вычислению результата
+    # использование метода с вычислением простых чисел приведёт к долгому вычислению результата
     def test_big_number(self):
         start = time.perf_counter()
-        self.assertEqual(factorize(31000000, use_primes=False), [[2, 6], [5, 6], [31, 1]])
+        self.assertEqual([[2, 6], [5, 6], [31, 1]], factorize(31000000, use_primes=False))
         print("Without primes:", time.perf_counter() - start)
 
     def test_big_number_using_primes(self):
         start = time.perf_counter()
-        self.assertEqual(factorize(31000000), [[2, 6], [5, 6], [31, 1]])
+        self.assertEqual([[2, 6], [5, 6], [31, 1]], factorize(31000000))
         print("With primes (calculating primes):", time.perf_counter() - start)
         start = time.perf_counter()
-        self.assertEqual(factorize(31000000), [[2, 6], [5, 6], [31, 1]])
+        self.assertEqual([[2, 6], [5, 6], [31, 1]], factorize(31000000))
         print("With primes (using calculated primes):", time.perf_counter() - start)
 
 
