@@ -1,8 +1,8 @@
 from loggable import Loggable
 
 import unittest
-from datetime import datetime
 import time
+
 
 class ClassWithLogging(Loggable):
     def sleep_for_sec(self):
