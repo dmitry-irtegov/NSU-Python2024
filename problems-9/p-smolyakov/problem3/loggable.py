@@ -93,7 +93,7 @@ class Loggable:
         return self.__log_store
 
     
-class ClassWithLogging(Loggable):
+class _ClassWithLogging(Loggable):
     def a(self):
         print('sideeffect')
         return 123
@@ -102,19 +102,19 @@ class ClassWithLogging(Loggable):
         pass
 
     def exceptionness(self):
-        raise RuntimeError("errortext")
+        raise RuntimeError('errortext')
 
     def __str__(self):
         return 'string'
         
 
 if __name__ == '__main__':
-    one = ClassWithLogging()
+    one = _ClassWithLogging()
     one.a()
     print(str(one))
     one.mnogo(1, 2, 3)
 
-    two = ClassWithLogging()
+    two = _ClassWithLogging()
     two.mnogo(1, 2, four = 'GAGAGGAGAGAG')
     try:
         two.exceptionness()
