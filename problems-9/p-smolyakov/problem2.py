@@ -36,9 +36,6 @@ class _StorageTransaction(_ReadOnlyDict):
         self.__src_storage._ongoing_transaction = False
         if exception_type is None:
             self.__src_storage._dict = self._dict
-        else:
-            raise exception_type(exception_value)
-        return True
 
 
 class Storage(_ReadOnlyDict):
