@@ -1,4 +1,4 @@
-from typing import Self
+from __future__ import annotations
 import unittest
 
 class CartesianProduct():
@@ -6,12 +6,12 @@ class CartesianProduct():
     _n: int
     _state: tuple
 
-    def __init__(self, init_set: tuple, n: int, start_subset: tuple = None) -> None:
+    def __init__(self, init_set: tuple, n: int, start_subset: tuple = (None,)) -> None:
         self._set = init_set
         self._n = n
         self._first = self._set[0]
         self._last = self._set[-1]
-        if start_subset:
+        if start_subset != (None,):
             self._state = start_subset
         else:
             self._state = tuple([self._first] * n)
@@ -20,7 +20,7 @@ class CartesianProduct():
         assert(cur_elem != self._last)
         return self._set[self._set.index(cur_elem)+1]
 
-    def next_subset(self) -> Self:
+    def next_subset(self) -> CartesianProduct:
         try:
             # search from the end
             ni, cur_elem = next((self._n - i - 1, elem) for i, elem in enumerate(self._state[::-1]) if elem != self._last)
