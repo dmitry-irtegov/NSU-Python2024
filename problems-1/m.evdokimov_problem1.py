@@ -4,11 +4,11 @@ def cumulativeSum(inputList):
 
     inputList = inputList.split()
 
-    l = len(inputList)
-    resultList = [None] * (l + 1)
+    length = len(inputList)
+    resultList = [None] * (length + 1)
     resultList[0] = 0
 
-    for i in range(l):
+    for i in range(length):
         resultList[i+1] = resultList[i] + int(inputList[i])
     
     return resultList
