@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from time import sleep
 from sys import stderr, exit
 
-WIKI_LINK_BASE = "httpsaas://en.wikipedia.org/wiki/"
+WIKI_LINK_BASE = "https://en.wikipedia.org/wiki/"
 
 def is_wiki_normal(wiki_link: str) -> bool:
     '''
@@ -20,6 +20,7 @@ def remove_parentheses(text: str) -> str:
 
 def seek_philosopy(article: str) -> str:
     result = (article, )
+    print(article)
     while article != "Philosophy":
         sleep(2)
         url = ''.join((WIKI_LINK_BASE, article))
@@ -41,7 +42,6 @@ def seek_philosopy(article: str) -> str:
             print(f"Troubles sending request to {url}. Shutting down")
             exit(-1)
         
-        print(article)
         soup = BeautifulSoup(response.content, 'html.parser')
         
         link_found: bool = False
