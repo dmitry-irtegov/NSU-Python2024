@@ -22,10 +22,7 @@ class _StorageTransaction(_ReadOnlyDict):
 
 
     def __delitem__(self, key):
-        try:
-            del self._dict[key]
-        except KeyError:
-            raise KeyError(f'Key {key} doesn\'t exist in current snapshot') from None
+        del self._dict[key]
 
 
     def __enter__(self):
