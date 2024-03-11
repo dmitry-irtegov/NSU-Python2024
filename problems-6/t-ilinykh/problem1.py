@@ -2,8 +2,11 @@ import random
 
 def shuffle_letters(word):
     letters = list(word)
-    random.shuffle(letters)
-    return ''.join(letters)
+    if len(letters) <= 3:
+        return word
+    first_letter, *middle_letters, last_letter = letters
+    random.shuffle(middle_letters)
+    return ''.join([first_letter] + middle_letters + [last_letter])
 
 def sort_letters(word):
     letters = list(word)
