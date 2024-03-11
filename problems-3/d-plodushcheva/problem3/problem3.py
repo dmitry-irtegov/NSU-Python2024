@@ -10,27 +10,20 @@ class Vector:
             self.values = args
         self.size = len(args)
 
-    def add(self, other):
-        for i in range(self.size):
-            self.values[i] += other.get(i)
+    def __add__(self, other):
+        return [x + y for x, y in zip(self.values, other.values)]
 
-    def sub(self, other):
-        for i in range(self.size):
-            self.values[i] -= other.get(i)
+    def __sub__(self, other):
+        return [x - y for x, y in zip(self.values, other.values)]
 
-    def scalar_mul(self, scalar):
-        for i in range(self.size):
-            self.values[i] *= scalar
+    def __mul__(self, scalar):
+        return [x * scalar for x in self.values]
 
     def mult(self, other):
-        for i in range(self.size):
-            self.values[i] *= other.get(i)
+        self.values = [x * y for x, y in zip(self.values, other.values)]
 
     def dot(self, other):
-        dot_product = 0
-        for i in range(self.size):
-            dot_product += self.values[i] * other.get(i)
-        return dot_product
+        return sum(x * y for x, y in zip(self.values, other.values))
 
     def compare(self, other):
         return self.values == other.values

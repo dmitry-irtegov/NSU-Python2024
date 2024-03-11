@@ -9,16 +9,16 @@ class TestVector(unittest.TestCase):
         self.v2 = Vector([4, 5, 6])
 
     def test_add(self):
-        self.v1.add(self.v2)
-        self.assertEqual(str(self.v1), "[5, 7, 9]")
+        result = self.v1 + self.v2
+        self.assertEqual(str(result), "[5, 7, 9]")
 
     def test_sub(self):
-        self.v1.sub(self.v2)
-        self.assertEqual(str(self.v1), "[-3, -3, -3]")
+        result = self.v1 - self.v2
+        self.assertEqual(str(result), "[-3, -3, -3]")
 
     def test_scalar_mul(self):
-        self.v1.scalar_mul(2)
-        self.assertEqual(str(self.v1), "[2, 4, 6]")
+        result = self.v1 * 2
+        self.assertEqual(str(result), "[2, 4, 6]")
 
     def test_mult(self):
         self.v1.mult(self.v2)
