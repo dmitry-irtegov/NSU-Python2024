@@ -1,3 +1,4 @@
+from typing import Self
 import unittest
 
 class CartesianProduct():
@@ -19,7 +20,7 @@ class CartesianProduct():
         assert(cur_elem != self._last)
         return self._set[self._set.index(cur_elem)+1]
 
-    def next_subset(self) -> 'CartesianProduct':
+    def next_subset(self) -> Self:
         try:
             # search from the end
             ni, cur_elem = next((self._n - i - 1, elem) for i, elem in enumerate(self._state[::-1]) if elem != self._last)
