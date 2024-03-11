@@ -1,4 +1,6 @@
 import unittest
+import sys
+import io
 
 
 def collatz_hypothesis(x):
@@ -12,12 +14,10 @@ def collatz_hypothesis(x):
     return result
 
 
-def print_collatz(L):
-    for i, elem in enumerate(L):
-        if i == len(L) - 1:
-            print(elem)
-        else:
-            print(elem, "->", end=" ")
+def print_collatz(L, file=sys.stdout):
+    for elem in L[:-1]:
+        print(elem, "->", end=" ", file=file)
+    print(L[-1], file=file)
 
 
 class TestCollatz(unittest.TestCase):
@@ -33,6 +33,11 @@ class TestCollatz(unittest.TestCase):
                           1367, 4102, 2051, 6154, 3077, 9232, 4616, 2308, 1154, 577, 1732, 866, 433, 1300, 650, 325,
                           976, 488, 244, 122, 61, 184, 92, 46, 23, 70, 35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2,
                           1])
+        
+    def test_print(self):
+        f = io.StringIO()
+        print_collatz(collatz_hypothesis(3), file=f)
+        self.assertEqual(f.getvalue(), "3 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1\n")
 
 
 if __name__ == '__main__':
