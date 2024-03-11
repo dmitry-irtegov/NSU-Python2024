@@ -38,6 +38,7 @@ class TestTrimSequence(unittest.TestCase):
         a = 5
         b = 10
         expected_trimmed_sequence = [5, 5, 5]
+        
         self.assertEqual(trim_sequence(sequence, a, b), expected_trimmed_sequence)
 
 if __name__ == '__main__':
