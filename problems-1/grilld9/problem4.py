@@ -1,25 +1,36 @@
 import unittest
 
+orig_print = print
+song = []
+s = ""
+def mock_print(string, **kwargs):
+    song.append(string)
+
+print = mock_print
 
 def sing_the_song():
-    templ_wall = " green bottles hanging on the wall"
-    templ_fall = "And if one green bottle should accidentally fall,\n"
-    templ_will = "There’ll be "
-    amounts = ["ten", "nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "no"]
-    result = ""
-    for i in range(10):
-        result += amounts[i].capitalize() + templ_wall + ",\n"
-        result += amounts[i].capitalize() + templ_wall + ",\n"
-        result += templ_fall
-        result += templ_will + amounts[i + 1] + templ_wall + ".\n"
-    return result
 
-# print(sing_the_song())
+    green = "green"
+    bottle = "bottle"
+    templ_wall = "hanging on the wall"
+    templ_fall = "should accidentally fall"
+    templ_will = "There’ll be"
+    amounts = ["ten", "nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "no"]
+    for i in range(10):
+        print("{} {} {} {},".format(amounts[i].capitalize(), green, bottle if i == 9 else bottle + "s", templ_wall))
+        print("{} {} {} {},".format(amounts[i].capitalize(), green, bottle if i == 9 else bottle + "s", templ_wall))
+        print("{} {} {} {} {},".format("And if", amounts[9], green, bottle, templ_fall))
+        print("{} {} {} {} {}.".format(templ_will, amounts[i+1], green, bottle if i + 1 == 9 else bottle + "s", templ_wall))
+
+sing_the_song()
+
+print = orig_print
+song = "\n".join(song)
 
 class BottleSongTest(unittest.TestCase):
 
     def test(self):
-        self.assertEqual(sing_the_song(),
+        self.assertEqual(song,
 """Ten green bottles hanging on the wall,
 Ten green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
@@ -55,9 +66,8 @@ There’ll be two green bottles hanging on the wall.
 Two green bottles hanging on the wall,
 Two green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
-There’ll be one green bottles hanging on the wall.
-One green bottles hanging on the wall,
-One green bottles hanging on the wall,
+There’ll be one green bottle hanging on the wall.
+One green bottle hanging on the wall,
+One green bottle hanging on the wall,
 And if one green bottle should accidentally fall,
-There’ll be no green bottles hanging on the wall.
-""")
+There’ll be no green bottles hanging on the wall.""")
