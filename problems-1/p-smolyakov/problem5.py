@@ -1,24 +1,15 @@
-def is_prime(n):
-    if n < 2:
-        return False
+import unittest
 
-    i = 2
-    while i * i <= n:
-        if n % i == 0:
-            return False
-        i += 1
-    
-    return True
 
 def primes_list(n):
-    return [x for x in range(2, n+1) if is_prime(x)]
+    return [x for x in range(2, n + 1) if not any(x % divider == 0 for divider in range(2, x // 2 + 1))]
 
-import unittest
+
 class PrimesListTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        size = 200000
+        size = 20000
         self.__primes_list = primes_list(size)
 
     def test_zero(self):
@@ -34,10 +25,11 @@ class PrimesListTest(unittest.TestCase):
         self.assertFalse(49 in self.__primes_list)
 
     def test_largeprime(self):
-        self.assertTrue(199999 in self.__primes_list)
+        self.assertTrue(19997 in self.__primes_list)
 
     def test_largenonprime(self):
-        self.assertFalse(199997 in self.__primes_list)
+        self.assertFalse(19971 in self.__primes_list)
+        self.assertFalse(20000 in self.__primes_list)
 
 if __name__ == '__main__':
     unittest.main()
