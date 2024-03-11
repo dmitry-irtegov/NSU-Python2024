@@ -19,16 +19,20 @@ def transform_text(text, transformation):
 
 def main():
     text = input("Введите текст: ")
-    random_result = transform_text(text, shuffle_letters)
-    sorted_result = transform_text(text, sort_letters)
+    try:
+        random_result = transform_text(text, shuffle_letters)
+        sorted_result = transform_text(text, sort_letters)
 
-    print("Исходный текст:")
-    print(text)
-    print("Случайная перестановка букв:")
-    print(random_result)
-    print("Сортировка букв по алфавиту:")
-    print(sorted_result)
+        print("Исходный текст:")
+        print(text)
+        print("Случайная перестановка букв:")
+        print(random_result)
+        print("Сортировка букв по алфавиту:")
+        print(sorted_result)
+    except TypeError as e:
+        print("Ошибка типа данных при обработке текста:", e)
+    except ValueError as e:
+        print("Ошибка значения при обработке текста:", e)
 
 if __name__ == "__main__":
     main()
-    
