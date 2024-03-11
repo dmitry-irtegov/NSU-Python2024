@@ -22,19 +22,13 @@ def seek_philosopy(article: str) -> str:
     result = (article, )
     print(article)
     while article != "Philosophy":
-        sleep(2)
+        sleep(0.5)
         url = ''.join((WIKI_LINK_BASE, article))
         try:
             response = requests.get(
                 url=url,
             )
             response.raise_for_status()
-        except requests.exceptions.Timeout:
-            print(f"Timeout while connecting to {url}. Shutting down", file=stderr)
-            exit(-1)
-        except requests.exceptions.ConnectionError as e:
-            print(f"Troubles connecting to {url}. Shutting down\n\nError description:\n{e.args[0]}", file=stderr)
-            exit(-1)
         except requests.exceptions.HTTPError as errh:
             print(f"HTTP Error occured when sending request to {url}. Shutting down.\n\nError description:\n{errh.args[0]}", file=stderr)
             exit(-1)
