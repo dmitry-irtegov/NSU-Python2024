@@ -39,7 +39,7 @@ def print_dict_to_file(some_dict, filename):
         print("Ошибка при сохранении результата: ", e, file=sys.stderr)
         return {}
    
-latin_english_dict = revers_dict(read_dict_file('inpt_task_2.txt'))
+latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
 print_dict_to_file(latin_english_dict, 'output_task_2.txt')
 
 ###
