@@ -2,9 +2,12 @@ import re
 import unittest
 
 def find_urls(example_data):
+    if not isinstance(example_data, str):
+        raise TypeError("example_data must be a string")
     pattern = r"(?:https?:\/\/|www\.)(?:(?![.,?!;:()]*(?:\s|$))[^\s]){2,}"
     urls = re.findall(pattern, example_data)
     return urls
+
 
 class TestFindURLs(unittest.TestCase):
 
@@ -83,6 +86,10 @@ class TestFindURLs(unittest.TestCase):
     def test_http_url_with_long_tld(self):
         text = "Visit http://www.example.travel"
         self.assertEqual(find_urls(text), ["http://www.example.travel"])
+
+    def test_invalid_example_data_type(self):
+        with self.assertRaises(TypeError):
+            find_urls(123)
 
 if __name__ == '__main__':
     unittest.main()
