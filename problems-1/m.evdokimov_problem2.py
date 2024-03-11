@@ -5,13 +5,13 @@ def limiter(inputList, a, b):
     inputList = inputList.split()
 
     resultList = [None] * len(inputList)
-    for i in range(len(inputList)):
-        x = int(inputList[i])
+    for index, number in enumerate(inputList):
+        x = int(number)
         if x > b:
             x = b
         if x < a:
             x = a
-        resultList[i] = x
+        resultList[index] = x
     
     return resultList
 
