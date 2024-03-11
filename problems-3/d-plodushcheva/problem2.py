@@ -1,3 +1,5 @@
+import unittest
+
 
 class Eukaryote:
     pass
@@ -24,11 +26,16 @@ class Anatidae(Anseriformes):
 
 
 class Anser(Anatidae):
-    pass
+    def fly(self):
+        return f"{self.__class__.__name__} is flying."
 
 
 class WaterBirds:
-    pass
+    def __init__(self, location="Water"):
+        self.location = location
+
+    def swim(self):
+        return f"{self.__class__.__name__} is swimming."
 
 
 class Geese(WaterBirds):
@@ -46,3 +53,21 @@ class AnserIndicus(Anser, GreyGeese):
 
 class AnserRossii(Anser):
     pass
+
+
+class TestInheritance(unittest.TestCase):
+    def test_anser_fly(self):
+        anser = AnserIndicus()
+        assert anser.fly() == "AnserIndicus is flying."
+
+    def test_water_birds_swim(self):
+        water_bird = WaterBirds()
+        assert water_bird.swim() == "WaterBirds is swimming."
+
+    def test_geese_swim(self):
+        geese = Geese()
+        assert geese.swim() == "Geese is swimming."
+
+
+if __name__ == '__main__':
+    unittest.main()
