@@ -2,6 +2,7 @@ import requests
 import regex
 from bs4 import BeautifulSoup
 from time import sleep
+from sys import stderr, exit
 
 WIKI_LINK_BASE = "https://en.wikipedia.org/wiki/"
 
@@ -19,6 +20,7 @@ def remove_parentheses(text: str) -> str:
 
 def seek_philosopy(article: str) -> str:
     result = (article, )
+    print(article)
     while article != "Philosophy":
         sleep(2)
         url = ''.join((WIKI_LINK_BASE, article))
@@ -26,9 +28,16 @@ def seek_philosopy(article: str) -> str:
             response = requests.get(
                 url=url,
             )
-        except requests.exceptions.RequestException as e:
-            print("Trouble connecting to the wiki page. Shutting down\n")
-            raise SystemExit(e)
+            response.raise_for_status()
+        except requests.exceptions.Timeout:
+            print(f"Timeout while connecting to {url}. Shutting down", file=stderr)
+            exit(-1)
+        except requests.exceptions.ConnectionError as e:
+            print(f"Troubles connecting to {url}. Shutting down\n\nError description:\n{e.args[0]}", file=stderr)
+            exit(-1)
+        except requests.exceptions.HTTPError as errh:
+            print(f"HTTP Error occured when sending request to {url}. Shutting down.\n\nError description:\n{errh.args[0]}", file=stderr)
+            exit(-1)
         
         soup = BeautifulSoup(response.content, 'html.parser')
         
@@ -47,10 +56,14 @@ def seek_philosopy(article: str) -> str:
                 break
 
         if not link_found:
-            raise Exception("Philosophy wasn't reached: No more links to follow")
+            # index.php?title=MOS:FIRST&redirect=no
+            print(f"Philosophy wasn't reached: No more links to follow from {url}", file=stderr)
+            exit(-1)
         
         if article in result:
-            raise Exception("Philosophy wasn't reached: Loop occured")
+            # Tax
+            print(f"Philosophy wasn't reached: Loop occured with {article} article", file=stderr)
+            exit(-1)
         
         result += (article, )
         print(article)
