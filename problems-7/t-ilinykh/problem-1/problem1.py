@@ -49,6 +49,7 @@ def follow_philosophy_law(start_url):
             next_url = get_first_normal_link('https://en.wikipedia.org' + url)
         except Exception as e:
             print("Error:", e, file=sys.stderr)
+            time.sleep(2)
             flag_error = 1
             break
         if next_url is None:
@@ -63,8 +64,6 @@ def follow_philosophy_law(start_url):
             print("Invalid link format:", next_url, file=sys.stderr)
             break
         url = next_url
-    if flag_error:
-        print("Error, stopped")
     if flag and not flag_error:
         print("Cycle detected.")
 
@@ -75,3 +74,4 @@ start_url = '/wiki/Rapping'
 follow_philosophy_law(start_url)
 start_url = '/wiki/Python_(programming_language)'
 follow_philosophy_law(start_url)
+
