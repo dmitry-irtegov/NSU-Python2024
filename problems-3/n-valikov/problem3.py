@@ -4,12 +4,12 @@ from itertools import starmap
 from typing import Tuple
 
 
-class Vector(Number):
-    _content: Tuple[Number]
+class Vector:
+    _content: Tuple
     _iter_counter: int
 
-    def __init__(self, content: Tuple[Number]):
-        if not isinstance(content, Tuple) or not all(map(lambda value: isinstance(value, Number), content)):
+    def __init__(self, content: Tuple):
+        if not isinstance(content, tuple) or not all(map(lambda value: isinstance(value, Number), content)):
             raise TypeError("content must be a list of values that inherit from Number")
 
         self._content = content
@@ -21,7 +21,7 @@ class Vector(Number):
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        return Vector((*[first + second for first, second in zip(self, other)],))
+        return Vector((*[first + second for first, second in zip(self._content, other._content)],))
 
     def __sub__(self, other) -> 'Vector':
         return self + (-other)
@@ -37,7 +37,7 @@ class Vector(Number):
 
         return Vector((*new_vector_content,))
 
-    def __next__(self) -> Number:
+    def __next__(self):
         length = len(self)
         index = 0
         while index < length:
@@ -53,14 +53,14 @@ class Vector(Number):
     def __len__(self):
         return len(self._content)
 
-    def __eq__(self, other: 'Vector') -> bool:
+    def __eq__(self, other) -> bool:
         if not isinstance(other, Vector):
-            raise TypeError('other must be of type Vector')
+            return NotImplemented
 
         if len(self) != len(other):
             return False
 
-        return all(starmap(lambda x_1, x_2: x_1 == x_2, zip(self, other)))
+        return all(starmap(lambda x_1, x_2: x_1 == x_2, zip(self._content, other._content)))
 
     def __str__(self):
         return (f"Number of dimensions: {len(self._content)}\n"
@@ -74,7 +74,7 @@ class Vector(Number):
 
         new_vector_content = list(self._content)
 
-        for index, value in enumerate(other):
+        for index, value in enumerate(other._content):
             new_vector_content[index] *= value
 
         return Vector(tuple(new_vector_content))
