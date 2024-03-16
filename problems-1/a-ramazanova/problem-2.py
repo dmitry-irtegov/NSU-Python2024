@@ -2,15 +2,12 @@ import unittest
 
 
 def clamp_values(input_list, a, b):
-    result = []
-    for i in input_list:
-        if i < a:
-            result.append(a)
-        elif i > b:
-            result.append(b)
-        else:
-            result.append(i)
-    return result
+    for i, number in enumerate(input_list):
+        if number < a:
+            input_list[i] = a
+        elif number > b:
+            input_list[i] = b
+    return input_list
 
 
 class TestClampValues(unittest.TestCase):
