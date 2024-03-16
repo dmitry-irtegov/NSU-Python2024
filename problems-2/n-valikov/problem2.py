@@ -1,8 +1,10 @@
 import unittest
 
+from typing_extensions import List, Dict
+
 
 def solve(data: str) -> list[tuple[str, str]]:
-    result = dict()
+    result:Dict[str, List[str]] = dict()
     for line in data.splitlines():
         lexems = line.replace(',', '').split()
         for word in lexems[2:]:
