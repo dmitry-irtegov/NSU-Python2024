@@ -2,11 +2,9 @@ import unittest
 
 
 def cumulative_sum(input_list):
-    s = 0
-    result = [s]
-    for i in input_list:
-        s += i
-        result.append(s)
+    result = [0] * len(input_list)
+    for i, number in enumerate(input_list, 1):
+        result[i] = result[i-1] + number
     return result
 
 
