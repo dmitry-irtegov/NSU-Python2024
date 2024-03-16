@@ -1,19 +1,17 @@
 import unittest
 
-NUMBERS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six",
-           7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten"}
+NUMBERS = ["No", "One", "Two", "Three", "Four", "Five", "Six",
+           "Seven", "Eight", "Nine", "Ten"]
 HANGING = "%s green bottle%s hanging on the wall,\n"
-IF_STRING = "And if one green bottle should accidentally fall,\n"
-IF_ONE_STRING = "If that one green bottle should accidentally fall\n"
+IF_STRING = " one green bottle should accidentally fall,\n"
 ANY_BOTTLES = "There’ll be %s green bottle%s hanging on the wall.\n"
-NO_BOTTLES = "There’ll be no green bottles hanging on the wall.\n"
 
 
 def song_part(num):
     return (HANGING % (NUMBERS[num], "" if num == 1 else "s")
             + HANGING % (NUMBERS[num], "" if num == 1 else "s")
-            + (IF_ONE_STRING if num == 1 else IF_STRING)
-            + f'{NO_BOTTLES if num == 1 else ANY_BOTTLES % (NUMBERS[num - 1].lower(), "" if num - 1 == 1 else "s")}')
+            + ("If that" if num == 1 else "And if") + IF_STRING
+            + ANY_BOTTLES % (NUMBERS[num - 1].lower(), "" if num - 1 == 1 else "s"))
 
 
 def sing_song():
@@ -61,7 +59,7 @@ And if one green bottle should accidentally fall,
 There’ll be one green bottle hanging on the wall.
 One green bottle hanging on the wall,
 One green bottle hanging on the wall,
-If that one green bottle should accidentally fall
+If that one green bottle should accidentally fall,
 There’ll be no green bottles hanging on the wall.
 """)
 
