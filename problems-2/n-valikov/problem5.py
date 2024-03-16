@@ -1,7 +1,9 @@
 import unittest
 
+from typing_extensions import List
 
-def solve(n: int) -> [int]:
+
+def solve(n: int) -> List[int]:
     return [number for number in range(2, n + 1)
             if (number % 2
                 and all([number % divisor
