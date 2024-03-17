@@ -8,13 +8,17 @@ def get_file_size(name):
         return os.stat(name).st_size
     except FileNotFoundError as e:
         print("File \"" + e.filename + "\" doesn't exist", file=sys.stderr)
+        return
 
 
 def bytes_to_string(Bytes):
     if not isinstance(Bytes, (int, float)):
-        raise TypeError("Argument must be a number")
+        print("Argument must be a number", file=sys.stderr)
+        return
     if Bytes < 0:
-        raise ValueError("Argument must be greater or equals to zero")
+        print("Argument must be greater or equals to zero", file=sys.stderr)
+        return
+
     size_unit = ['B', 'KB', 'MB', 'GB', 'TB']
     unit = 0
     while Bytes >= 1024 and unit < len(size_unit) - 1:
@@ -40,6 +44,7 @@ def print_files(path):
             print(f'{o}:{longest_string_size}{c}'.format(f[0]) + " size: " + bytes_to_string(f[1]))
     except FileNotFoundError as e:
         print("Current path doesn't exist: " + e.filename, file=sys.stderr)
+        return
 
 
 def main():
