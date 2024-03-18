@@ -38,3 +38,6 @@ class PrimeDivisorsTest(unittest.TestCase):
         self.assertEqual(prime_divisors(123), [[3, 1], [41, 1]])
         self.assertEqual(prime_divisors(562), [[2, 1], [281, 1]])
         self.assertEqual(prime_divisors(12), [[2, 2], [3, 1]])
+
+if '__main__' == __name__:
+    unittest.main()
