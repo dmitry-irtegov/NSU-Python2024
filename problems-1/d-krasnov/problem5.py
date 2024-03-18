@@ -38,6 +38,25 @@ class TestFactorizeNumber(unittest.TestCase):
     def test_zero(self):
         self.assertEqual([], factorize_number(0))
 
+    def test_big(self):
+        self.assertEqual([
+                [2, 1],
+                [3, 1],
+                [5, 1],
+                [7, 1],
+                [11, 1],
+                [13, 1],
+                [17, 1],
+                [19, 1],
+                [23, 1],
+                [29, 1],
+                [31, 1],
+                [37, 1],
+            ], factorize_number(7420738134810))
+
+    def test_big_prime(self):
+        self.assertEqual([[3553741211, 1]], factorize_number(3553741211))
+
 
 if __name__ == '__main__':
     unittest.main()
