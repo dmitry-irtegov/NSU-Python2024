@@ -1,11 +1,11 @@
 from io import TextIOWrapper
 import sys
 
-type LangDict = dict[str, set[str]]
+LangDict = dict[str, set[str]]
 
 
 def _lat_eng_to_eng_lat(d: LangDict) -> LangDict:
-    res = dict()
+    res: LangDict = dict()
     for key, val in d.items():
         for word in val:
             if word in res:
