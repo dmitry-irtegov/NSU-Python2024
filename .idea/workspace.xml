@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5de85e3e-76e2-495c-a9b2-a589c1e8c391" name="Changes" comment="problems-1/task-2 removed unused imports" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="problems-3/problem-3" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Tretiakovv&quot;
+  }
+}</component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="completed task" />
+        <option name="rewordedMessage" value="completed problem" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="2062cc00ac893dbe44b112cfb2e92a709102ba62" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="5412db16-9128-4436-ad67-84d6e1a1fd94" />
+        <option name="url" value="https://github.com/Tretiakovv/NSU-Python2024.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2ctjZxl9N7LcVTnpDg9ZBVx63Wf" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "problems-2/task-1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\treti\PycharmProjects\NSU-Python2024\problems-2\a.tretyakov\problem-3" />
+      <recent name="C:\Users\treti\PycharmProjects\NSU-Python2024\problems-2\a.tretyakov\problem-1" />
+      <recent name="C:\Users\treti\PycharmProjects\NSU-Python2024\problems-1\a-tretyakov\problem-4" />
+      <recent name="C:\Users\treti\PycharmProjects\NSU-Python2024\problems-3\a.tretyakov\problem-3" />
+      <recent name="C:\Users\treti\PycharmProjects\NSU-Python2024\problems-3\a.treyakov\problem-1" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.problem-3">
+    <configuration name="problem-3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NSU-Python2024" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems-2/a.tretyakov/problem-3" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/problems-2/a.tretyakov/problem-3/problem-3.py" />
+      <option name="PARAMETERS" value="C:\Users\treti\PycharmProjects\NSU-Python2024" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="problem-3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="NSU-Python2024" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems-1/a-tretyakov" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/problems-1/a-tretyakov/problem-3.py" />
+      <option name="PARAMETERS" value="C:\Users\treti\PycharmProjects\NSU-Python2024\problems-2\a.tretyakov\problem-3.py" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-2/a.tretyakov/problem-1/problem-1.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="NSU-Python2024" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems-2/a.tretyakov/problem-1" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/problems-2/a.tretyakov/problem-1/problem-1.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-3/a.tretyakov/problem-2/problem-2.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="NSU-Python2024" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems-3/a.tretyakov/problem-2" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/problems-3/a.tretyakov/problem-2/problem-2.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-3/a.tretyakov/problem-3/problem-3.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="NSU-Python2024" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems-3/a.tretyakov/problem-2" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/problems-3/a.tretyakov/problem-3/problem-3.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in problem-4.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="NSU-Python2024" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/problems-2/a.tretyakov" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/problems-2/a.tretyakov/problem-4.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.problem-3" />
+      <item itemvalue="Python tests.Python tests in problem-4.py" />
+      <item itemvalue="Python tests.Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-3/a.tretyakov/problem-2/problem-2.py" />
+      <item itemvalue="Python tests.Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-2/a.tretyakov/problem-1/problem-1.py" />
+      <item itemvalue="Python tests.Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-3/a.tretyakov/problem-3/problem-3.py" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.problem-3" />
+        <item itemvalue="Python tests.Python tests in problem-4.py" />
+        <item itemvalue="Python tests.Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-3/a.tretyakov/problem-2/problem-2.py" />
+        <item itemvalue="Python tests.Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-3/a.tretyakov/problem-3/problem-3.py" />
+        <item itemvalue="Python tests.Python tests in C:/Users/treti/PycharmProjects/NSU-Python2024/problems-2/a.tretyakov/problem-1/problem-1.py" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5de85e3e-76e2-495c-a9b2-a589c1e8c391" name="Changes" comment="problems-1/task-2 completed task" />
+      <created>1708937829512</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1708937829512</updated>
+      <workItem from="1708937835441" duration="895000" />
+      <workItem from="1708939264263" duration="3614000" />
+      <workItem from="1709101691819" duration="28000" />
+      <workItem from="1709101777590" duration="44000" />
+      <workItem from="1709455747789" duration="1500000" />
+      <workItem from="1709457275830" duration="4544000" />
+      <workItem from="1709462126311" duration="2529000" />
+      <workItem from="1709544050406" duration="136000" />
+      <workItem from="1709544202815" duration="236000" />
+      <workItem from="1709544460252" duration="1289000" />
+      <workItem from="1710085822853" duration="39000" />
+      <workItem from="1710126864602" duration="143000" />
+      <workItem from="1710142552533" duration="4425000" />
+      <workItem from="1710757797868" duration="725000" />
+    </task>
+    <task id="LOCAL-00001" summary="problems-1/task-2 removed unused imports">
+      <option name="closed" value="true" />
+      <created>1708939341940</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1708939341940</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="problems-1/task-2 completed task" />
+    <MESSAGE value="problems-1/task-2 removed unused imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="problems-1/task-2 removed unused imports" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/NSU_Python2024$problem_4.coverage" NAME="problem-4 Coverage Results" MODIFIED="1709456754820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-1/a-tretyakov" />
+    <SUITE FILE_PATH="coverage/NSU_Python2024$problem_1.coverage" NAME="problem-1 Coverage Results" MODIFIED="1709460404404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-2/a.tretyakov/problem-1" />
+    <SUITE FILE_PATH="coverage/NSU_Python2024$problem_2__1_.coverage" NAME="problem-2 (1) Coverage Results" MODIFIED="1708931481519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-2/a.tretyakov" />
+    <SUITE FILE_PATH="coverage/NSU_Python2024$problem_3__1_.coverage" NAME="problem-3 (1) Coverage Results" MODIFIED="1709459067413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-2/a.tretyakov" />
+    <SUITE FILE_PATH="coverage/NSU_Python2024$problem_5.coverage" NAME="problem-5 Coverage Results" MODIFIED="1708330943711" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-1/a-tretyakov" />
+    <SUITE FILE_PATH="coverage/NSU_Python2024$problem_2.coverage" NAME="problem-2 Coverage Results" MODIFIED="1707714481813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-1/a-tretyakov" />
+    <SUITE FILE_PATH="coverage/NSU_Python2024$.coverage" NAME=" Coverage Results" MODIFIED="1709464611402" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-3/a.tretyakov/problem-2" />
+    <SUITE FILE_PATH="coverage/NSU_Python2024$problem_3.coverage" NAME="problem-3 Coverage Results" MODIFIED="1710149759702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/problems-2/a.tretyakov/problem-3" />
+  </component>
+</project>
