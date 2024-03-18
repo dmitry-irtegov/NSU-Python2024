@@ -21,12 +21,8 @@ def list_files_by_size(directory):
 def get_files(path):
     try:
         return listdir(path)
-    except NotADirectoryError:
-        print(f"Cannot open directory {path}. This is file, not the directory", file=stderr)
-    except FileNotFoundError:
-        print(f"Cannot open directory {path}. Directory not found", file=stderr)
-    except PermissionError:
-        print(f"Cannot open directory {path}. Permission denied", file=stderr)
+    except Exception as e:
+        print(f"Cannot open catalog {path} : {e}", file=stderr)
     return {}
 
 
