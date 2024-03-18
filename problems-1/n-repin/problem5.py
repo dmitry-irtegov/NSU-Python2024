@@ -2,34 +2,27 @@ import unittest
 
 from math import ceil, sqrt
 
-def first_divisor(num: int) -> int | None:
-    bound = ceil(sqrt(num))
-
-    for i in range(2, bound + 1):
-        if num % i == 0:
-            return i
-
-    return None
-
-
-def insert_or_inc(map: dict[int, int], key: int):
-        if key in map:
-            map[key] += 1
-        else:
-            map[key] = 1
-
 
 def primes(number: int) -> list[tuple[int, int]]:
-    prime_map = {}
+    prime_list = []
+    divisor = 2
     
-    while (divisor := first_divisor(number)) is not None:
-        insert_or_inc(prime_map, divisor)
+    while divisor <= ceil(sqrt(number)):
+        power = 0
+        
+        while number % divisor == 0:
+            power += 1
+            number //= divisor
 
-        number //= divisor
+        if power > 0:
+            prime_list.append((divisor, power))
 
-    insert_or_inc(prime_map, number)
+        divisor += 1
 
-    return [ (p, k) for (p, k) in prime_map.items() if p != 1 ]
+    if number > 1:
+        prime_list.append((number, 1))
+
+    return prime_list
 
 
 def format_primes_list(map: list[tuple[int, int]]) -> str:
