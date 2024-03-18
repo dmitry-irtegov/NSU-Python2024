@@ -1,3 +1,5 @@
+import sys
+
 PI_FILENAME = "pi.txt"
 SEQUENCE_MULTIPLIER = 10
 
@@ -24,6 +26,17 @@ def search_sequence(sequence: str):
 
 
 if __name__ == "__main__":
-    sequence_indexes = search_sequence(input("Enter sequence to search for.\n > "))
-    print(f"Found {len(sequence_indexes)} results")
-    print(f"Positions: {sequence_indexes}")
+    try:
+        substring = input("Enter sequence to search for.\n> ")
+        if substring.isdigit():
+            sequence_indexes = search_sequence(substring)
+            print(f"Found {len(sequence_indexes)} results")
+            print(f"Positions: {sequence_indexes}")
+        else:
+            raise ValueError(f"incorrect sequence")
+    except (FileNotFoundError, ValueError) as e:
+        if isinstance(e, FileNotFoundError):
+            sys.stderr.write(f'"{PI_FILENAME}" not available')
+        else:
+            sys.stderr.write(str(e))
+        exit(1)
