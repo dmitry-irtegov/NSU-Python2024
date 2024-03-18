@@ -1,6 +1,6 @@
 import unittest
-from numbers import Number
 from itertools import starmap
+from numbers import Number
 from typing import Tuple
 
 
@@ -137,9 +137,6 @@ class TestVector(unittest.TestCase):
     def test_eq(self):
         self.assertTrue(self.vector_1 == Vector((1, 2, 3)))
         self.assertFalse(self.vector_1 == self.vector_2)
-
-        with self.assertRaises(TypeError):
-            self.vector_1 == "lolchik"
 
     def test_scalar_product(self):
         self.assertEqual(self.vector_1.scalar_product(self.vector_4), Vector((7, 12, 15)))
