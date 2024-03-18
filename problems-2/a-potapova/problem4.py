@@ -34,9 +34,6 @@ if __name__ == "__main__":
             print(f"Positions: {sequence_indexes}")
         else:
             raise ValueError(f"incorrect sequence: {substring}")
-    except (FileNotFoundError, ValueError) as e:
-        if isinstance(e, FileNotFoundError):
-            sys.stderr.write(f'"{PI_FILENAME}" not available')
-        else:
-            sys.stderr.write(str(e))
+    except Exception as e:
+        sys.stderr.write(str(e))
         exit(1)
