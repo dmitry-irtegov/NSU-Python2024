@@ -9,7 +9,7 @@ def bottles_lyrics():
     numbers_lowercase = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
     def bottle_format(index):
-        return "bottle" if index == 1 else "bottles"
+        return "bottle" if index == 2 else "bottles"
 
     for i in range(10, 0, -1):
         if i == 1:
@@ -62,7 +62,7 @@ There'll be two green bottles hanging on the wall.
 Two green bottles hanging on the wall,
 Two green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
-There'll be one green bottles hanging on the wall.
+There'll be one green bottle hanging on the wall.
 One green bottle hanging on the wall,
 One green bottle hanging on the wall,
 If that one green bottle should accidentally fall
