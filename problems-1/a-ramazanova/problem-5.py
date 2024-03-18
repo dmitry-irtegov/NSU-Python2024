@@ -4,21 +4,24 @@ import unittest
 def prime_factorization(number):
     result = []
     primes = []
-    i = 1
-    while number != 1:
-        i += 1
+    i = 2
+    n = number
+    while i * i <= number and n != 1:
         f = True
         for prime in primes:
             if i % prime == 0:
                 f = False
                 break
-        if f and number % i == 0:
+        if f and n % i == 0:
             primes.append(i)
             step = [i, 0]
-            while number % i == 0:
+            while n % i == 0:
                 step[1] += 1
-                number //= i
+                n //= i
             result.append(step)
+        i += 1
+    if len(result) == 0:
+        result.append([number, 1])
     return result
 
 
@@ -57,6 +60,9 @@ class TestPrimeFactorization(unittest.TestCase):
         self.assertEqual(prime_factorization(19631060871031905047766960690917), [[2963, 1], [2969, 1], [2971, 1],
                                                                                  [2999, 1], [3001, 1], [3011, 1],
                                                                                  [3019, 1], [3023, 1], [3037, 1]])
+
+    def test_prime_factorization_20999999(self):
+        self.assertEqual(prime_factorization(20999999), [[20999999, 1]])
 
 
 if __name__ == '__main__':
