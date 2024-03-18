@@ -36,7 +36,7 @@ class TestFactorizeNumber(unittest.TestCase):
         self.assertEqual([[3, 4], [37, 1], [333667, 1]], factorize_number(999999999))
 
     def test_zero(self):
-        self.assertEqual([],factorize_number(0))
+        self.assertEqual([], factorize_number(0))
 
 
 if __name__ == '__main__':
