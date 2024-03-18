@@ -24,8 +24,8 @@ if __name__ == '__main__':
     args = init_parser().parse_args()
     try:
         files = get_files(args.path)
-    except OSError as e:
-        sys.stderr.write(e.strerror + '\n')
+    except Exception as e:
+        sys.stderr.write(str(e))
         exit(1)
     print(f"current directory: {args.path}")
     print(f"{'NAME':<50}  {'SIZE (in bytes)':<4}")
