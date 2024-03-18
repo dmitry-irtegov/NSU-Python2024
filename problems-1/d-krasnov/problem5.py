@@ -1,10 +1,14 @@
+import math
 import unittest
 
 
 def factorize_number(num):
     factors = []
     divisor = 2
-    while divisor * divisor <= num:
+
+    upper_bound = math.sqrt(num)
+
+    while divisor <= upper_bound:
         if num % divisor == 0:
             count = 0
             while num % divisor == 0:
