@@ -52,11 +52,11 @@ if __name__ == '__main__':
     latin_dictionary = None
     try:
         latin_dictionary = reverse_dictionary(input_file)
-    except OSError:
-        sys.stderr.write(f"Error reading file: {input_file}")
+    except Exception as e:
+        sys.stderr.write(str(e))
         exit(1)
     try:
         save_dictionary(latin_dictionary, output_file)
-    except OSError:
-        sys.stderr.write(f"Error writing file: {output_file}")
+    except Exception as e:
+        sys.stderr.write(str(e))
         exit(1)
