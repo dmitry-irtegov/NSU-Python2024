@@ -9,6 +9,8 @@ def prime_factorization(number):
     while i * i <= number and n != 1:
         f = True
         for prime in primes:
+            if prime*prime > i:
+                break
             if i % prime == 0:
                 f = False
                 break
