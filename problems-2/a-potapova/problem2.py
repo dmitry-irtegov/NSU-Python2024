@@ -1,4 +1,16 @@
+import argparse
 import sys
+
+
+def init_parser():
+    parser = argparse.ArgumentParser(description='Make alternative dictionary.')
+    parser.add_argument('--input', type=str,
+                        default='english-latin-dictionary.txt',
+                        help='path to input file')
+    parser.add_argument('--output', type=str,
+                        default='latin-english-dictionary.txt',
+                        help='path to output file')
+    return parser
 
 
 def parse_line(line: str):
@@ -34,8 +46,9 @@ def save_dictionary(dictionary: dict, output_filename: str):
 
 
 if __name__ == '__main__':
-    input_file = 'english-latin-dictionary.txt'
-    output_file = 'latin-english-dictionary.txt'
+    args = init_parser().parse_args()
+    input_file = args.input
+    output_file = args.output
     latin_dictionary = None
     try:
         latin_dictionary = reverse_dictionary(input_file)
