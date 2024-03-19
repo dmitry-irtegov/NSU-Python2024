@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import unittest
 from itertools import starmap
 from numbers import Number
@@ -15,7 +17,7 @@ class Vector:
         self._content = content
         self._iter_counter = 0
 
-    def __add__(self, other: 'Vector') -> 'Vector':
+    def __add__(self, other: Vector) -> Vector:
         if not isinstance(other, Vector):
             raise TypeError('other must be of type Vector')
         if len(self) != len(other):
@@ -23,14 +25,14 @@ class Vector:
 
         return Vector((*[first + second for first, second in zip(self._content, other._content)],))
 
-    def __sub__(self, other) -> 'Vector':
+    def __sub__(self, other) -> Vector:
         return self + (-other)
 
-    def __neg__(self) -> 'Vector':
+    def __neg__(self) -> Vector:
         # UncheckedWarning
         return Vector(tuple(-value for value in self._content))
 
-    def __mul__(self, constant: int) -> 'Vector':
+    def __mul__(self, constant: int) -> Vector:
         new_vector_content = list(self._content)
         for index in range(len(self)):
             new_vector_content[index] *= constant
@@ -66,7 +68,7 @@ class Vector:
         return (f"Number of dimensions: {len(self._content)}\n"
                 f"{'\n'.join(map(lambda value: str(value), self._content))}\n")
 
-    def scalar_product(self, other: 'Vector') -> 'Vector':
+    def scalar_product(self, other: Vector) -> Vector:
         if not isinstance(other, Vector):
             raise TypeError('other must be of type Vector')
         if len(self) != len(other):
