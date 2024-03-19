@@ -19,11 +19,11 @@ def find_substring(num):
 
 class TestFindSubstring(unittest.TestCase):
 
-    def test_first_example_seq(self):
+    def test_first_example_sequence(self):
         expected = (4185, [1923, 2937, 2975, 3891, 6547])
         self.assertTupleEqual(expected, find_substring("123"))
 
-    def test_second_example_seq(self):
+    def test_second_example_sequence(self):
         expected = (424, [0, 6954, 29135, 45233, 79686])
         self.assertTupleEqual(expected, find_substring("1415"))
 
