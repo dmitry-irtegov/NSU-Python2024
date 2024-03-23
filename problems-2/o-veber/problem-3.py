@@ -7,22 +7,19 @@ from sys import stderr
 def get_dir_elements():
     try:
         return listdir(directory_path)
-    except NotADirectoryError:
-        print(f"Trying to list files in directory with path {directory_path}, but found a file", file=stderr)
-    except FileNotFoundError:
-        print(f"Trying to open directory with path {directory_path}, but not found one with such name", file=stderr)
-    except PermissionError:
-        print(f"Trying to list files in directory with path {directory_path}, but does not have persmission to do this",
-              file=stderr)
+    except BaseException as e:
+        print(f"Trying to list files in directory with path {directory_path}, but catch exception:", e, file=stderr,
+              sep='\n')
     return {}
 
 
 def get_file_stat():
     try:
         return stat(path=element_absolute_path).st_size
-    except PermissionError:
-        print(f'Trying to stat information about file with path {element_absolute_path}, but dont have permission',
-              file=stderr)
+    except BaseException as e:
+        print(f'Trying to stat information about file with path {element_absolute_path}, but catch exception:', e,
+              file=stderr, sep='\n')
+    return -1
 
 
 if __name__ == "__main__":
@@ -39,4 +36,4 @@ if __name__ == "__main__":
         for file in sorted(file_stats.items(), key=lambda x: x[1], reverse=True):
             print(f'File with name=\"{file[0]}\" and size={file[1]}')
     except BaseException as e:
-        print("Unexpected exception", e, file=stderr)
+        print("Catch unexpected exception", e, file=stderr)
