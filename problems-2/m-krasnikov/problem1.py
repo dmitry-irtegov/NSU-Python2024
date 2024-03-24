@@ -1,13 +1,13 @@
 import unittest
+from math import sqrt
 
 
 def generate_pythagorean_triplets(number):
     return [
-        [x, y, z]
+        [x, y, sqrt(x ** 2 + y ** 2)]
         for x in range(1, number + 1)
         for y in range(x, number + 1)
-        for z in range(y, number + 1)
-        if x ** 2 + y ** 2 == z ** 2
+        if sqrt(x ** 2 + y ** 2) <= number and sqrt(x ** 2 + y ** 2) % 1 == 0
     ]
 
 
