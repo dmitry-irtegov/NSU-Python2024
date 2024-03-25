@@ -22,13 +22,13 @@ def read_dict_file(file_path):
                 input_dict[english] = latin_translations.split(', ')
         return input_dict
     except Exception as e:
-        print("Ошибка при открытии файла: ", e, file=sys.stderr)
+        print("Ошибка при чтении файла: ", e, file=sys.stderr)
         return {}
     
 def print_dict_to_file(some_dict, filename):
     sorted_dict = dict(sorted(some_dict.items()))
     try:
-        with open(filename, 'w') as file:
+        with open(filename, 'w', encoding='utf-8') as file:
             for english, latin_words in sorted_dict.items():
                 file.write(f"{english} - ")
                 for latin in latin_words[:-1]:
