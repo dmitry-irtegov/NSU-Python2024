@@ -31,7 +31,7 @@ class PrimeDivisorsTest(unittest.TestCase):
         self.assertEqual(prime_divisors(12), [[2, 2], [3, 1]])
 
     def test_performance(self):
-        prime_divisors(9310971384583411)
+        print(prime_divisors(453526297733342))
 
 
 if '__main__' == __name__:
