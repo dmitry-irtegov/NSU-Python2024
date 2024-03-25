@@ -5,9 +5,9 @@ def gen_pytha_triples(n):
     triples = []
     for x in range(1, n + 1):
         for y in range(x, n + 1):
-            z_square = x**2 + y**2
+            z_square = math.pow(x, 2) + math.pow(y, 2)
             z = int(math.sqrt(z_square))
-            if z <= n and z**2 == z_square:
+            if z <= n and math.pow(z, 2) == z_square:
                 triples.append((x, y, z))
     return triples
 
@@ -18,7 +18,8 @@ class TestPythagoreanTriples(unittest.TestCase):
             triples = gen_pytha_triples(n)
             for triple in triples:
                 x, y, z = triple
-                self.assertTrue(x**2 + y**2 == z**2, f"Triple {triple} is not a Pythagorean triple.")
+                self.assertTrue(math.pow(x, 2) + math.pow(y, 2) == math.pow(z, 2),
+                                f"Triple {triple} is not a Pythagorean triple.")
 
     def test_empty_case(self):
         # Testing with n = 1, where no Pythagorean triple exists
@@ -32,7 +33,8 @@ class TestPythagoreanTriples(unittest.TestCase):
         triples = gen_pytha_triples(n)
         for triple in triples:
             x, y, z = triple
-            self.assertTrue(x**2 + y**2 == z**2, f"Triple {triple} is not a Pythagorean triple.")
+            self.assertTrue(math.pow(x, 2) + math.pow(y, 2) == math.pow(z, 2),
+                            f"Triple {triple} is not a Pythagorean triple.")
 
 if __name__ == '__main__':
     unittest.main()
