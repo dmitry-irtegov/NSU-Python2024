@@ -4,7 +4,7 @@ from unittest import TestCase
 def collatz_conjecture_step(num):
     if num % 2 == 0:
         return num // 2
-    if num % 2 != 0:
+    else:
         return num * 3 + 1
 
 
