@@ -1,4 +1,5 @@
 from main import convert
+import os
 import unittest
 
 
@@ -10,6 +11,7 @@ class ConverterTestCase(unittest.TestCase):
             "resources/expected.txt", "r"
         ) as expected:
             self.assertEqual(res_file.readlines(), expected.readlines())
+        os.remove(res_name)
 
 
 if __name__ == "__main__":

@@ -32,11 +32,8 @@ def _write_dict(file: TextIOWrapper, d: LangDict):
 def convert(latengdictname: str, englatdictname: str):
     try:
         file = open(latengdictname, "r")
-    except FileNotFoundError:
-        print("File '{}' not found.".format(latengdictname), file=sys.stderr)
-        return
     except Exception as e:
-        print("Unidentified error has occured: {}".format(e), file=sys.stderr)
+        print(e, file=sys.stderr)
         return
 
     with file:
@@ -45,12 +42,7 @@ def convert(latengdictname: str, englatdictname: str):
     try:
         file = open(englatdictname, "w")
     except Exception as e:
-        print(
-            "Unidentified error has occured while opening file '{}' for writing: {}".format(
-                englatdictname, e
-            ),
-            file=sys.stderr,
-        )
+        print(e, file=sys.stderr)
         return
 
     with file:
