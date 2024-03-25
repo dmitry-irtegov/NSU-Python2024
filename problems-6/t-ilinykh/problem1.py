@@ -4,26 +4,32 @@ import random
 import sys
 
 def shuffle_letters(word):
-    letters = [char for char in word if char.isalpha()]
-    non_alpha = [char for char in word if not char.isalpha()]
-    if len(letters) <= 3:
+    if len(word) <= 3:
         return word
-    first_letter, *middle_letters, last_letter = letters
+    first_letter, *middle_letters, last_letter = word
     random.shuffle(middle_letters)
-    return ''.join([first_letter] + middle_letters + [last_letter]) + ''.join(non_alpha)
+    return first_letter + ''.join(middle_letters) + last_letter
 
 def sort_letters(word):
-    letters = [char for char in word if char.isalpha()]
-    non_alpha = [char for char in word if not char.isalpha()]
-    if len(letters) <= 3:
+    if len(word) <= 3:
         return word
-    first_letter, *middle_letters, last_letter = letters
-    middle_letters.sort()
-    return ''.join([first_letter] + middle_letters + [last_letter]) + ''.join(non_alpha)
+    return word[0] + ''.join(sorted(word[1:-1])) + word[-1]
 
 def transform_text(text, transformation):
-    transformed_words = [transformation(word) for word in text.split()]
-    return ' '.join(transformed_words)
+    words = []
+    current_word = []
+    for char in text:
+        if char.isalnum():
+            current_word.append(char)
+        else:
+            if current_word:
+                words.append(''.join(current_word))
+                current_word = []
+            words.append(char)
+    if current_word:
+        words.append(''.join(current_word))
+    transformed_words = [transformation(word) if word.isalpha() else word for word in words]
+    return ''.join(transformed_words)
 
 def main():
     sys.stdout.reconfigure(encoding='utf-8')
