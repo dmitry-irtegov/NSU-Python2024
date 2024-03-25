@@ -2,7 +2,7 @@ from sys import maxsize
 import unittest
 
 def cumulative_sum(seq):
-    result = [0 for i in range(0, len(seq) + 1)]
+    result = [0] * (len(seq) + 1)
     for i in range(0, len(seq) + 1):
         result[i] = sum(seq[0:i])
     return result
