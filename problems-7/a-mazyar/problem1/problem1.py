@@ -16,7 +16,7 @@ def is_wiki_normal(wiki_link: str) -> bool:
     return 'href' in wiki_link.attrs and wiki_link['href'].find("/wiki/") != -1
 
 def remove_parentheses(text: str) -> str:
-    return regex.sub("\(([^()]|(?R))*\)", "", text)
+    return regex.sub("(?![^<]*<\/a>)\(([^()]|(?R))*\)", "", text)
 
 def seek_philosopy(article: str) -> str:
     result = (article, )
@@ -39,7 +39,13 @@ def seek_philosopy(article: str) -> str:
         soup = BeautifulSoup(response.content, 'html.parser')
         
         link_found: bool = False
-        for paragraph in soup.find(id="mw-content-text").find_all("p"):
+
+        # Remove table elements
+        main_content = soup.find(id="mw-content-text")
+        if(main_content.table is not None):
+            main_content.table.decompose()
+
+        for paragraph in main_content.find_all("p"):
             # we create artificial paragraph where all parantheses and their contents were removed
             psoup = BeautifulSoup()
             p = psoup.new_tag('p')
@@ -69,4 +75,5 @@ def seek_philosopy(article: str) -> str:
     return result
 
 if __name__ == "__main__":
-    seek_philosopy("Tzimmes")
+    start_article = input()
+    seek_philosopy(start_article)
