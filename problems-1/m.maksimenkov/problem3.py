@@ -16,23 +16,29 @@ def collatz(num):
 
 class CollatzFuncTest(unittest.TestCase):
 
-    def mock_print(self, num, **kwargs):
-        if isinstance(num, int):
-            self.output.append(num)
-
-    def mocked_collatz(self, num):
+    def setUp(self):
         global print
         self.output = []
-        orig_print = print
-        print = self.mock_print
-        collatz(num)
-        print = orig_print
-        return self.output
+        def mock_print(num, **kwargs):
+            if isinstance(num, int):
+                self.output.append(num)
+        self.orig_print = print
+        print = mock_print
 
-    def test(self):
-        self.assertEqual(self.mocked_collatz(50),
+    def tearDown(self):
+        global print
+        print = self.orig_print
+
+    def test_even(self):
+        collatz(50)
+        self.assertEqual(self.output,
                          [50, 25, 76, 38, 19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26,
                           13, 40, 20, 10, 5, 16, 8, 4, 2, 1])
+    def test_odd(self):
+        collatz(21)
+        self.assertEqual(self.output,
+                         [21, 64, 32, 16, 8, 4, 2, 1])
+    def errors_test(self):
         with self.assertRaises(ValueError):
             collatz(0)
         with self.assertRaises(ValueError):
