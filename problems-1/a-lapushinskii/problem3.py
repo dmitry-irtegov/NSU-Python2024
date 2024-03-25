@@ -10,14 +10,12 @@ def collatz_row(n):
         yield n
 
 def print_row_string(generator):
-    row = list(generator)
-    for i in row[:-1]:
+    for i in generator:
+        if (i <= 1):
+            print(1)
+            break
         print(str(i), end = " -> ")
-    if row:
-        print(row[-1])
     
-n = int(input())
-print_row_string(collatz_row(n))
 
 ###
     
@@ -28,6 +26,16 @@ class TestCollatzRow(unittest.TestCase):
         self.assertEqual(list(collatz_row(4)), [4, 2, 1])
     def test_minus(self):
         self.assertEqual(list(collatz_row(-1)), [-1])
+    def test_gen(self):
+        gen = collatz_row(4)
+        self.assertEqual(next(gen), 4)
+        self.assertEqual(next(gen), 2)
+        self.assertEqual(next(gen), 1)
+        try :
+            next(gen)
+            self.assertEqual(1, 2)
+        except Exception as e:
+            return
 
 if __name__ == '__main__':
     unittest.main()
