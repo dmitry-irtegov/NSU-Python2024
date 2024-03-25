@@ -10,32 +10,32 @@ class TranslatorTests(unittest.TestCase):
 
     def test_creation_typeerror(self):
         with self.assertRaises(TypeError):
-            tr = Translator(1, 'b', 'c')
+            _ = Translator(1, 'b', 'c')
 
         with self.assertRaises(TypeError):
-            tr = Translator('a', None, 'c')
+            _ = Translator('a', None, 'c')
 
         with self.assertRaises(TypeError):
-            tr = Translator('a', 'b', ['a', 'b'])
+            _ = Translator('a', 'b', ['a', 'b'])
 
         with self.assertRaises(TypeError):
-            tr = Translator(b'abc', 'b', 'c')
+            _ = Translator(b'abc', 'b', 'c')
 
     
     def test_creation_invalid_sizes(self):
         with self.assertRaises(DifferentAlphabetLengthsException):
-            tr = Translator('abc', 'de')
+            _ = Translator('abc', 'de')
 
         with self.assertRaises(DifferentAlphabetLengthsException):
-            tr = Translator('abc', 'defg')
+            _ = Translator('abc', 'defg')
 
 
     def test_creation_duplicates(self):
         with self.assertRaises(InvalidAlphabetException):
-            tr = Translator('abb', 'def')
+            _ = Translator('abb', 'def')
 
         with self.assertRaises(InvalidAlphabetException):
-            tr = Translator('abc', 'def', tr_remove_alphabet='bb')
+            _ = Translator('abc', 'def', tr_remove_alphabet='bb')
 
     
     def test_translate_typeerror(self):
