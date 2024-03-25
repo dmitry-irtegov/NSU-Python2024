@@ -25,6 +25,7 @@ class BottleSongTest(unittest.TestCase):
         print = mock_print
 
     def tearDown(self):
+        global print
         print = self.orig_print
 
     def test(self):
