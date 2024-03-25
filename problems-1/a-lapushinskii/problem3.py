@@ -34,7 +34,7 @@ class TestCollatzRow(unittest.TestCase):
         try :
             next(gen)
             self.assertEqual(1, 2)
-        except Exception as e:
+        except Exception:
             return
 
 if __name__ == '__main__':
