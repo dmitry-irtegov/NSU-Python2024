@@ -1,13 +1,5 @@
 import unittest
 
-orig_print = print
-song = []
-s = ""
-def mock_print(string, **kwargs):
-    song.append(string)
-
-print = mock_print
-
 def sing_the_song():
 
     green = "green"
@@ -17,20 +9,27 @@ def sing_the_song():
     templ_will = "There’ll be"
     amounts = ["ten", "nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "no"]
     for i in range(10):
-        print("{} {} {} {},".format(amounts[i].capitalize(), green, bottle if i == 9 else bottle + "s", templ_wall))
-        print("{} {} {} {},".format(amounts[i].capitalize(), green, bottle if i == 9 else bottle + "s", templ_wall))
-        print("{} {} {} {} {},".format("And if", amounts[9], green, bottle, templ_fall))
-        print("{} {} {} {} {}.".format(templ_will, amounts[i+1], green, bottle if i + 1 == 9 else bottle + "s", templ_wall))
-
-sing_the_song()
-
-print = orig_print
-song = "\n".join(song)
+        print(f"{amounts[i].capitalize()} {green} {bottle if i == 9 else bottle + 's'} {templ_wall},")
+        print(f"{amounts[i].capitalize()} {green} {bottle if i == 9 else bottle + 's'} {templ_wall},")
+        print(f"And if {amounts[9]} {green} {bottle} {templ_fall},")
+        print(f"{templ_will} {amounts[i+1]} {green} {bottle if i + 1 == 9 else bottle + 's'} {templ_wall}.")
 
 class BottleSongTest(unittest.TestCase):
 
+    def setUp(self):
+        global print
+        self.orig_print = print
+        self.song = []
+        def mock_print(string, **kwargs):
+            self.song.append(string)
+        print = mock_print
+
+    def tearDown(self):
+        print = self.orig_print
+
     def test(self):
-        self.assertEqual(song,
+        sing_the_song()
+        self.assertEqual("\n".join(self.song),
 """Ten green bottles hanging on the wall,
 Ten green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
