@@ -53,10 +53,10 @@ if __name__ == '__main__':
     try:
         latin_dictionary = reverse_dictionary(input_file)
     except Exception as e:
-        sys.stderr.write(str(e))
+        sys.stderr.write(f"Error while reversing dictionary: {str(e)}")
         exit(1)
     try:
         save_dictionary(latin_dictionary, output_file)
     except Exception as e:
-        sys.stderr.write(str(e))
+        sys.stderr.write(f"Error while saving dictionary: {str(e)}")
         exit(1)
