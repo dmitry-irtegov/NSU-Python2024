@@ -4,24 +4,29 @@ import unittest
 class CartesianProductElement():
     _set: tuple
     _n: int
+    _ids: list[int]
     _current_item_id: int
     _next_item_id: int
-    _state: tuple
 
-    def __init__(self, init_set: tuple, n: int, start_subset: tuple = (None,)) -> None:
+    def __init__(self, init_set: tuple, n: int, state_ids: list[int] = [None]) -> None:
         self._set = init_set
         self._n = n
-        self._current_item_id = 0
-        self._next_item_id = 1
         self._first = self._set[0]
         self._last = self._set[-1]
-        if start_subset != (None,):
-            self._state = start_subset
+        self._current_item_id = 0
+        self._next_item_id = 1
+
+        if state_ids != None:
+            self._ids = state_ids
         else:
-            self._state = tuple([self._first] * n)
+            self._ids = [0] * n
 
     def next_subset(self) -> Self:
-        next_state = list(self._state)
+        next_ids = self._ids.copy()
+        next_ids[self._current_item_id] += 1
+        if next_ids[self._current_item_id] == self._n - 1:
+            self._current_item_id = self._next_item_id
+
         next_item = self._set[self._next_item_id]
         next_state[self._current_item_id] = next_item
         next_state = tuple(next_state)
