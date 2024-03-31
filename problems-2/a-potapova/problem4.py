@@ -28,12 +28,13 @@ def search_sequence(sequence: str):
 if __name__ == "__main__":
     try:
         substring = input("Enter sequence to search for.\n> ")
-        if substring.isdigit():
+        while True:
             sequence_indexes = search_sequence(substring)
             print(f"Found {len(sequence_indexes)} results")
             print(f"Positions: {sequence_indexes}")
-        else:
-            raise ValueError(f"incorrect sequence: {substring}")
+            substring = input("Enter sequence to search for.\n> ")
+    except EOFError as e:
+        exit(0)
     except Exception as e:
-        sys.stderr.write(str(e))
+        sys.stderr.write(f"Error while searching sequence \"{substring}\": {str(e)}")
         exit(1)
