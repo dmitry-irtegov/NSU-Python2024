@@ -1,25 +1,43 @@
 from unittest import TestCase
 
 
-def collatz_conjecture_step(num):
-    if num % 2 == 0:
-        return num // 2
-    else:
-        return num * 3 + 1
-
-
 def collatz_conjecture(num):
-    collatz_string = '' + str(num) + '->'
-    cur_num = num
-    while cur_num != 1:
-        cur_num = collatz_conjecture_step(cur_num)
-        collatz_string += str(cur_num)
-        if cur_num != 1:
-            collatz_string += '->'
-    return collatz_string
+    yield num
+    while num != 1:
+        num = num // 2 if num % 2 == 0 else num * 3 + 1
+        yield num
+
+
+def collatz_conjecture_list(num):
+    return list(collatz_conjecture(num))
+
+
+def format_collatz_list(collatz_list):
+    return '->'.join(str(num) for num in collatz_list)
 
 
 class TestProblem(TestCase):
     def test_default(self):
+        expected_list = [3, 10, 5, 16, 8, 4, 2, 1]
+        self.assertEqual(expected_list, collatz_conjecture_list(3))
+
+    def test_formatted_output(self):
+        collatz_list = collatz_conjecture_list(3)
         expected_string = "3->10->5->16->8->4->2->1"
-        self.assertEqual(expected_string, collatz_conjecture(3))
+        self.assertEqual(expected_string, format_collatz_list(collatz_list))
+
+    def test_one(self):
+        expected_list = [1]
+        self.assertEqual(expected_list, collatz_conjecture_list(1))
+
+    def test_even_number(self):
+        expected_list = [6, 3, 10, 5, 16, 8, 4, 2, 1]
+        self.assertEqual(expected_list, collatz_conjecture_list(6))
+
+    def test_odd_number(self):
+        expected_list = [7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
+        self.assertEqual(expected_list, collatz_conjecture_list(7))
+
+    def test_large_number(self):
+        collatz_list = collatz_conjecture_list(1000000)
+        self.assertEqual(1, collatz_list[-1])
