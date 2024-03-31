@@ -10,7 +10,7 @@ def init_parser():
     return parser
 
 
-def get_files(directory_path: str):
+def get_files(directory_path: str) -> list:
     filenames = os.listdir(directory_path)
     directory_files = [None] * len(filenames)
     for i, filename in enumerate(filenames):
@@ -29,9 +29,9 @@ if __name__ == '__main__':
     try:
         files = get_files(args.path)
     except Exception as e:
-        sys.stderr.write(f"Error while {str(e)}")
+        sys.stderr.write(f"Error while getting files info: {str(e)}")
         exit(1)
-    print(f"current directory: {args.path}")
+    print(f"Current directory: {args.path}")
     print(f"{'NAME':<50}  {'SIZE (in bytes)':<4}")
     for file in files:
         filename, size = file
