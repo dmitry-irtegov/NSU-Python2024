@@ -33,7 +33,7 @@ if __name__ == "__main__":
             print(f"Found {len(sequence_indexes)} results")
             print(f"Positions: {sequence_indexes}")
             substring = input("Enter sequence to search for.\n> ")
-    except EOFError as e:
+    except EOFError:
         exit(0)
     except Exception as e:
         sys.stderr.write(f"Error while searching sequence \"{substring}\": {str(e)}")
