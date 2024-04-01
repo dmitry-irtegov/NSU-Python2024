@@ -1,7 +1,7 @@
 import argparse
 
 
-def translate(input_string: str, translate_from: str, translate_to: str, delete: str) -> str:
+def translate(input_string, translate_from, translate_to, delete):
     if len(translate_from) != len(translate_to):
         raise ValueError("Количество символов в строках замены не совпадает ")
     translate_table = {}
