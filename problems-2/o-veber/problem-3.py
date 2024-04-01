@@ -7,19 +7,15 @@ from sys import stderr
 def get_dir_elements():
     try:
         return listdir(directory_path)
-    except BaseException as e:
-        print(f"Trying to list files in directory with path {directory_path}, but catch exception:", e, file=stderr,
-              sep='\n')
-    return {}
+    except Exception as err:
+        raise ValueError("Trying to list files, but caught:", err.args) from err
 
 
 def get_file_stat():
     try:
         return stat(path=element_absolute_path).st_size
-    except BaseException as e:
-        print(f'Trying to stat information about file with path {element_absolute_path}, but catch exception:', e,
-              file=stderr, sep='\n')
-    return -1
+    except Exception:
+        return -1
 
 
 if __name__ == "__main__":
