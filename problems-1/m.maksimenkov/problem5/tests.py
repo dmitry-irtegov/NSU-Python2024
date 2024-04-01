@@ -3,6 +3,7 @@ import problem5_Eratosthenes
 import unittest
 import time
 
+
 class PerformanceCompetition(unittest.TestCase):
 
     def test_correctness(self):
@@ -18,6 +19,7 @@ class PerformanceCompetition(unittest.TestCase):
         self.assertEqual(problem5.prime_divisors(562), [[2, 1], [281, 1]])
         self.assertEqual(problem5_Eratosthenes.sieve_of_eratosthenes(12), [[2, 2], [3, 1]])
         self.assertEqual(problem5.prime_divisors(12), [[2, 2], [3, 1]])
+
     def test_small_value(self):
         start_time = time.time()
         res_simple = problem5.prime_divisors(53134932)
@@ -42,6 +44,15 @@ class PerformanceCompetition(unittest.TestCase):
         print(f"Simple algorithm time: {time.time() - start_time}")
         start_time = time.time()
         res_erato = problem5_Eratosthenes.sieve_of_eratosthenes(421542465436754)
+        print(f"Eratosthenes sieve time: {time.time() - start_time}")
+        self.assertEqual(res_simple, res_erato)
+
+    def test_simple_value(self):
+        start_time = time.time()
+        res_simple = problem5.prime_divisors(14142133)
+        print(f"Simple algorithm time: {time.time() - start_time}")
+        start_time = time.time()
+        res_erato = problem5_Eratosthenes.sieve_of_eratosthenes(14142133)
         print(f"Eratosthenes sieve time: {time.time() - start_time}")
         self.assertEqual(res_simple, res_erato)
 
