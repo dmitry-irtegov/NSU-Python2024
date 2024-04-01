@@ -10,6 +10,8 @@ def sieve_of_eratosthenes(num):
     sieve_size = round(math.sqrt(num)) + 1
     sieve = [0] * sieve_size
     for divisor in range(2, sieve_size):
+        if num == 1:
+            return result
         if sieve[divisor] == 0:
             if num % divisor == 0:
                 degree = 0
