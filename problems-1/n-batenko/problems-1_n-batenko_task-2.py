@@ -1,7 +1,7 @@
 import unittest
 
 def substitution_function(seq, a, b):
-    result = [0] * (len(seq))
+    result = [0] * (len(seq) + 1)
     if a > b:
         raise Exception('Lower bound is higher than Higher bound.')
     
