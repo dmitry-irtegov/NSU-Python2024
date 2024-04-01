@@ -1,28 +1,22 @@
 #!/usr/bin/env python3
 import unittest
 
-class _ReadOnlyDict:
-    def __init__(self):
-        self._dict = dict()
 
+class _StorageTransaction:
+    def __init__(self, merge_func, storage_dict_copy):
+        self.__merge_func = merge_func
+        self.__dict = storage_dict_copy
 
     def __getitem__(self, key):
-        return self._dict[key]
-
-
-class _StorageTransaction(_ReadOnlyDict):
-    def __init__(self, src_storage):
-        _ReadOnlyDict.__init__(self)
-        self.__src_storage = src_storage
-        self._dict |= src_storage._dict
+        return self.__dict[key]
 
 
     def __setitem__(self, key, value):
-        self._dict[key] = value
+        self.__dict[key] = value
 
 
     def __delitem__(self, key):
-        del self._dict[key]
+        del self.__dict[key]
 
 
     def __enter__(self):
@@ -30,23 +24,35 @@ class _StorageTransaction(_ReadOnlyDict):
 
 
     def __exit__(self, exception_type, exception_value, traceback):
-        self.__src_storage._ongoing_transaction = False
         if exception_type is None:
-            self.__src_storage._dict = self._dict
+            self.__merge_func(self.__dict)
+        else:
+            self.__merge_func(None)
 
 
-class Storage(_ReadOnlyDict):
+class Storage:
     def __init__(self):
-        _ReadOnlyDict.__init__(self)
+        self.__dict = dict()
         self._ongoing_transaction = False
+
+
+    def __getitem__(self, key):
+        return self.__dict[key]
+
+
+    def _merge(self, new_dict=None):
+        self._ongoing_transaction = False
+        if new_dict is not None:
+            self.__dict = new_dict
 
 
     def edit(self):
         if not self._ongoing_transaction:
             self._ongoing_transaction = True
-            return _StorageTransaction(self)
+            return _StorageTransaction(lambda new_dict: self._merge(new_dict), self.__dict.copy())
         else:
             raise RuntimeError('some transaction is already in progress')
+
 
 
 class StorageTransactionsTests(unittest.TestCase):
