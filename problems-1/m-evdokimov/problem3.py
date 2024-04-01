@@ -26,6 +26,7 @@ class TestTheory(unittest.TestCase):
         test_output.clear()
         
     def tearDown(self):
+        global print
         print = self.orig_print
   
     def test_5(self):
