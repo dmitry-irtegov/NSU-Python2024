@@ -5,14 +5,12 @@ from typing import Tuple, Any, Self
 
 class Vector:
     _content: Tuple
-    _iter_counter: int
 
     def __init__(self, content: Tuple):
         if not all(map(lambda value: isinstance(value, Number), content)):
             raise TypeError("content must be a list of values that inherit from Number")
 
         self._content = content
-        self._iter_counter = 0
 
     def __add__(self, other: Self) -> Self:
         if len(self) != len(other):
