@@ -34,9 +34,7 @@ def reverse_dictionary(input_filename: str):
 
 def save_dictionary(dictionary: dict, output_filename: str):
     with open(output_filename, 'w') as file:
-        keys = list(dictionary.keys())
-        keys.sort()
-        for key in keys:
+        for key in sorted(dictionary.keys()):
             file.write(key + " - ")
             for i, word in enumerate(sorted(dictionary[key])):
                 if i != 0:
