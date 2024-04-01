@@ -13,6 +13,8 @@ def into_prime_numbers(number: int) -> list:
         if power > 0:
             result.append([divisor, power])
             power = 0
+        if current_number == 1:
+            return result
     if current_number != 1:
         result.append([current_number, 1])
     return result
