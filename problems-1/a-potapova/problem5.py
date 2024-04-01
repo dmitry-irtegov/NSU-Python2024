@@ -6,7 +6,7 @@ def into_prime_numbers(number: int) -> list:
     result = []
     current_number = number
     power = 0
-    for divisor in range(2, int(math.sqrt(number))+1):
+    for divisor in range(2, int(math.sqrt(number)) + 1):
         while current_number % divisor == 0:
             current_number = current_number // divisor
             power += 1
@@ -24,6 +24,8 @@ class TestIntoPrimeNumbers(unittest.TestCase):
         self.assertEqual(into_prime_numbers(9), [[3, 2]])
         self.assertEqual(into_prime_numbers(21), [[3, 1], [7, 1]])
         self.assertEqual(into_prime_numbers(31), [[31, 1]])
+        big_prime_number = int(math.pow(2, 31) - 1)
+        self.assertEqual(into_prime_numbers(big_prime_number), [[big_prime_number, 1]])
 
 
 if __name__ == '__main__':
