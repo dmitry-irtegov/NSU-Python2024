@@ -4,10 +4,7 @@ import math
 class Vector:
 
     def __init__(self, args):
-        if len(args) == 0:
-            self.values = (0, 0)
-        else:
-            self.values = args
+        self.values = args
         self.size = len(args)
 
     def __add__(self, other):
