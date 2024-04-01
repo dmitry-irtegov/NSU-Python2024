@@ -1,31 +1,31 @@
 import unittest
 from numbers import Number
-from typing import Tuple, Any, Self
+from typing import Tuple, Any, Self, Iterable
 
 
 class Vector:
     _content: Tuple
 
-    def __init__(self, content: Tuple):
+    def __init__(self, content: Iterable):
         if not all(map(lambda value: isinstance(value, Number), content)):
             raise TypeError("content must be a list of values that inherit from Number")
 
-        self._content = content
+        self._content = tuple(content)
 
     def __add__(self, other: Self) -> Self:
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        return type(self)(tuple(first + second for first, second in zip(self._content, other._content)))
+        return type(self)(first + second for first, second in zip(self._content, other._content))
 
     def __sub__(self, other: Self) -> Self:
         return self + (-other)
 
     def __neg__(self) -> Self:
-        return type(self)(tuple(-value for value in self._content))
+        return type(self)(-value for value in self._content)
 
     def __mul__(self, constant: int) -> Self:
-        return type(self)(tuple(content * constant for content in self._content))
+        return type(self)(content * constant for content in self._content)
 
     def __next__(self):
         length = len(self)
@@ -58,7 +58,7 @@ class Vector:
             raise ValueError('Vectors dimensions must be equal')
 
         return type(self)(
-            tuple(this_content * other_content for this_content, other_content in zip(self._content, other._content)))
+            this_content * other_content for this_content, other_content in zip(self._content, other._content))
 
 
 class TestVector(unittest.TestCase):
