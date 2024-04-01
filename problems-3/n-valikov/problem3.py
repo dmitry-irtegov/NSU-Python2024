@@ -1,11 +1,9 @@
 import unittest
 from numbers import Number
-from typing import Tuple, Any
+from typing import Tuple, Any, Self
 
 
 class Vector:
-    type Vector = Vector
-
     _content: Tuple
     _iter_counter: int
 
@@ -16,19 +14,19 @@ class Vector:
         self._content = content
         self._iter_counter = 0
 
-    def __add__(self, other: Vector) -> Vector:
+    def __add__(self, other: Vector) -> Self:
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
         return Vector(tuple(first + second for first, second in zip(self._content, other._content)))
 
-    def __sub__(self, other) -> Vector:
+    def __sub__(self, other) -> Self:
         return self + (-other)
 
-    def __neg__(self) -> Vector:
+    def __neg__(self) -> Self:
         return Vector(tuple(-value for value in self._content))
 
-    def __mul__(self, constant: int) -> Vector:
+    def __mul__(self, constant: int) -> Self:
         return Vector(tuple(content * constant for content in self._content))
 
     def __next__(self):
@@ -57,7 +55,7 @@ class Vector:
         return (f"Number of dimensions: {len(self._content)}\n"
                 f"{'\n'.join(map(lambda value: str(value), self._content))}\n")
 
-    def scalar_product(self, other: Vector) -> Vector:
+    def scalar_product(self, other: Vector) -> Self:
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
