@@ -1,11 +1,11 @@
-from __future__ import annotations
-
 import unittest
 from numbers import Number
 from typing import Tuple, Any
 
 
 class Vector:
+    type Vector = Vector
+
     _content: Tuple
     _iter_counter: int
 
