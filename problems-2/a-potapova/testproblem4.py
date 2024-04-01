@@ -14,6 +14,13 @@ class TestSearchSequence(unittest.TestCase):
         self.assertEqual(indexes[0], 0)
         self.assertEqual(indexes[1], 6954)
         self.assertEqual(indexes[2], 29135)
+
+    def test_search_sequence_at_last_block(self):
+        indexes = search_sequence("1350")
+        self.assertEqual(len(indexes), 429)
+        self.assertEqual(indexes[428], 4194299)
+
+    def test_search_big_sequence(self):
         indexes = search_sequence("17450284102701938521105559644622948954930381964428810975665933446128475648233786783")
         self.assertEqual(len(indexes), 1)
         self.assertEqual(indexes[0], 154)

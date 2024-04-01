@@ -15,14 +15,18 @@ def search_sequence(sequence: str):
             block = block + line.strip("\n")
             if len(block) < block_size:
                 continue
-            index = block.find(sequence)
-            while index != -1:
-                indexes.append(block_index + index - 2)
-                index = block.find(sequence, index + 1, len(block))
-
+            find_sequence_in_block(block, sequence, block_index, indexes)
             block_index += len(block) - offset
             block = block[-offset:]
+        find_sequence_in_block(block, sequence, block_index, indexes)
     return indexes
+
+
+def find_sequence_in_block(block, sequence, block_index, indexes):
+    index = block.find(sequence)
+    while index != -1:
+        indexes.append(block_index + index - 2)
+        index = block.find(sequence, index + 1, len(block))
 
 
 if __name__ == "__main__":
