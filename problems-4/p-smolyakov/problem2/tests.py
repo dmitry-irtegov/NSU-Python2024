@@ -56,5 +56,27 @@ class TranslatorTests(unittest.TestCase):
         self.assertEqual(tr.translate('ad' * 100), '')
 
 
+    def test_removal_no_translating(self):
+        tr = Translator('', '', 'ad')
+        self.assertEqual(tr.translate('abcd'), 'bc')
+        self.assertEqual(tr.translate('ad' * 100), '')
+        self.assertEqual(tr.translate('qwe'), 'qwe')
+
+
+
+    def test_no_changes_at_all(self):
+        tr = Translator('abc', 'qwe')
+        self.assertEqual(tr.translate('qqwwee'), 'qqwwee')
+        self.assertEqual(tr.translate(''), '')
+
+
+    def test_meaningful(self):
+        tr = Translator('', '')
+        self.assertEqual(tr.translate(''), '')
+        
+
+
+
+
 if __name__ == '__main__':
     unittest.main()
