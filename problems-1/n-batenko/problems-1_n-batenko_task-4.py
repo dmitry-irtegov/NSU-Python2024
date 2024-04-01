@@ -6,28 +6,31 @@ def green_bottles():
     green_bottle = " green bottle"
     comma = ",\n"
     dot = ".\n"
-    filler1 = " hanging on the wall"
-    filler2_1 = "And if " 
-    filler2_2 = green_bottle + " should accidentally fall"
-    filler3_1 = "There'll be "
-    filler4_1 = "If that "
+    hanging_on_the_wall = " hanging on the wall"
+    and_if = "And if " 
+    green_bottle_should_accidentally_fall = green_bottle + " should accidentally fall"
+    threre_ll_be = "There'll be "
+    if_that = "If that "
 
     for i in range(len(numbers) - 1):
-        if (i == (len(numbers) - 2)):
-            result += numbers[i].title() + green_bottle + filler1 + comma
-            result += numbers[i].title() + green_bottle + filler1 + comma
-        else:
-            result += numbers[i].title() + green_bottle + 's' + filler1 + comma
-            result += numbers[i].title() + green_bottle + 's' + filler1 + comma
+        for _ in range(2):
+            result += numbers[i].title() + green_bottle
+            
+            if (i != (len(numbers) - 2)):
+                result += "s"
+                
+            result += hanging_on_the_wall + comma
 
         if (i == (len(numbers) - 2)):
-            result += filler4_1 + numbers[-2] + filler2_2
+            result += if_that
         else:    
-            result += filler2_1 + numbers[-2] + filler2_2
+            result += and_if
+
+        result += numbers[-2] + green_bottle_should_accidentally_fall
 
         result += comma
 
-        result += filler3_1 + numbers[i + 1] + green_bottle + 's' + filler1 + dot
+        result += threre_ll_be + numbers[i + 1] + green_bottle + 's' + hanging_on_the_wall + dot
 
     return result
 
