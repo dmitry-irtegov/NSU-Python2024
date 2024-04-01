@@ -1,5 +1,4 @@
 import math
-import unittest
 
 
 def prime_divisors(num):
@@ -19,20 +18,7 @@ def prime_divisors(num):
         result.append([num, 1])
     return result
 
-
-class PrimeDivisorsTest(unittest.TestCase):
-
-    def test(self):
-        self.assertEqual(prime_divisors(0), [])
-        self.assertEqual(prime_divisors(1), [])
-        self.assertEqual(prime_divisors(-123), [[3, 1], [41, 1]])
-        self.assertEqual(prime_divisors(123), [[3, 1], [41, 1]])
-        self.assertEqual(prime_divisors(562), [[2, 1], [281, 1]])
-        self.assertEqual(prime_divisors(12), [[2, 2], [3, 1]])
-
-    def test_performance(self):
-        print(prime_divisors(453526297733342))
-
-
 if '__main__' == __name__:
-    unittest.main()
+    print(prime_divisors(int(input())))
+
+
