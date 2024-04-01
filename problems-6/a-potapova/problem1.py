@@ -3,7 +3,6 @@ import enum
 import random
 import re
 import sys
-from io import TextIOWrapper
 
 
 class Mode(enum.Enum):
