@@ -1,4 +1,3 @@
-from typing import Self
 import unittest
 
 class n_ary_digit():
