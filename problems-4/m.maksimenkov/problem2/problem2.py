@@ -18,10 +18,10 @@ def translate(input_string, translate_from, translate_to, delete):
 
 def main():
     parser = argparse.ArgumentParser(description='Изменяет заданные символы файла на другие символы')
-    parser.add_argument('string')
-    parser.add_argument('translate_from')
-    parser.add_argument('translate_to')
-    parser.add_argument('-d', '--delete')
+    parser.add_argument('string', type=str)
+    parser.add_argument('translate_from', type=str)
+    parser.add_argument('translate_to', type=str)
+    parser.add_argument('-d', '--delete', type=str)
     args = parser.parse_args()
     translate(args.string, args.translate_from, args.translate_to, args.delete)
 
