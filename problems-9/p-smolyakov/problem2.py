@@ -3,9 +3,11 @@ import unittest
 
 
 class _StorageTransaction:
-    def __init__(self, merge_func, storage_dict_copy):
-        self.__merge_func = merge_func
+    def __init__(self, commit_func, rollback_func, storage_dict_copy):
+        self.__commit_func = commit_func
+        self.__rollback_func = rollback_func
         self.__dict = storage_dict_copy
+
 
     def __getitem__(self, key):
         return self.__dict[key]
@@ -25,31 +27,38 @@ class _StorageTransaction:
 
     def __exit__(self, exception_type, exception_value, traceback):
         if exception_type is None:
-            self.__merge_func(self.__dict)
+            self.__commit_func(self.__dict)
         else:
-            self.__merge_func(None)
+            self.__rollback_func()
 
 
 class Storage:
     def __init__(self):
         self.__dict = dict()
-        self._ongoing_transaction = False
+        self.__ongoing_transaction = False
 
 
     def __getitem__(self, key):
         return self.__dict[key]
 
 
-    def _merge(self, new_dict=None):
-        self._ongoing_transaction = False
-        if new_dict is not None:
+    def _commit_func(self, new_dict):
+        def commit(self, new_dict):
+            self.__ongoing_transaction = False
             self.__dict = new_dict
+        return lambda new_dict: commit(self, new_dict)
+        
+
+    def _rollback_func(self):
+        def rollback(self):
+            self.__ongoing_transaction = False
+        return rollback
 
 
     def edit(self):
-        if not self._ongoing_transaction:
-            self._ongoing_transaction = True
-            return _StorageTransaction(lambda new_dict: self._merge(new_dict), self.__dict.copy())
+        if not self.__ongoing_transaction:
+            self.__ongoing_transaction = True
+            return _StorageTransaction(_commit_func, _rollback_func, self.__dict.copy())
         else:
             raise RuntimeError('some transaction is already in progress')
 
