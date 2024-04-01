@@ -18,24 +18,27 @@ def theory(a):
 
 
 class TestTheory(unittest.TestCase):
+    
+    def setUp(self):
+        global print
+        self.orig_print = print
+        print = custom_print
+        test_output.clear()
+        
+    def tearDown(self):
+        print = self.orig_print
   
     def test_5(self):
-        test_output.clear()
         theory(5)
         self.assertEqual(test_output, [5, 16, 8, 4, 2, 1])
     
     def test_1(self):
-        test_output.clear()
         theory(1)
         self.assertEqual(test_output, [1])
         
     def test_10(self):
-        test_output.clear()
         theory(10)
         self.assertEqual(test_output, [10, 5, 16, 8, 4, 2, 1])
   
 if __name__ == "__main__":
-    orig_print = print
-    print = custom_print
     unittest.main()
-    print = orig_print
