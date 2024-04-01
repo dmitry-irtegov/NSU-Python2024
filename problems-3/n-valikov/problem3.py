@@ -22,7 +22,7 @@ class Vector:
 
         return Vector(tuple(first + second for first, second in zip(self._content, other._content)))
 
-    def __sub__(self, other) -> Vector:
+    def __sub__(self, other: Vector) -> Vector:
         return self + (-other)
 
     def __neg__(self) -> Vector:
