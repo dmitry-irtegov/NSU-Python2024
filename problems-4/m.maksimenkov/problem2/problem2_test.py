@@ -19,5 +19,8 @@ class TranslateSymbolsTest(unittest.TestCase):
     def testEmptyInput(self):
         self.assertEqual(tr.translate("", "ab", "ab", "a"), "")
 
+    def testWithoutTranslate(self):
+        self.assertEqual(tr.translate("fdfdre", "ab", "ba", "a"), "fdfdre")
+
 
 
