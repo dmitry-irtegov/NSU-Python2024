@@ -42,15 +42,15 @@ class Storage:
         return self.__dict[key]
 
 
-    def _commit_func(self, new_dict):
-        def commit(self, new_dict):
+    def _commit_func(self):
+        def commit(new_dict):
             self.__ongoing_transaction = False
             self.__dict = new_dict
-        return lambda new_dict: commit(self, new_dict)
+        return commit
         
 
     def _rollback_func(self):
-        def rollback(self):
+        def rollback():
             self.__ongoing_transaction = False
         return rollback
 
@@ -58,7 +58,7 @@ class Storage:
     def edit(self):
         if not self.__ongoing_transaction:
             self.__ongoing_transaction = True
-            return _StorageTransaction(_commit_func, _rollback_func, self.__dict.copy())
+            return _StorageTransaction(self._commit_func(), self._rollback_func(), self.__dict.copy())
         else:
             raise RuntimeError('some transaction is already in progress')
 
