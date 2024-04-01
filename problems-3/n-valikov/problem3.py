@@ -20,7 +20,7 @@ class Vector:
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        return Vector((*[first + second for first, second in zip(self._content, other._content)],))
+        return Vector(tuple(first + second for first, second in zip(self._content, other._content)))
 
     def __sub__(self, other) -> Vector:
         return self + (-other)
@@ -29,11 +29,7 @@ class Vector:
         return Vector(tuple(-value for value in self._content))
 
     def __mul__(self, constant: int) -> Vector:
-        new_vector_content = list(self._content)
-        for index in range(len(self)):
-            new_vector_content[index] *= constant
-
-        return Vector((*new_vector_content,))
+        return Vector(tuple(content * constant for content in self._content))
 
     def __next__(self):
         length = len(self)
@@ -65,12 +61,8 @@ class Vector:
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        new_vector_content = list(self._content)
-
-        for index, value in enumerate(other._content):
-            new_vector_content[index] *= value
-
-        return Vector(tuple(new_vector_content))
+        return Vector(
+            tuple(this_content * other_content for this_content, other_content in zip(self._content, other._content)))
 
 
 class TestVector(unittest.TestCase):
