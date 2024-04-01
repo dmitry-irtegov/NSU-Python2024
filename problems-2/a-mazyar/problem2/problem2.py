@@ -83,11 +83,9 @@ if __name__ == "__main__":
     print("All functionality with thesaurus from example:")
     print(format_thesaurus(reverse_thesaurus(read_file_thes('thesaurus.txt'))))
 
-    test_arr = []
     t = Timer(lambda: push_sorted_old())
     print("My linear insert:", t.timeit(number=1))
 
-    test_arr = []
     t = Timer(lambda: push_sorted_bs())
     print("Lib binary search insert:", t.timeit(number=1))
     
