@@ -7,8 +7,12 @@ from sys import stderr
 def get_dir_elements():
     try:
         return listdir(directory_path)
-    except Exception as err:
-        raise ValueError("Trying to list files, but caught:", err.args) from err
+    except OSError as os_error:
+        os_error.strerror = "Trying to list files, but caught exception\n" + os_error.strerror
+        raise os_error
+    except BaseException as err:
+        err.args = ("Trying to list files, but caught exception", *err.args)
+        raise err
 
 
 def get_file_stat():
@@ -32,4 +36,4 @@ if __name__ == "__main__":
         for file in sorted(file_stats.items(), key=lambda x: x[1], reverse=True):
             print(f'File with name=\"{file[0]}\" and size={file[1]}')
     except BaseException as e:
-        print("Catch unexpected exception", e, file=stderr)
+        print("Caught exception while execution:", e, file=stderr)
