@@ -49,10 +49,10 @@ class PerformanceCompetition(unittest.TestCase):
 
     def test_simple_value(self):
         start_time = time.time()
-        res_simple = problem5.prime_divisors(14142133)
+        res_simple = problem5.prime_divisors(454547865385769)
         print(f"Simple algorithm time: {time.time() - start_time}")
         start_time = time.time()
-        res_erato = problem5_Eratosthenes.sieve_of_eratosthenes(14142133)
+        res_erato = problem5_Eratosthenes.sieve_of_eratosthenes(454547865385769)
         print(f"Eratosthenes sieve time: {time.time() - start_time}")
         self.assertEqual(res_simple, res_erato)
 
