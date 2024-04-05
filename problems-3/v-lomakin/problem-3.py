@@ -29,21 +29,18 @@ class Vector:
         self.args = [n*i for i in self.args]
 
     def plus(self, vec):
-        for i in range(self.size):
-            self.args[i] += vec.get(i)
+        self.args = [a+b for a, b in zip(vec.getList(), self.args)]
 
     def minus(self, vec):
-        for i in range(self.size):
-            self.args[i] -= vec.get(i)
+        self.args = [a-b for a, b in zip(self.args, vec.getList())]
 
     def mult(self, vec):
-        for i in range(self.size):
-            self.args[i] *= vec.get(i)
+        self.args = [a*b for a, b in zip(vec.getList(), self.args)]
 
     def equal(self, vec):
         flag = True
-        for i in range(self.size):
-            if self.args[i] != vec.get(i):
+        for a, b in zip(vec.getList(), self.args):
+            if a != b:
                 flag = False
         return flag
 
