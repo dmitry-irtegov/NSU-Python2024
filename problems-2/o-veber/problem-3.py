@@ -16,7 +16,6 @@ def get_dir_elements():
 
 
 if __name__ == "__main__":
-    thrown_stats_exceptions = []
     try:
         parser = ArgumentParser()
         parser.add_argument("directory", help="Absolute path for target directory to list files in")
@@ -28,19 +27,10 @@ if __name__ == "__main__":
             try:
                 if isfile(element_absolute_path):
                     file_stats[element] = stat(path=element_absolute_path).st_size
-            except OSError as os_error:
-                os_error.strerror = f"Trying to stat file {element} but catch exception:" + os_error.strerror
-                thrown_stats_exceptions.append(os_error)
-                file_stats[element] = -1
-            except BaseException as e:
-                e.args = (f"Trying to stat file {element}, but caught exception", *e.args)
-                thrown_stats_exceptions.append(e)
+            except BaseException as err:
+                print(f"Trying to stat file {element} but catch exception:", err, file=stderr)
                 file_stats[element] = -1
         for file in sorted(file_stats.items(), key=lambda x: x[1], reverse=True):
             print(f'File with name=\"{file[0]}\" and size={file[1]}')
-        if len(thrown_stats_exceptions) > 0:
-            print('Caught exception while trying to stat files in directory:', file=stderr)
-        for e in thrown_stats_exceptions:
-            print(e, file=stderr)
     except BaseException as e:
         print("Caught unhandled exception while execution:", e, file=stderr)
