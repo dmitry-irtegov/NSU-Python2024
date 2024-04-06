@@ -1,4 +1,5 @@
 from unittest import TestCase, main
+from inspect import signature
 
 
 class Cachier(object):
@@ -7,29 +8,78 @@ class Cachier(object):
         self.cache = {}
 
     def __call__(self, *args, **kwargs):
-        if args not in self.cache:
-            self.cache[args] = self.func(*args, **kwargs)
-        return self.cache[args]
+        cached_args = tuple()
+        arg_names = signature(self.func).parameters
+        for named_positional_arg in list(zip(arg_names, args)):
+            cached_args += named_positional_arg
+        for item in sorted(kwargs.items(), key=lambda x: x[0]):
+            cached_args += item
+        if cached_args not in self.cache:
+            self.cache[cached_args] = self.func(*args, **kwargs)
+        return self.cache[cached_args]
+
+
+def my_sum(first, second):
+    return first + second
 
 
 class TestCachier(TestCase):
+
+    def test_mixed_cache(self):
+        cached = Cachier
+        cached_sum = cached(my_sum)
+        self.assertEqual(3, cached_sum(1, 2))
+        self.assertEqual(3, cached_sum(1, second=2))
+        self.assertEqual(3, cached_sum(first=1, second=2))
+        self.assertEqual({('first', 1, 'second', 2): 3}, cached_sum.cache)
+
     def test_cache_function_value(self):
         cached = Cachier
-        sum = cached(lambda x, y: x + y)
-        self.assertEqual(sum.cache, {})
-        self.assertEqual(3, sum(1, 2))
-        self.assertEqual({(1, 2): 3}, sum.cache)
-        self.assertEqual(3, sum(1, 2))
-        self.assertEqual({(1, 2): 3}, sum.cache)
+        cached_sum = cached(my_sum)
+        self.assertEqual(cached_sum.cache, {})
+
+        self.assertEqual(3, cached_sum(1, 2))
+        self.assertEqual({('first', 1, 'second', 2): 3}, cached_sum.cache)
+
+        self.assertEqual(3, cached_sum(1, 2))
+        self.assertEqual({('first', 1, 'second', 2): 3}, cached_sum.cache)
 
     def test_cache_function_many_values(self):
         cached = Cachier
-        sum = cached(lambda x, y: x + y)
-        self.assertEqual(sum.cache, {})
-        self.assertEqual(3, sum(1, 2))
-        self.assertEqual(5, sum(3, 2))
-        self.assertEqual(2, sum(1, 1))
-        self.assertEqual(sum.cache, {(1, 2): 3, (3, 2): 5, (1, 1): 2})
+        cached_sum = cached(my_sum)
+        self.assertEqual(cached_sum.cache, {})
+
+        self.assertEqual(3, cached_sum(1, 2))
+        self.assertEqual(3, cached_sum(1, 2))
+
+        self.assertEqual(5, cached_sum(3, 2))
+        self.assertEqual(5, cached_sum(3, 2))
+
+        self.assertEqual(2, cached_sum(1, 1))
+        self.assertEqual(2, cached_sum(1, 1))
+
+        self.assertEqual(
+            cached_sum.cache,
+            {('first', 1, 'second', 1): 2, ('first', 1, 'second', 2): 3, ('first', 3, 'second', 2): 5}
+        )
+
+    def test_cache_with_positional_arguments(self):
+        cached = Cachier
+        cached_sum = cached(my_sum)
+        self.assertEqual(cached_sum.cache, {})
+        self.assertEqual(3, cached_sum(first=1, second=2))
+        self.assertEqual(3, cached_sum(first=1, second=2))
+
+        self.assertEqual(5, cached_sum(first=3, second=2))
+        self.assertEqual(5, cached_sum(first=3, second=2))
+
+        self.assertEqual(2, cached_sum(first=1, second=1))
+        self.assertEqual(2, cached_sum(first=1, second=1))
+
+        self.assertEqual(
+            cached_sum.cache,
+            {('first', 1, 'second', 1): 2, ('first', 1, 'second', 2): 3, ('first', 3, 'second', 2): 5}
+        )
 
 
 if __name__ == '__main__':
