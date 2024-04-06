@@ -30,9 +30,18 @@ def song():
     print(will, ' ', numberList[0], ' ', green, letter_s, ' ', wall, sep = '')
     
 class TestSong(unittest.TestCase):
+    
+    def setUp(self):
+        global print
+        self.orig_print = print
+        print = custom_print
+        t_o.clear()
+
+    def tearDown(self):
+        global print
+        print = self.orig_print
   
     def test_song(self):
-        t_o.clear()
         song()
         self.assertEqual(t_o, 
 ['Ten green bottles hanging on the wall',
@@ -77,8 +86,5 @@ class TestSong(unittest.TestCase):
 'There’ll be no green bottles hanging on the wall'])
   
 if __name__ == "__main__":
-    orig_print = print
-    print = custom_print
     unittest.main()
-    print = orig_print
-    print(t_o)
+    #print(t_o)
