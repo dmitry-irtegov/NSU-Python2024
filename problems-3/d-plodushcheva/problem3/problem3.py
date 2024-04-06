@@ -3,36 +3,38 @@ import math
 
 class Vector:
 
-    def __init__(self, args):
-        self.values = args
-        self.size = len(args)
+    def __init__(self, *values):
+        self.values = values
+        self.size = len(values)
 
     def __add__(self, other):
-        return [x + y for x, y in zip(self.values, other.values)]
+        new_values = [x + y for x, y in zip(self.values, other.values)]
+        return Vector(*new_values)
 
     def __sub__(self, other):
-        return [x - y for x, y in zip(self.values, other.values)]
+        new_values = [x - y for x, y in zip(self.values, other.values)]
+        return Vector(*new_values)
 
     def __mul__(self, scalar):
-        return [x * scalar for x in self.values]
-
-    def mult(self, other):
-        self.values = [x * y for x, y in zip(self.values, other.values)]
+        new_values = [x * scalar for x in self.values]
+        return Vector(*new_values)
 
     def dot(self, other):
         return sum(x * y for x, y in zip(self.values, other.values))
 
-    def compare(self, other):
-        return self.values == other.values
+    def __eq__(self, other):
+        if isinstance(other, Vector):
+            return self.values == other.values
+        return False
 
     def length(self):
-        s = 0
-        for v in self.values:
-            s += v ** 2
-        return math.sqrt(s)
+        return math.sqrt(self.dot(self))
 
-    def get(self, i):
-        return self.values[i]
+    def __len__(self):
+        return self.size
+
+    def __getitem__(self, item):
+        return self.values[item]
 
     def __str__(self):
         return "[" + ", ".join(map(str, self.values)) + "]"
