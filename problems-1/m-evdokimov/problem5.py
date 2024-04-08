@@ -1,7 +1,7 @@
 import unittest
 
-def my_find(l, number):
-    for index, sub_list in enumerate(l):
+def my_find(input_list, number):
+    for index, sub_list in enumerate(input_list):
         if sub_list[0] == number:
             return index
     return -1
