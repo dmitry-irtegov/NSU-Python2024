@@ -8,6 +8,7 @@ def get_file_size(name):
         return os.stat(name).st_size
     except FileNotFoundError as e:
         print("Trying to get size of the file, but file \"" + e.filename + "\" doesn't exist", file=sys.stderr)
+        exit(1)
 
 
 def bytes_to_string(Bytes):
@@ -40,6 +41,7 @@ def print_files(path):
             print('{:{val}}'.format(f[0], val=longest_string_size) + " size: " + bytes_to_string(f[1]))
     except FileNotFoundError as e:
         print("Trying to get directories in current path, but path doesn't exist: " + e.filename, file=sys.stderr)
+        exit(1)
 
 
 def main():
