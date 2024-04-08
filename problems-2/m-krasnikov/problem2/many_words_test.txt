@@ -1,0 +1,8 @@
+eng1 - latin1, latin2, latin3, latin4, latin5, latin6
+eng2 - latin9, latin5, latin8, latin1, latin4, latin3
+eng3 - latin7, latin9, latin5, latin6, latin2, latin4
+eng4 - latin4, latin1, latin3, latin8, latin2, latin5
+eng5 - latin9, latin4, latin7, latin3, latin2, latin8
+eng6 - latin9, latin5, latin4, latin8, latin2, latin1
+eng7 - latin1, latin5, latin8, latin3, latin2, latin9
+eng8 - latin4, latin5, latin6, latin3, latin7, latin2
