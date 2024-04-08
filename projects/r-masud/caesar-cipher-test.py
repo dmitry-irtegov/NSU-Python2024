@@ -18,20 +18,6 @@ def decrypt_english(msg, shift):
             decrypted_text += char
     return decrypted_text
 
-def decrypt_russian(msg, shift):
-    llst = ['а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', 'ё']
-    ulst = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'Ё']
-    decrypted_text = ""
-    for char in msg:
-        if char.lower() in llst:
-            ind = llst.index(char.lower())
-            decrypted_ind = (ind - shift) % len(llst)
-            decrypted_char = ulst[decrypted_ind] if char.isupper() else llst[decrypted_ind]
-            decrypted_text += decrypted_char
-        else:
-            decrypted_text += char
-    return decrypted_text
-
 
 def encrypt_russian(msg, shift):
     llst = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
