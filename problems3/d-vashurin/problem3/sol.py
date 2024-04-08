@@ -63,16 +63,16 @@ class Vector(Generic[A]):
             self._check_equal_len(__value)
             return type(self)(a + b for a, b in zip(self, __value))
 
-        component = cast(A, __value)
-        return type(self)(a + component for a in self)
+        arithmetic = cast(A, __value)
+        return type(self)(a + arithmetic for a in self)
 
     def __sub__(self, __value: A | Self) -> Self:
         if isinstance(__value, Vector):
             self._check_equal_len(__value)
             return type(self)(a - b for a, b in zip(self, __value))
 
-        component = cast(A, __value)
-        return type(self)(a - component for a in self)
+        arithmetic = cast(A, __value)
+        return type(self)(a - arithmetic for a in self)
 
     @overload
     def __mul__(self, __value: A) -> Self: ...
@@ -83,8 +83,8 @@ class Vector(Generic[A]):
             self._check_equal_len(__value)
             return reduce(operator.add, (a * b for a, b in zip(self, __value)))
 
-        component = cast(A, __value)
-        return type(self)(a * component for a in self)
+        arithmetic = cast(A, __value)
+        return type(self)(a * arithmetic for a in self)
 
     def __eq__(self, __value: object) -> bool:
         if self is __value:
