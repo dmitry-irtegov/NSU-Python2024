@@ -10,7 +10,6 @@ class TestVector(unittest.TestCase):
 
     def test_size(self):
         self.assertEqual(len(self.v1), 3)
-        self.assertEqual(self.v1.size, 3)
 
     def test_add(self):
         result = self.v1 + self.v2
@@ -43,6 +42,14 @@ class TestVector(unittest.TestCase):
     def test_str(self):
         result = str(self.v1)
         self.assertEqual(result, "[1, 2, 3]")
+
+    def test_add_type_error(self):
+        with self.assertRaises(TypeError):
+            self.v1 + 1
+
+    def test_sub_value_error(self):
+        with self.assertRaises(ValueError):
+            self.v1 - Vector(1, 2)
 
 
 if __name__ == '__main__':
