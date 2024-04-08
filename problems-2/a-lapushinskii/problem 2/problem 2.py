@@ -22,8 +22,7 @@ def read_dict_file(file_path):
                 input_dict[english] = latin_translations.split(', ')
         return input_dict
     except Exception as e:
-        print("Ошибка при чтении файла: ", e, file=sys.stderr)
-        return {}
+        raise OSError("Ошибка при чтении файла: " +  str(e))
     
 def print_dict_to_file(some_dict, filename):
     sorted_dict = dict(sorted(some_dict.items()))
@@ -36,11 +35,14 @@ def print_dict_to_file(some_dict, filename):
                 if latin_words: 
                     file.write(f"{latin_words[-1]}\n")
     except Exception as e:
-        print("Ошибка при сохранении результата: ", e, file=sys.stderr)
-        return {}
-   
-latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
-print_dict_to_file(latin_english_dict, 'output_task_2.txt')
+        raise OSError("Ошибка при сохранении результата: " + str(e))
+
+try:   
+    latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
+    print_dict_to_file(latin_english_dict, 'output_task_2.txt')
+except OSError as e:
+    print(e, file=sys.stderr)
+
 
 ###
 
@@ -67,7 +69,10 @@ class TestDictRevers(unittest.TestCase):
         correct_ans = {}
         prog_ans = revers_dict(inp_dict)
         self.assertEqual(prog_ans, correct_ans)
-        
+    def test_except(self):
+        with self.assertRaises(OSError):  
+            latin_english_dict = revers_dict(read_dict_file('Probably_a_non-existent_file.txt'))
+            print_dict_to_file(latin_english_dict, 'Probably_a_non-existent_file.txt')   
 
 
 if __name__ == '__main__':
