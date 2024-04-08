@@ -19,6 +19,13 @@ class TestPythagoreanTriplets(unittest.TestCase):
     def test_pythagorean_triplets_15(self):
         self.assertEqual(pythagorean_triplets(15), [(3, 4, 5), (5, 12, 13), (6, 8, 10), (9, 12, 15)])
 
+    def test_pythagorean_triplets_500(self):
+        actual_triplets = pythagorean_triplets(500)
+        self.assertEqual(len(actual_triplets), 386)
+        for triplet in actual_triplets:
+            self.assertEqual(triplet[0] ** 2 + triplet[1] ** 2, triplet[2] ** 2)
+            self.assertTrue(triplet[2] <= 500)
+
 
 if __name__ == '__main__':
     unittest.main()
