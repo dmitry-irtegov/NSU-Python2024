@@ -4,8 +4,7 @@ def caesar_decrypt(text, shift, language):
     elif language == 'ru':
         return decrypt_russian(text, shift)
     else:
-        return "Unsupported language"
-
+        raise ValueError("Unsupported language")
 
 
 def decrypt_english(msg, shift):
@@ -19,44 +18,27 @@ def decrypt_english(msg, shift):
     return decrypted_text
 
 
-def encrypt_russian(msg, shift):
-    llst = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
-    ulst = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я']
-    encrypted_text = ""
-    for char in msg:
-        if char.lower() in llst:
-            ind = llst.index(char.lower()) + shift
-            encrypted_char = ulst[ind % len(llst)] if char.islower() else ulst[ind % len(llst)].lower()
-            encrypted_text += encrypted_char
-        elif char in ulst:
-            ind = ulst.index(char) + shift
-            encrypted_text += ulst[ind % len(ulst)]
-        else:
-            encrypted_text += char
-    return encrypted_text
-
-
 def decrypt_russian(msg, shift):
-    llst = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
-    ulst = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я']
+    lowercase_alphabet = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
+    uppercase_alphabet = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я']
     decrypted_text = ""
     for char in msg:
-        if char.lower() in llst:
-            ind = llst.index(char.lower())
-            decrypted_ind = (ind - shift) % len(llst)
-            decrypted_char = llst[decrypted_ind].upper() if char.isupper() else llst[decrypted_ind]
+        if char.lower() in lowercase_alphabet:
+            ind = lowercase_alphabet.index(char.lower())
+            decrypted_ind = (ind - shift) % len(lowercase_alphabet)
+            decrypted_char = uppercase_alphabet[decrypted_ind] if char.isupper() else lowercase_alphabet[decrypted_ind]
             decrypted_text += decrypted_char
-        elif char in ulst:
-            ind = ulst.index(char)
-            decrypted_ind = (ind - shift) % len(ulst)
-            decrypted_char = ulst[decrypted_ind].lower() if char.islower() else ulst[decrypted_ind]
+        elif char in uppercase_alphabet:
+            ind = uppercase_alphabet.index(char)
+            decrypted_ind = (ind - shift) % len(uppercase_alphabet)
+            decrypted_char = uppercase_alphabet[decrypted_ind].lower() if char.islower() else uppercase_alphabet[decrypted_ind]
             decrypted_text += decrypted_char
         else:
             decrypted_text += char
     return decrypted_text
 
 
-import  unittest
+import unittest
 
 class TestCaesarDecrypt(unittest.TestCase):
 
@@ -77,8 +59,8 @@ class TestCaesarDecrypt(unittest.TestCase):
     def test_unsupported_language(self):
         # Test unsupported language
         encrypted_text = "Wklv lv d whvw phvvdjh."
-        decrypted_text = caesar_decrypt(encrypted_text, 3, 'fr')
-        self.assertEqual(decrypted_text, "Unsupported language")
+        with self.assertRaises(ValueError):
+            caesar_decrypt(encrypted_text, 3, 'fr')
 
 
 if __name__ == '__main__':
