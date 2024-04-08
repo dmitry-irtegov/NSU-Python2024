@@ -14,8 +14,10 @@ def get_file_size(name):
 def bytes_to_string(Bytes):
     if not isinstance(Bytes, (int, float)):
         print("Argument must be a number", file=sys.stderr)
+        return ""
     if Bytes < 0:
         print("Argument must be greater or equals to zero", file=sys.stderr)
+        return ""
 
     size_unit = ['B', 'KB', 'MB', 'GB', 'TB']
     unit = 0
