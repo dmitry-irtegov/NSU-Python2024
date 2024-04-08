@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Decryption Result</title>
+</head>
+<body>
+    <h1>Decryption Result:</h1>
+
+    <p><strong>Original Encrypted Text:</strong> "{{ encrypted_text }}"</p>
+    <p><strong>Shift Value:</strong> {{ shift }}</p>
+    <p><strong>Language:</strong> {{ language }}</p>
+
+    <h2>Decrypted Text:</h2>
+    {% if language == 'ru' %}
+        <p style="font-family: Arial, sans-serif;">{{ decrypted_text }}</p>
+    {% else %}
+        <p>{{ decrypted_text }}</p>
+    {% endif %}
+
+    <h2>Resolved Text:</h2>
+    <p>{{ resolved_text }}</p>
+</body>
+</html>
