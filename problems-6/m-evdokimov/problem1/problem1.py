@@ -16,7 +16,7 @@ def abc_mix(word, length):
     letters = word_list[1:length-1]
     letters.sort(key = str.lower)
     for index, letter in enumerate(letters):
-        word_list[index+1] = l
+        word_list[index+1] = letter
     return ''.join(word_list)
     
 
