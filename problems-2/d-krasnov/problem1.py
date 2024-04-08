@@ -13,4 +13,8 @@ class TestPythagoreanTriples(unittest.TestCase):
     def test_pythagorean_triples(self):
         self.assertEqual([(3, 4, 5)], pythagorean_triplet(5))
         self.assertEqual([(3, 4, 5), (6, 8, 10)], pythagorean_triplet(10))
-        self.assertEqual([(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17), (9, 12, 15), (12, 16, 20)], pythagorean_triplet(20))
+        self.assertEqual([(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17), (9, 12, 15), (12, 16, 20)],
+                         pythagorean_triplet(20))
+        self.assertEqual([], pythagorean_triplet(1))
+        self.assertEqual([], pythagorean_triplet(0))
+        self.assertEqual([], pythagorean_triplet(-2))
