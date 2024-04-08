@@ -21,12 +21,12 @@ def test_subtraction(a: range, b: range) -> None:
     assert (Vector(a) - Vector(b))._components == Vector((a - b for a, b in zip(a, b)))._components
 
 
-def test_dot_multiplication(a: range, b: range) -> None:
+def test_scalar_multiplication(a: range, b: range) -> None:
     assert Vector(a) * Vector(b) == sum(a * b for a, b in zip(a, b))
 
 
-def test_scalar_multiplication(a: range, b: range) -> None:
-    assert (Vector(a) * 2)._components == Vector(b)._components
+def test_dot_multiplication(a: range, b: range) -> None:
+    assert (Vector(components=a) * 2)._components == Vector(b)._components
 
 
 def test_equality(a: range, b: range) -> None:
