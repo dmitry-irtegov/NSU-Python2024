@@ -2,7 +2,7 @@ import unittest
 
 def substitution_function(seq, a, b):
     if a > b:
-        raise Exception('Lower bound is higher than Higher bound.')
+        raise Exception('Exception: Lower bound is higher than upper bound.')
     
     result = [0] * (len(seq))
 
@@ -28,6 +28,14 @@ class SubstitutionTests(unittest.TestCase):
     def test_equals_equals(self):
         print(substitution_function([0, 0, 0], 0, 0))
         self.assertEqual(substitution_function([0, 0, 0], 0, 0), [0, 0, 0])
-
+    
+    def test_exception(self):
+        with self.assertRaises(Exception) as context:
+            substitution_function([0, 0, 0], 5, 1)
+        
+        self.assertTrue('Exception: Lower bound is higher than upper bound.' in str(context.exception))
+        
 if __name__ == '__main__':
     unittest.main()
+
+
