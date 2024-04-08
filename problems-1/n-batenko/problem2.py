@@ -1,10 +1,11 @@
 import unittest
 
 def substitution_function(seq, a, b):
-    result = [0] * (len(seq) + 1)
     if a > b:
         raise Exception('Lower bound is higher than Higher bound.')
     
+    result = [0] * (len(seq) + 1)
+
     for i in range(len(seq)):
         num = seq[i]
         temp = num
