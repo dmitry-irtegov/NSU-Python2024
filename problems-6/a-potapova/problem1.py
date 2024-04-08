@@ -17,10 +17,8 @@ MODE_MIXERS = {Mode.random: (lambda word_part: ''.join(random.sample(word_part, 
 def init_parser():
     parser = argparse.ArgumentParser(description='Rearrange letters in words of a given text.')
     parser.add_argument('--input', type=argparse.FileType('r'), default=sys.stdin,
+                        nargs='+',
                         help='Input file (default: stdin)')
-
-    parser.add_argument('--output', type=argparse.FileType('r'), default=sys.stdout,
-                        help='Output file (default: stdout)')
     parser.add_argument('--mode', type=Mode, default=Mode.random,
                         help='"random" or "ABC" mode for words')
     return parser
@@ -41,16 +39,13 @@ def replace_words(text: str, mode: Mode) -> str:
 
 if __name__ == '__main__':
     args = init_parser().parse_args()
-    try:
-        result = ""
-        for line in args.input:
-            result += replace_words(line, args.mode)
-    except Exception as e:
-        sys.stderr.write(f"Failed while replacing words from file \"{args.input.name}\": {str(e)}")
-        exit(1)
-
-    try:
-        args.output.write(result)
-    except Exception as e:
-        sys.stderr.write(f"Failed while writing result to file \"{args.output}\": {str(e)}")
-        exit(1)
+    for file in args.input:
+        try:
+            result = ""
+            for line in file:
+                result += replace_words(line, args.mode)
+            print(f"\nFile \"{file.name}\"")
+            print(result)
+        except Exception as e:
+            sys.stderr.write(f"Failed while replacing words from file \"{file.name}\": {str(e)}")
+            exit(1)
