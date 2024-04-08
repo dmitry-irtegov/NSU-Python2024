@@ -22,7 +22,7 @@ class TestCumulativeSum(unittest.TestCase):
     def test_below_zero(self):
         self.assertEqual(cumulativeSum([-1, -2, -3]), [0, -1, -3, -6])
         
-    def test_exeption(self):
+    def test_exception(self):
         with self.assertRaises(TypeError):
             cumulativeSum(['a', 'b', 'c'])
   
