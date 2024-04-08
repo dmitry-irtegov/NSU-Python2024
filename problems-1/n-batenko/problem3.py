@@ -1,27 +1,22 @@
 import unittest
 
 def collatz_conjecture(n):
-    num = n
-    temp = num
-    seq = [num]
+    if (n <= 0): 
+        raise Exception("Value Error: Invalid number on input of collatz_conjecture. Try positive integer.")
 
-    while temp != 1:
-        if temp % 2 == 0:
-            temp //= 2
+    seq = [n]
+
+    while n != 1:
+        if n % 2 == 0:
+            n //= 2
         else:
-            temp = 3 * temp + 1
-        seq.append(temp)
+            n = 3 * n + 1
+        seq.append(n)
     
     return seq
 
-def collatz_input():
-    while True:
-        x = input("Enter positive integer number: ")
-        if (x > 0 & isinstance(x, int)):
-            break
-        else: 
-            raise Exception("Value Error: Invalid number. Try positive integer.")
-    collatz_conjecture(x)
+def collatz_input():  
+    collatz_conjecture(input("Enter positive integer number: "))
 
 def collatz_string(seq):
     result = ''
