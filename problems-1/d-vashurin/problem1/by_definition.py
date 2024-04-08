@@ -1,3 +1,4 @@
+from __future__ import annotations
 from collections.abc import Iterable
 from itertools import chain
 from typing import TYPE_CHECKING
@@ -10,8 +11,11 @@ if TYPE_CHECKING:
     A = TypeVar("A", bound=SupportsAdd)
 
 
-def cumulative_sums(addable: "Iterable[A]") -> "list[A]":
+def cumulative_sums(addable: Iterable[A]) -> list[A]:
     """Returns the cumulative sum of the `addable` iterable.
+
+    References:
+        https://docs.python.org/3/library/itertools.html#itertools.accumulate
 
     >>> cumulative_sums((1, 2, 3))
     [1, 3, 6]
