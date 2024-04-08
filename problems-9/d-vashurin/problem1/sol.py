@@ -1,5 +1,5 @@
 import time
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 
 class Timer:
@@ -30,6 +30,6 @@ class Timer:
     @property
     def elapsed(self) -> int:
         if self._end is None:
-            return time.perf_counter_ns() - self._start
+            return time.perf_counter_ns() - cast(int, self._start)
 
-        return self._end - self._start
+        return self._end - cast(int, self._start)
