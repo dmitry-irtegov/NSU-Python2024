@@ -1,28 +1,32 @@
 import unittest
 
+def my_find(l, number):
+    for index, sub_list in enumerate(l):
+        if sub_list[0] == number:
+            return index
+    return -1
+
 def factorization(n):
 
     i = 2
-    resDict = {}
+    resList = []
     
     while i * i <= n:
         while n % i == 0:
-            if i in resDict :
-                resDict[i] = resDict[i] + 1
+            index = my_find(resList, i)
+            if index != -1 :
+                resList[index][1] = resList[index][1] + 1
             else:
-                resDict[i] = 1
+                resList.append([i, 1])
             n = n // i
         i = i + 1
         
     if n > 1:
-        if n in resDict :
-            resDict[n] = resDict[n] + 1
+        index = my_find(resList, n)
+        if index != -1:
+            resList[index][1] = resList[index][1] + 1
         else:
-            resDict[n] = 1
-            
-    resList = []
-    for key in resDict:
-        resList.append([key, resDict[key]])
+            resList.append([n, 1])
             
     return resList
 
