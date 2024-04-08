@@ -3,7 +3,7 @@ from math import sqrt
 
 def pif_triple(n : int):
     if (n <= 0):
-        raise Exception("pif_triple: n must be more than zero.")
+        raise Exception("Exception: In pif_triple input, n must be greater than zero.")
     
     result = []
 
@@ -24,6 +24,11 @@ class TestPifTriple(unittest.TestCase):
 
     def test_z10(self):
         self.assertEqual(pif_triple(100), [(3, 4, 5), (6, 8, 10)])
+    
+    def test_exception(self):
+        with self.assertRaises(Exception) as context:
+            pif_triple(-100)
+        self.assertTrue("Exception: In pif_triple input, n must be greater than zero." in str(context.exception))
 
 if __name__ == '__main__':
     unittest.main()
