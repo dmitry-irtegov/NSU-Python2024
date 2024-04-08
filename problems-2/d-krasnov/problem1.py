@@ -18,3 +18,10 @@ class TestPythagoreanTriples(unittest.TestCase):
         self.assertEqual([], pythagorean_triplet(1))
         self.assertEqual([], pythagorean_triplet(0))
         self.assertEqual([], pythagorean_triplet(-2))
+
+    def test_large_n(self):
+        triplets = pythagorean_triplet(600)
+
+        for triplet in triplets:
+            x, y, z = triplet
+            self.assertTrue(x ** 2 + y ** 2 == z ** 2, f"Triple {triplet} is not a Pythagorean triple.")
