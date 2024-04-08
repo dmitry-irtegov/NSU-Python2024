@@ -4,7 +4,7 @@ from functools import reduce
 from typing import Generic, Protocol, Self, TypeVar, cast, overload
 
 
-class Component(Protocol):
+class Arithmetic(Protocol):
     def __add__(self, __value: Self) -> Self:
         ...
 
@@ -21,17 +21,17 @@ class Component(Protocol):
         ...
 
 
-C = TypeVar("C", bound=Component)
+A = TypeVar("A", bound=Arithmetic)
 
 
-class Vector(Generic[C]):
+class Vector(Generic[A]):
     __slots__ = ("_components",)
 
-    def __init__(self, components: Iterable[C]) -> None:
-        self._components: tuple[C, ...] = tuple(components)
+    def __init__(self, components: Iterable[A]) -> None:
+        self._components: tuple[A, ...] = tuple(components)
 
     @classmethod
-    def from_literals(cls, *components: C) -> Self:
+    def from_literals(cls, *components: A) -> Self:
         return cls(components)
 
     def _check_equal_len(self, other):
@@ -42,14 +42,14 @@ class Vector(Generic[C]):
     def __len__(self) -> int:
         return len(self._components)
 
-    def __iter__(self) -> Iterator[C]:
+    def __iter__(self) -> Iterator[A]:
         return iter(self._components)
 
     def __str__(self) -> str:
         return f"Vector({", ".join(map(str, self._components))})"
 
     @overload
-    def __getitem__(self, __index: int) -> C: ...
+    def __getitem__(self, __index: int) -> A: ...
     @overload
     def __getitem__(self, __index: slice) -> Self: ...
     def __getitem__(self, __index):
@@ -58,32 +58,32 @@ class Vector(Generic[C]):
 
         return self._components[__index]
 
-    def __add__(self, __value: C | Self) -> Self:
+    def __add__(self, __value: A | Self) -> Self:
         if isinstance(__value, Vector):
             self._check_equal_len(__value)
             return type(self)(a + b for a, b in zip(self, __value))
 
-        component = cast(C, __value)
+        component = cast(A, __value)
         return type(self)(a + component for a in self)
 
-    def __sub__(self, __value: C | Self) -> Self:
+    def __sub__(self, __value: A | Self) -> Self:
         if isinstance(__value, Vector):
             self._check_equal_len(__value)
             return type(self)(a - b for a, b in zip(self, __value))
 
-        component = cast(C, __value)
+        component = cast(A, __value)
         return type(self)(a - component for a in self)
 
     @overload
-    def __mul__(self, __value: C) -> Self: ...
+    def __mul__(self, __value: A) -> Self: ...
     @overload
-    def __mul__(self, __value: Self) -> C: ...
+    def __mul__(self, __value: Self) -> A: ...
     def __mul__(self, __value):
         if isinstance(__value, Vector):
             self._check_equal_len(__value)
             return reduce(operator.add, (a * b for a, b in zip(self, __value)))
 
-        component = cast(C, __value)
+        component = cast(A, __value)
         return type(self)(a * component for a in self)
 
     def __eq__(self, __value: object) -> bool:
