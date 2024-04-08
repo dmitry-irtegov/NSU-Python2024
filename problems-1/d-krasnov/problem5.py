@@ -8,7 +8,7 @@ def factorize_number(num):
 
     upper_bound = math.sqrt(num)
 
-    while divisor <= upper_bound:
+    while divisor <= upper_bound and num > 1:
         if num % divisor == 0:
             count = 0
             while num % divisor == 0:
