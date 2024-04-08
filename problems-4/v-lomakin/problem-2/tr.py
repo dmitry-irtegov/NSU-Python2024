@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def tr(string, replace_from, replace_to, delete_chars=None):
     if len(replace_from) != len(replace_to):
         raise ValueError('Строки замены и заменяемые строки должны быть одинаковой длины')
