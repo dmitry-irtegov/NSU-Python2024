@@ -16,7 +16,7 @@ def substitution_function(seq, a, b):
         result[i] = temp
     return result
 
-class SubstiotutionTests(unittest.TestCase):
+class SubstitutionTests(unittest.TestCase):
     def test_equals_dif(self):
         print(substitution_function([0, 0, 0], 1, 5))
         self.assertEqual(substitution_function([0, 0, 0], 1, 5), [1, 1, 1])
