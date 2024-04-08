@@ -1,38 +1,27 @@
 import unittest
 from numbers import Number
-from typing import Tuple, Any, Self, Iterable
+from typing import Any, Self
 
 
 class Vector:
-    _content: Tuple
 
-    def __init__(self, content: Iterable):
-        if not all(map(lambda value: isinstance(value, Number), content)):
-            raise TypeError("content must be a list of values that inherit from Number")
-
-        self._content = tuple(content)
+    def __init__(self, *content):
+        self._content = content
 
     def __add__(self, other: Self) -> Self:
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        return type(self)(first + second for first, second in zip(self._content, other._content))
+        return type(self)(*(first + second for first, second in zip(self._content, other._content)))
 
     def __sub__(self, other: Self) -> Self:
-        return self + (-other)
+        return type(self)(*(a - b for a, b in zip(self._content, other._content)))
 
     def __neg__(self) -> Self:
-        return type(self)(-value for value in self._content)
+        return type(self)(*(-value for value in self._content))
 
-    def __mul__(self, constant: int) -> Self:
-        return type(self)(content * constant for content in self._content)
-
-    def __next__(self):
-        length = len(self)
-        index = 0
-        while index < length:
-            yield self[index]
-            index += 1
+    def __mul__(self, constant: Number) -> Self:
+        return type(self)(*(content * constant for content in self._content))
 
     def __getitem__(self, item: int):
         return self._content[item]
@@ -57,16 +46,16 @@ class Vector:
         if len(self) != len(other):
             raise ValueError('Vectors dimensions must be equal')
 
-        return type(self)(
-            this_content * other_content for this_content, other_content in zip(self._content, other._content))
+        return type(self)(*(
+            this_content * other_content for this_content, other_content in zip(self._content, other._content)))
 
 
 class TestVector(unittest.TestCase):
 
     def setUp(self):
-        self.vector_1 = Vector((1, 2, 3))
-        self.vector_2 = Vector((3, 4, 5, 6, 7))
-        self.vector_4 = Vector((7, 6, 5))
+        self.vector_1 = Vector(1, 2, 3)
+        self.vector_2 = Vector(3, 4, 5, 6, 7)
+        self.vector_4 = Vector(7, 6, 5)
 
     def test_constructor(self):
         self.assertEqual(self.vector_1._content[0], 1)
@@ -74,7 +63,7 @@ class TestVector(unittest.TestCase):
         self.assertEqual(self.vector_1._content[2], 3)
 
     def test_add(self):
-        self.assertEqual(self.vector_1 + self.vector_4, Vector((8, 8, 8)))
+        self.assertEqual(self.vector_1 + self.vector_4, Vector(8, 8, 8))
 
         with self.assertRaises(TypeError):
             self.vector_1 + 4
@@ -94,7 +83,6 @@ class TestVector(unittest.TestCase):
 
     def test_mul(self):
         tmp_vec = self.vector_1 * 4
-
         self.assertEqual(tmp_vec[0], 4)
         self.assertEqual(tmp_vec[1], 8)
         self.assertEqual(tmp_vec[2], 12)
@@ -111,11 +99,11 @@ class TestVector(unittest.TestCase):
         self.assertEqual(len(self.vector_1), len(self.vector_1._content))
 
     def test_eq(self):
-        self.assertTrue(self.vector_1 == Vector((1, 2, 3)))
+        self.assertTrue(self.vector_1 == Vector(1, 2, 3))
         self.assertFalse(self.vector_1 == self.vector_2)
 
     def test_scalar_product(self):
-        self.assertEqual(self.vector_1.scalar_product(self.vector_4), Vector((7, 12, 15)))
+        self.assertEqual(self.vector_1.scalar_product(self.vector_4), Vector(7, 12, 15))
 
         with self.assertRaises(ValueError):
             self.vector_1.scalar_product(self.vector_2)
