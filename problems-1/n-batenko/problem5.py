@@ -1,9 +1,7 @@
 from math import sqrt
 import unittest
 
-def decompose_to_primes(n):
-
-    def is_prime(num, primes):
+def is_prime(num, primes):
         k = 1
         for i in range(2, int(sqrt(num)) + 1, k):
             if num in primes:
@@ -14,7 +12,8 @@ def decompose_to_primes(n):
             if i == 3:
                 k += 1
         return True
-    
+
+def decompose_to_primes(n):    
     result = []
     primes = []
 
@@ -28,10 +27,12 @@ def decompose_to_primes(n):
         for factor in range(2, num // 2 + 1, k):
             if (not is_prime(factor, primes)):
                 continue
+
             power = 0
             while num % factor == 0:
                 num //= factor
                 power += 1
+                
             if (power == 0):
                 continue
             else:
