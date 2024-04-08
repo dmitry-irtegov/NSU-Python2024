@@ -3,18 +3,27 @@ import unittest
 
 def find_substring(num):
     occurrences = []
-    occurrence_index = 0
-
+    last_sliced_index = 0
+    chunks = ""
     with open("pi.txt") as f:
-        pi = f.read().replace('\n', '')
+        while True:
+            chunk = f.read(10000)
+            if not chunk:
+                break
 
-        occurrence_index = pi.find(num, occurrence_index)
-        while occurrence_index != -1:
-            occurrences.append(occurrence_index)
-            occurrence_index += 1
-            occurrence_index = pi.find(num, occurrence_index)
+            chunk = chunk.replace('\n', '')
 
-        return len(occurrences), occurrences[:5]
+            chunks += chunk
+
+            occurrence_index = chunks.find(num)
+            while occurrence_index != -1:
+                occurrences.append(last_sliced_index + occurrence_index)
+                occurrence_index += 1
+                last_sliced_index += occurrence_index
+                chunks = chunks[occurrence_index:]
+                occurrence_index = chunks.find(num)
+
+    return len(occurrences), occurrences[:5]
 
 
 class TestFindSubstring(unittest.TestCase):
