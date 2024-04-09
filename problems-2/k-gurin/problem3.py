@@ -19,7 +19,7 @@ def get_files(path: str) -> list:
         ]
         return sorted(files, key=lambda item: (-item[1], item[0]))
     except OSError:
-        sys.stderr.write(f"Error while reading files")
+        sys.stderr.write("Error while reading files")
 
 
 if __name__ == '__main__':
