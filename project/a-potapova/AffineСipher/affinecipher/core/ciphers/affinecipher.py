@@ -6,8 +6,8 @@ from .ciphertable import CipherTable
 
 
 class AffineCipher(Cipher):
-    def __init__(self, key):
-        self.table = CipherTable(key)
+    def __init__(self, language: Language):
+        self.table = CipherTable(language.get_abc())
 
     def set_key(self, key):
         self.table = CipherTable(key)

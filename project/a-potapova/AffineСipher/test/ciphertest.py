@@ -28,7 +28,7 @@ class AffineCipherTest(unittest.TestCase):
             self.letters_bijection(key, language)
 
     def test_encrypt(self):
-        cipher: Cipher = AffineCipher(Language.English.get_abc())
+        cipher: Cipher = AffineCipher(Language.English)
         self.assertEqual(cipher.encrypt('hello world'), 'hello world')
         self.assertEqual(cipher.encrypt('hello world', key="abcwofglijkdmnepqrstuvhxyz"), 'lodde herdw')
         self.assertEqual(cipher.encrypt('aaazzz', key="zbcdefghijklmnopqrstuvwxya"), 'zzzaaa')
@@ -38,7 +38,7 @@ class AffineCipherTest(unittest.TestCase):
         self.letters_surjection(encrypted_text, Language.English)
 
     def test_decrypt(self):
-        cipher: Cipher = AffineCipher(Language.English.get_abc())
+        cipher: Cipher = AffineCipher(Language.English)
         self.assertEqual(cipher.decrypt('hello world'), 'hello world')
         self.assertEqual(cipher.decrypt('lodde herdw', key="abcwofglijkdmnepqrstuvhxyz"), 'hello world')
         key: str = AffineCipher.keygen(Language.English)
@@ -47,7 +47,7 @@ class AffineCipherTest(unittest.TestCase):
         self.letters_surjection(decrypted_text, Language.English)
 
     def test_all(self):
-        cipher: Cipher = AffineCipher(Language.English.get_abc())
+        cipher: Cipher = AffineCipher(Language.English)
         for language in [Language.English, Language.Russian]:
             if language == Language.English:
                 text = 'hello world'
