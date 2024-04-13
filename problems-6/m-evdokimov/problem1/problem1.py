@@ -26,15 +26,20 @@ def mixer(string, mode, how_to_print = print):
     if mode != 'abc' and mode != 'random':
         raise ValueError('Wrong mode name')
     
-    for word in string.split():
-        length = len(word)
-        if length > 3:
-            if mode == 'random':
+    if mode == 'random':
+        for word in string.split():
+            length = len(word)
+            if length > 3:
                 how_to_print(random_mix(word, length), end = ' ')
-            if mode == 'abc':
+            else:
+                how_to_print(word, end = ' ')
+    if mode == 'abc':
+        for word in string.split():
+            length = len(word)
+            if length > 3:
                 how_to_print(abc_mix(word, length), end = ' ')
-        else:
-            how_to_print(word, end = ' ')
+            else:
+                how_to_print(word, end = ' ')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
