@@ -8,7 +8,6 @@ ac_server = FastAPI(title="AffineCipher Server", version="0.1.0")
 @ac_server.get("/encode", response_model=str)
 async def encode(text: str, key: str = ""):
     encoded_text = utils.encrypt(text, key)
-
     return encoded_text
 
 
