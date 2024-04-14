@@ -27,10 +27,10 @@ class Table:
         return [row[n] for row in self.table]
 
     def get_rows(self, indexes):
-        return [self.table[i] for i in indexes]
+        return Table([self.table[i] for i in indexes])
 
     def get_columns(self, indexes):
-        return [self.get_column(i) for i in indexes]
+        return Table([self.get_column(i) for i in indexes])
 
     def join_by_rows(self, other):
         if not isinstance(other, Table):
@@ -54,10 +54,10 @@ class TestTable(unittest.TestCase):
         self.assertEqual(Table([[1, 2, 3], [4, 5, 6]]), Table([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).head(2))
 
     def test_get_rows(self):
-        self.assertEqual([[1, 2, 3], [7, 8, 9]], Table([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).get_rows([0, 2]))
+        self.assertEqual(Table([[1, 2, 3], [7, 8, 9]]), Table([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).get_rows([0, 2]))
 
     def test_get_columns(self):
-        self.assertEqual([[1, 4, 7], [3, 6, 9]], Table([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).get_columns([0, 2]))
+        self.assertEqual(Table([[1, 4, 7], [3, 6, 9]]), Table([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).get_columns([0, 2]))
 
     def test_join_by_rows(self):
         self.assertEqual(Table([[1, 2], [3, 4], [5, 6], [7, 8]]),
