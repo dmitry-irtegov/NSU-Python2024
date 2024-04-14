@@ -1,5 +1,4 @@
 import math
-import time
 import unittest
 
 
@@ -13,7 +12,7 @@ def factorize(x):
             x //= i
         if m[1] != 0:
             multipliers.append(m)
-    
+
     if x != 1:
         multipliers.append([x, 1])
 
@@ -38,6 +37,7 @@ class TestForFactorization(unittest.TestCase):
 
     def test_huge_number(self):
         self.assertEqual([[17, 2], [67, 1], [389, 1], [699059, 1]], factorize(5265457093213))
+
 
 if __name__ == '__main__':
     unittest.main()
