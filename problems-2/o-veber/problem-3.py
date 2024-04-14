@@ -15,6 +15,11 @@ def get_dir_elements():
         raise err
 
 
+def sorted_filtered(items):
+    items = filter(lambda x: x[1] != -1, items)
+    return sorted(items, key=lambda x: x[1], reverse=True)
+
+
 if __name__ == "__main__":
     try:
         parser = ArgumentParser()
@@ -30,7 +35,7 @@ if __name__ == "__main__":
             except BaseException as err:
                 print(f"Trying to stat file {element} but catch exception:", err, file=stderr)
                 file_stats[element] = -1
-        for file in sorted(file_stats.items(), key=lambda x: x[1], reverse=True):
+        for file in sorted_filtered(file_stats.items()):
             print(f'File with name=\"{file[0]}\" and size={file[1]}')
     except BaseException as e:
         print("Caught unhandled exception while execution:", e, file=stderr)
