@@ -1,6 +1,12 @@
 import unittest
+from unittest.mock import patch
 
-def collatz_conjecture(n):
+def collatz_conjecture(input : str):
+    if (input.isnumeric()):
+        n = int(input)
+    else:
+        raise Exception("Value Error: Not an integer on input.")
+
     if (n <= 0): 
         raise Exception("Value Error: Invalid number on input of collatz_conjecture. Try positive integer.")
 
@@ -16,7 +22,7 @@ def collatz_conjecture(n):
     return seq
 
 def collatz_input():  
-    collatz_conjecture(input("Enter positive integer number: "))
+    return collatz_conjecture(input("Enter positive integer number: "))
 
 def collatz_string(seq):
     result = ''
@@ -53,6 +59,18 @@ class CollatzConjectureTests(unittest.TestCase):
                                                                         1154, 577, 1732, 866, 433, 1300, 650, 325,
                                                                           976, 488, 244, 122, 61, 184, 92, 46, 23, 70,
                                                                             35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1])
+        
+    @patch('builtins.input', side_effect=['first'])
+    def test_using_side_effect(self, mock_input):
+        calling = mock_input()
+        with (self.assertRaises(Exception)):
+            res = collatz_conjecture(calling)
+    
+    '''def test_t(self):
+        with self.assertRaises(Exception):
+            print(collatz_string(collatz_conjecture('2')))
+        #self.assertEqual(collatz_conjecture(3), [3, 10, 5, 16, 8, 4, 2, 1])'''
+        
 
 if __name__ == '__main__':
     unittest.main()
