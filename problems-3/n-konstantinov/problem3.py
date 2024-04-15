@@ -1,3 +1,4 @@
+from unittest import TestCase
 class Vector:
     def __init__(self, *data):
         self._data = data
@@ -38,3 +39,84 @@ class Vector:
 
     def __str__(self):
         return f"Vector({', '.join(map(str, self._data))})"
+
+
+class TestVector(TestCase):
+    def test_init(self):
+        v1 = Vector(1, 2, 3)
+        self.assertEqual(v1, Vector(1, 2, 3))
+        self.assertEqual(v1.length, 3)
+
+        v2 = Vector()
+        self.assertEqual(v2, Vector())
+        self.assertEqual(v2.length, 0)
+
+    def test_add(self):
+        v1 = Vector(1, 2, 3)
+        v2 = Vector(4, 5, 6)
+        v3 = v1 + v2
+        self.assertEqual(v3, Vector(5, 7, 9))
+
+        with self.assertRaises(TypeError):
+            v1 + 123
+
+        with self.assertRaises(ValueError):
+            v1 + Vector(1, 2)
+
+    def test_sub(self):
+        v1 = Vector(1, 2, 3)
+        v2 = Vector(4, 5, 6)
+        v3 = v1 - v2
+        self.assertEqual(v3, Vector(-3, -3, -3))
+
+        with self.assertRaises(TypeError):
+            v1 - 123
+
+        with self.assertRaises(ValueError):
+            v1 - Vector(1, 2)
+
+    def test_mul(self):
+        v1 = Vector(1, 2, 3)
+        v2 = Vector(4, 5, 6)
+        dot_product = v1 * v2
+        self.assertEqual(dot_product, 32)
+
+        v3 = v1 * 2
+        self.assertEqual(v3, Vector(2, 4, 6))
+
+        with self.assertRaises(ValueError):
+            v1 * Vector(1, 2)
+
+        with self.assertRaises(TypeError):
+            v1 * "123"
+
+    def test_eq(self):
+        v1 = Vector(1, 2, 3)
+        v2 = Vector(1, 2, 3)
+        v3 = Vector(4, 5, 6)
+        self.assertTrue(v1 == v2)
+        self.assertFalse(v1 == v3)
+        self.assertFalse(v1 == 123)
+
+    def test_len(self):
+        v1 = Vector(1, 2, 3)
+        self.assertEqual(len(v1), 3)
+
+        v2 = Vector()
+        self.assertEqual(len(v2), 0)
+
+    def test_getitem(self):
+        v1 = Vector(1, 2, 3)
+        self.assertEqual(v1[0], 1)
+        self.assertEqual(v1[1], 2)
+        self.assertEqual(v1[2], 3)
+
+        with self.assertRaises(IndexError):
+            v1[3]
+
+    def test_str(self):
+        v1 = Vector(1, 2, 3)
+        self.assertEqual(str(v1), "Vector(1, 2, 3)")
+
+        v2 = Vector()
+        self.assertEqual(str(v2), "Vector()")
