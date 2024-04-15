@@ -22,7 +22,7 @@ def decompose_to_primes(n):
             if i == 3:
                 k += 1
         
-        if (not (num in primes)):
+        if (num not in primes):
             primes.append(num)
 
         return True
