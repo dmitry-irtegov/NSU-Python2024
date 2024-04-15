@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 
-def convert_dictionary(input_file, output_file):
+def convert_dictionary(input_file):
     with open(input_file, 'r') as file:
         lines = file.readlines()
 
@@ -17,23 +17,48 @@ def convert_dictionary(input_file, output_file):
             else:
                 latin_english_dict[latin_word] = [english_word]
 
-    sorted_latin_words = sorted(latin_english_dict.keys())
-
-    with open(output_file, 'w') as file:
-        for latin_word in sorted_latin_words:
-            english_words = latin_english_dict[latin_word]
-            file.write(f"{latin_word} - {', '.join(english_words)}\n")
-
-
-convert_dictionary("test_input.txt", "test_output.txt")
+    return dict(sorted(latin_english_dict.items()))
 
 
 class TestDictionaryConversion(TestCase):
-    def test_dictionary_conversion(self):
-        convert_dictionary("test_input.txt", "test_output.txt")
+    def test_single_word(self):
+        self.assertEqual(convert_dictionary('single_word_test.txt'), {
+            'latinword': ['englishword']
+        })
 
-        with open("test_output.txt", 'r') as output_file, open("test_default_checker.txt", 'r') as checker_file:
-            output_lines = output_file.readlines()
-            checker_lines = checker_file.readlines()
+    def test_simple(self):
+        self.assertEqual(convert_dictionary('simple_test.txt'), {
+            'latinword1': ['englishword1', 'englishword2'],
+            'latinword2': ['englishword1'],
+            'latinword3': ['englishword2']
+        })
 
-        self.assertEqual(output_lines, checker_lines)
+    def test_empty_file(self):
+        self.assertEqual(convert_dictionary('empty_test.txt'), {})
+
+    def test_long_dictionary(self):
+        self.assertEqual(convert_dictionary('long_dictionary_test.txt'), {
+            'latin1': ['english1', 'english4', 'english7', 'english10', 'english13', 'english16', 'english19'],
+            'latin2': ['english1', 'english2', 'english5', 'english8', 'english11', 'english14', 'english17', 'english20'],
+            'latin3': ['english1', 'english3', 'english6', 'english9', 'english12', 'english15', 'english18'],
+            'latin4': ['english2', 'english4', 'english7'],
+            'latin5': ['english2', 'english3', 'english5', 'english10'],
+            'latin6': ['english3', 'english6', 'english11'],
+            'latin7': ['english4', 'english8', 'english13'],
+            'latin8': ['english5', 'english9', 'english14'],
+            'latin9': ['english6', 'english12'],
+            'latin10': ['english7', 'english15'],
+            'latin11': ['english8', 'english16'],
+            'latin12': ['english9', 'english17'],
+            'latin13': ['english10', 'english18'],
+            'latin14': ['english11', 'english19'],
+            'latin15': ['english12', 'english20'],
+            'latin16': ['english13'],
+            'latin17': ['english14'],
+            'latin18': ['english15'],
+            'latin19': ['english16'],
+            'latin20': ['english17'],
+            'latin21': ['english18'],
+            'latin22': ['english19'],
+            'latin23': ['english20']
+        })
