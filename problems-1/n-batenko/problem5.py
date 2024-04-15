@@ -10,7 +10,7 @@ def decompose_to_primes(n):
     result = []
     primes = []
     
-    def is_prime(num, primes):
+    def is_prime(num):
         if num in primes:
             return True
         
@@ -27,12 +27,12 @@ def decompose_to_primes(n):
 
         return True
 
-    if is_prime(num, primes):
+    if is_prime(num):
         return [(num, 1)]
     
     k = 1
     for factor in range(2, num // 2 + 1, k):
-        if (not is_prime(factor, primes)):
+        if (not is_prime(factor)):
             continue
 
         power = 0
