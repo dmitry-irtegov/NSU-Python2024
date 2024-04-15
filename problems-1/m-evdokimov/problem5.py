@@ -1,24 +1,17 @@
 import unittest
 
-def my_find(input_list, number):
-    for index, sub_list in enumerate(input_list):
-        if sub_list[0] == number:
-            return index
-    return -1
-
 def factorization(n):
 
     i = 2
     resList = []
     
     while i * i <= n:
+        cnt = 0
         while n % i == 0:
-            index = my_find(resList, i)
-            if index != -1 :
-                resList[index][1] = resList[index][1] + 1
-            else:
-                resList.append([i, 1])
+            cnt = cnt + 1
             n = n // i
+        if cnt != 0:
+            resList.append([i, cnt])
         i = i + 1
         
     if n > 1:
