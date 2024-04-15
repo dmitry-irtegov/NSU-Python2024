@@ -1,48 +1,52 @@
 from math import sqrt
 import unittest
 
-def is_prime(num, primes):
-        k = 1
-        for i in range(2, int(sqrt(num)) + 1, k):
-            if num in primes:
-                return True
-            else:
-                if num % i == 0:
-                    return False
-            if i == 3:
-                k += 1
-        return True
-
 def decompose_to_primes(n):    
-    result = []
-    primes = []
-
     num = abs(n)
 
     if num < 2:
         return [()]
-
-    if not is_prime(num, primes):
+    
+    result = []
+    primes = []
+    
+    def is_prime(num, primes : list[int]):
+        if num in primes:
+            return True
+        
         k = 1
-        for factor in range(2, num // 2 + 1, k):
-            if (not is_prime(factor, primes)):
-                continue
+        for i in range(2, int(sqrt(num)) + 1, k):
+            if num % i == 0:
+                return False
 
-            power = 0
-            while num % factor == 0:
-                num //= factor
-                power += 1
-                
-            if (power == 0):
-                continue
-            else:
-                primes.append(factor)
-                result.append((factor, power))
-
-            if factor == 3: 
+            if i == 3:
                 k += 1
-    else:
-        result.append((num, 1))
+        
+        if (not num in primes):
+            primes.append(num)
+
+        return True
+
+    if is_prime(num, primes):
+        return [(num, 1)]
+    
+    k = 1
+    for factor in range(2, num // 2 + 1, k):
+        if (not is_prime(factor, primes)):
+            continue
+
+        power = 0
+        while num % factor == 0:
+            num //= factor
+            power += 1
+                
+        if (power == 0):
+            continue
+        else:
+            result.append((factor, power))
+
+        if factor == 3: 
+            k = k + 1
 
     return result
 
