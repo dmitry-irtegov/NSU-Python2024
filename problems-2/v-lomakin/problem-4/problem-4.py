@@ -1,8 +1,8 @@
 import unittest
 
 def findPos (sub):
-    file = open('pi.txt', "r")
-    pi = ''.join([a.replace("\n", "") for a in file.readlines()])
+    with open('pi.txt', 'r') as file:
+        pi = ''.join(line.strip() for line in file)
     list = []
     x = pi.find(sub)
     while (x != -1):
