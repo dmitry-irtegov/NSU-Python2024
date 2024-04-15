@@ -16,9 +16,9 @@ def find_sequence(sequence, pi_file):
     positions = []
     with open(pi_file, 'r', encoding='utf-8') as f:
         buffer = ''
-        for l in f:
-            l = l.replace('\n', '')
-            buffer += l
+        for line in f:
+            line = line.replace('\n', '')
+            buffer += line
         start = 0
         while True:
             pos = buffer.find(sequence, start)
