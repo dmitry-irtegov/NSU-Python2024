@@ -3,7 +3,7 @@ import argparse
 import sys
 import random
 
-from itertools import dropwhile, takewhile
+from itertools import dropwhile
 
 class _WordsRearranger:
     def __init__(self, rearrange_func):
