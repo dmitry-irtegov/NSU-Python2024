@@ -10,7 +10,7 @@ def decompose_to_primes(n):
     result = []
     primes = []
     
-    def is_prime(num, primes : list[int]):
+    def is_prime(num, primes):
         if num in primes:
             return True
         
