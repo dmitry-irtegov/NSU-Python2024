@@ -1,5 +1,6 @@
 import requests
 import time
+import argparse
 
 def wiki_searcher(start_link):
     infobox = '<table class="infobox'
@@ -51,6 +52,10 @@ def wiki_searcher(start_link):
         new_link_flag = True
         content = requests.get('https://ru.wikipedia.org/wiki/' + link).text
         
-startLink = 'https://ru.wikipedia.org/wiki/%D0%92%D1%81%D0%B5%D0%BC%D0%B8%D1%80%D0%BD%D0%B0%D1%8F_%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F'
+#startLink = 'https://ru.wikipedia.org/wiki/%D0%92%D1%81%D0%B5%D0%BC%D0%B8%D1%80%D0%BD%D0%B0%D1%8F_%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F'
 #startLink = 'https://ru.wikipedia.org/wiki/%D0%98%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F_%D1%84%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D0%B8'
-wiki_searcher(startLink)    
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("start_link", help="enter your start link here")
+    args = parser.parse_args()
+    wiki_searcher(args.start_link) 
