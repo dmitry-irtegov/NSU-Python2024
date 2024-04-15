@@ -22,11 +22,7 @@ def factorization(n):
         i = i + 1
         
     if n > 1:
-        index = my_find(resList, n)
-        if index != -1:
-            resList[index][1] = resList[index][1] + 1
-        else:
-            resList.append([n, 1])
+        resList.append([n, 1])
             
     return resList
 
