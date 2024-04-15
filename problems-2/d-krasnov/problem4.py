@@ -15,10 +15,13 @@ def find_sequence(sequence, pi_file):
     """
     positions = []
     with open(pi_file, 'r', encoding='utf-8') as f:
-        pi_digits = f.read()
+        buffer = ''
+        for l in f:
+            l = l.replace('\n', '')
+            buffer += l
         start = 0
         while True:
-            pos = pi_digits.find(sequence, start)
+            pos = buffer.find(sequence, start)
             if pos == -1:
                 break
             positions.append(pos)
