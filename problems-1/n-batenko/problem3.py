@@ -1,11 +1,8 @@
 import unittest
-from unittest.mock import patch
+import unittest.mock as mock
+import builtins
 
-def collatz_conjecture(input : str):
-    if (input.isnumeric()):
-        n = int(input)
-    else:
-        raise Exception("Value Error: Not an integer on input.")
+def collatz_conjecture(n : int):
 
     if (n <= 0): 
         raise Exception("Value Error: Invalid number on input of collatz_conjecture. Try positive integer.")
@@ -21,8 +18,14 @@ def collatz_conjecture(input : str):
     
     return seq
 
-def collatz_input():  
-    return collatz_conjecture(input("Enter positive integer number: "))
+def collatz_input():
+    inp = input("Enter positive integer number: ")
+    if (inp.lstrip('-+').isdigit()):
+        num = int(inp)
+    else:
+        raise Exception("Value Error: Not an integer on input.")
+    
+    return collatz_conjecture(num)
 
 def collatz_string(seq):
     result = ''
@@ -60,17 +63,25 @@ class CollatzConjectureTests(unittest.TestCase):
                                                                           976, 488, 244, 122, 61, 184, 92, 46, 23, 70,
                                                                             35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1])
         
-    @patch('builtins.input', side_effect=['first'])
-    def test_using_side_effect(self, mock_input):
-        calling = mock_input()
-        with (self.assertRaises(Exception)):
-            res = collatz_conjecture(calling)
+    def test_exception_with_input(self):
+        with mock.patch.object(builtins, 'input', lambda _: 'one'):
+            with self.assertRaises(Exception) as context:
+                 collatz_input()
+            self.assertTrue("Value Error: Not an integer on input." in str(context.exception))
+
+    def test_is_positive_with_input(self):
+        with mock.patch.object(builtins, 'input', lambda _: '-1'):
+            with self.assertRaises(Exception) as context:
+                 collatz_input()
+            self.assertTrue("Value Error: Invalid number on input of collatz_conjecture. Try positive integer." in str(context.exception))
+
+    def test_3_with_input(self):
+        with mock.patch.object(builtins, 'input', lambda _: '3'):
+            self.assertEqual(collatz_input(), [3, 10, 5, 16, 8, 4, 2, 1])
     
-    '''def test_t(self):
-        with self.assertRaises(Exception):
-            print(collatz_string(collatz_conjecture('2')))
-        #self.assertEqual(collatz_conjecture(3), [3, 10, 5, 16, 8, 4, 2, 1])'''
-        
+    def test_collatz_string_with_input(self):
+        with mock.patch.object(builtins, 'input', lambda _: '3'):
+            self.assertEqual(collatz_string(collatz_input()), "3 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1")
 
 if __name__ == '__main__':
     unittest.main()
