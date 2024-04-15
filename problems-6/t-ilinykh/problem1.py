@@ -33,8 +33,8 @@ def transform_text(text, transformation):
 
 def main():
     sys.stdout.reconfigure(encoding='utf-8')
-    text = input("Введите текст: ")
     try:
+        text = input("Введите текст: ")
         random_result = transform_text(text, shuffle_letters)
         sorted_result = transform_text(text, sort_letters)
         print("Исходный текст:")
@@ -47,6 +47,9 @@ def main():
         print("Ошибка типа данных при обработке текста:", e)
     except ValueError as e:
         print("Ошибка значения при обработке текста:", e)
+    except EOFError:
+        sys.stderr.write("Выход из программы.",)
+
 
 if __name__ == "__main__":
     main()
