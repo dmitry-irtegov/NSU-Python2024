@@ -25,5 +25,11 @@ class TranslateSymbolsTest(unittest.TestCase):
     def testWithoutTranslate2(self):
         self.assertEqual(tr.translate("refdsfeFD", "", "", ""), "refdsfeFD")
 
+    def testPartTranslate(self):
+        self.assertEqual(tr.translate("abababbbbaba", "b", "g", ""), "agagaggggaga")
+
+    def testPartTranslateWithDelete(self):
+        self.assertEqual(tr.translate("abbgbbgda", "a", "z", "b"), "zggdz")
+
 
 
