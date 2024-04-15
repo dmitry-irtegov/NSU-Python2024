@@ -42,7 +42,7 @@ def main():
         print("Случайная перестановка букв:")
         print(random_result)
         print("Сортировка букв по алфавиту:")
-        print(sorted_result)
+        print(sorted_result) 
     except TypeError as e:
         print("Ошибка типа данных при обработке текста:", e)
     except ValueError as e:
