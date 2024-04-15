@@ -5,54 +5,45 @@ import sys
 def sort_files_by_size(directory_path):
     files = []
 
-    for filename in get_filenames(directory_path):
-        file_path = os.path.join(directory_path, filename)
-        if os.path.isfile(file_path):
-            file_size = get_file_size(file_path)
-            if file_size is not None:
+    try:
+        for filename in get_filenames(directory_path):
+            file_path = os.path.join(directory_path, filename)
+            if os.path.isfile(file_path):
+                file_size = os.path.getsize(file_path)
                 files.append((filename, file_size))
 
-    files.sort(key=lambda file_info: (-file_info[1], file_info[0]))
+        files.sort(key=lambda file_info: (-file_info[1], file_info[0]))
 
-    for file_name, file_size in files:
-        print(f"{file_name}: {file_size} bytes")
+        for file_name, file_size in files:
+            print(f"{file_name}: {file_size} bytes")
+    except Exception as err:
+        sys.stderr.write(repr(err))
 
 
 def get_filenames(directory_path):
     try:
         return os.listdir(directory_path)
-    except FileNotFoundError:
-        sys.stderr.write("Directory does not exist: '%s'" % directory_path)
-    except PermissionError:
-        sys.stderr.write("Permission denied: '%s'" % directory_path)
-    except OSError:
-        sys.stderr.write("Path error: '%s'" % directory_path)
-    except Exception:
-        sys.stderr.write("Get filenames error: '%s'" % directory_path)
-    return []
-
-
-def get_file_size(file_path):
-    try:
-        return os.path.getsize(file_path)
-    except OSError:
-        sys.stderr.write("Error while getting size of file '%s'" % file_path)
-    except Exception:
-        sys.stderr.write("Get file size error: '%s'" % file_path)
+    except FileNotFoundError as err:
+        raise FileNotFoundError("Directory does not exist: '%s'" % directory_path, repr(err))
+    except PermissionError as err:
+        raise PermissionError("Permission denied: '%s'" % directory_path, repr(err))
+    except OSError as err:
+        raise OSError("Path error: '%s'" % directory_path, repr(err))
+    except Exception as err:
+        raise Exception("Get filenames error: '%s'" % directory_path, repr(err))
 
 
 def is_file(file_path):
     try:
         return os.path.isfile(file_path)
-    except FileNotFoundError:
-        sys.stderr.write("File does not exist: '%s'" % file_path)
-    except PermissionError:
-        sys.stderr.write("Permission denied: '%s'" % file_path)
-    except OSError:
-        sys.stderr.write("Path '%s' does not exists or is inaccessible" % file_path)
-    except Exception:
-        sys.stderr.write("Is file error: '%s'" % file_path)
-    return False
+    except FileNotFoundError as err:
+        raise FileNotFoundError("File does not exist: '%s'" % file_path, repr(err))
+    except PermissionError as err:
+        raise PermissionError("Permission denied: '%s'" % file_path, repr(err))
+    except OSError as err:
+        raise OSError("Path '%s' does not exists or is inaccessible" % file_path, repr(err))
+    except Exception as err:
+        raise Exception("Is file error: '%s'" % file_path, repr(err))
 
 
 if __name__ == "__main__":
