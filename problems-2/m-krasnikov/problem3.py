@@ -9,7 +9,8 @@ def sort_files_by_size(directory_path):
         file_path = os.path.join(directory_path, filename)
         if os.path.isfile(file_path):
             file_size = get_file_size(file_path)
-            files.append((filename, file_size))
+            if file_size is not None:
+                files.append((filename, file_size))
 
     files.sort(key=lambda file_info: (-file_info[1], file_info[0]))
 
@@ -26,6 +27,9 @@ def get_filenames(directory_path):
         sys.stderr.write("Permission denied: '%s'" % directory_path)
     except OSError:
         sys.stderr.write("Path error: '%s'" % directory_path)
+    except Exception:
+        sys.stderr.write("Get filenames error: '%s'" % directory_path)
+    return []
 
 
 def get_file_size(file_path):
@@ -33,6 +37,8 @@ def get_file_size(file_path):
         return os.path.getsize(file_path)
     except OSError:
         sys.stderr.write("Error while getting size of file '%s'" % file_path)
+    except Exception:
+        sys.stderr.write("Get file size error: '%s'" % file_path)
 
 
 def is_file(file_path):
@@ -44,6 +50,9 @@ def is_file(file_path):
         sys.stderr.write("Permission denied: '%s'" % file_path)
     except OSError:
         sys.stderr.write("Path '%s' does not exists or is inaccessible" % file_path)
+    except Exception:
+        sys.stderr.write("Is file error: '%s'" % file_path)
+    return False
 
 
 if __name__ == "__main__":
