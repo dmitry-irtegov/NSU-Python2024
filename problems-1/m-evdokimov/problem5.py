@@ -30,7 +30,13 @@ class TestFactorization(unittest.TestCase):
     def test_109(self):
         self.assertEqual(factorization(109), [[109, 1]])
         
-    def test_exeption(self):
+    def test_big(self):
+        self.assertEqual(factorization(188956800000), [[2, 10], [3, 10], [5, 5]])
+        
+    def test_big_prime(self):
+        self.assertEqual(factorization(2448842248841), [[2448842248841, 1]])
+        
+    def test_exception(self):
         with self.assertRaises(TypeError):
             factorization("hello")
   
