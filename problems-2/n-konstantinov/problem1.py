@@ -43,3 +43,10 @@ class TestPythagoreanTriples(TestCase):
                             (45, 60, 75), (48, 55, 73), (48, 64, 80), (51, 68, 85), (54, 72, 90), (57, 76, 95),
                             (60, 63, 87), (60, 80, 100), (65, 72, 97)]
         self.assertEqual(pythagorean_triples_list(100), expected_triples)
+
+    def test_pythagorean_triples_check(self):
+        triplets = pythagorean_triples(500)
+
+        for triplet in triplets:
+            a, b, c = triplet
+            self.assertTrue(a ** 2 + b ** 2 == c ** 2)
