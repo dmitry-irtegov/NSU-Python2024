@@ -3,6 +3,7 @@ import argparse
 import sys
 import random
 
+from itertools import dropwhile, takewhile
 
 class _WordsRearranger:
     def __init__(self, rearrange_func):
@@ -10,9 +11,13 @@ class _WordsRearranger:
     
 
     def rearrange_word(self, s):
-        if len(s) < 3:
+        beg = next(dropwhile(lambda i: not s[i].isalpha(), range(len(s))), len(s)) + 1
+        end = next(dropwhile(lambda i: not s[i].isalpha(), reversed(range(beg, len(s)))), beg)
+
+        if end - beg < 1:
             return s
-        return self.__rearrange_func(s)
+
+        return s[:beg] +  self.__rearrange_func(s[beg:end]) + s[end:]
 
 
     def rearrange_text(self, text):
@@ -23,7 +28,7 @@ class RandomizedWordsRearranger(_WordsRearranger):
     def __init__(self, seed = None):
         rand = random.Random(seed)
         def shuffle_func(s):
-            return s[0] + ''.join(rand.sample(list(s[1:-1]), k = len(s) - 2)) + s[-1]
+            return ''.join(rand.sample(list(s), k = len(s)))
 
         _WordsRearranger.__init__(self, shuffle_func)
 
@@ -31,7 +36,7 @@ class RandomizedWordsRearranger(_WordsRearranger):
 class SortedWordsRearranger(_WordsRearranger):
     def __init__(self):
         def sort_func(s):
-            return s[0] + ''.join(sorted(s[1:-1])) + s[-1]
+            return ''.join(sorted(s))
 
         _WordsRearranger.__init__(self, sort_func)
 

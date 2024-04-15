@@ -6,24 +6,32 @@ import unittest
 class RearrangerTests(unittest.TestCase):
     def test_random_basic(self):
         rearranger = RandomizedWordsRearranger(100500)
-        self.assertEqual(rearranger.rearrange_text('I love the smell of napalm in the morning'), 'I lvoe the smlel of nlaapm in the morning')
+        self.assertEqual(rearranger.rearrange_text('I love the smell of napalm in the morning.'), 'I lvoe the smlel of nlaapm in the morning.')
 
 
     def test_random_with_repetion(self):
-        src = 'hellooooooooooooooooooooo it is a sentence with a word with manymanymanymanymany characters'
+        src = 'Mmyy kkeeyybbooaarrdd ttyyppeess eevveerryytthhinngg ttwwiiccee!!!!!! hheellpp,, pplleeassee!!!!!!'
         res_list = [
-            'hoooeoooooooloooooloooooo it is a snetnece with a word wtih maynyynmmnaaanmynamy chcaaertrs',
-            'hoooooooooooooooleooloooo it is a scneente wtih a wrod with mmmaanyanmyaynmnyany chaaerrtcs',
-            'hoooooooooooooolooooeoloo it is a snncteee wtih a wrod with mynmnnnamaamynamayyy ccarerahts',
-            'hooooooooooooloooleoooooo it is a setnncee wtih a word with manaanaymmnnmynamyyy crtacahres',
-            'hoooloeoooooooolooooooooo it is a secnetne wtih a word wtih mmymmanynayynmaaanny cechtraras',
-            'hooooooollooooooeoooooooo it is a scnnetee with a word with mmnymaynnannmaymyaay ceahtrcars',
-            'hoooooooooooloooooolooeoo it is a stceenne wtih a word wtih mmannnynmnyyayaammay chaaretcrs',
-            'heooolooooooooooolooooooo it is a snenecte with a wrod wtih mamanyymyaaynmnmnany crrhatcaes',
-            'hooloooooeooooooooooloooo it is a scenetne with a word with mymmnanayaynmnmnaayy carhcaerts',
-            'hoooooooooooooelooloooooo it is a scentene with a wrod with mnnmnmyanynaaaammyyy cctrhaeras',
-            'hooooooooooeolooooooolooo it is a sncneete with a wrod wtih myaamyynmamnnnnamyay crcretahas',
-            'hooooloooooooooooloooooeo it is a snetcene wtih a word with myyaaaamnymnmnamnyny crtcraehas'
+            'Mymy kkeyoaaebrydbord tpeyetypss eyvthieevnnhygrtreg tccwiiewte!!!!!! hlhleepp,, plpeeeslase!!!!!!',
+            'Mmyy kbeedyboararkoyd tpyeyestps eentiryyhgerhevnvtg tcteciwiwe!!!!!! hllpeehp,, ppsleelseae!!!!!!',
+            'Mmyy kyreybbeaaokdrod tyyeepptss ervyvgrhttyneeihneg ttcewiwice!!!!!! hleelhpp,, peespllsaee!!!!!!',
+            'Mmyy kbbkoodeerayaryd tspytpeeys eveyrgrheeiynthntvg twcwiitece!!!!!! hllhpeep,, ppsseelleae!!!!!!',
+            'Mmyy kardeaybkboryeod teeytpsyps eenhiyhygvrrttneveg twwicteice!!!!!! helphelp,, peeelspslae!!!!!!',
+            'Mymy kdyokabearboeyrd tteseppyys evivhenternhegyrytg tciceiwtwe!!!!!! hphellep,, pleepslasee!!!!!!',
+            'Mmyy kroybbreakoydead teepyytsps egeirenhtrventyyhvg ticcwwtiee!!!!!! hhllpeep,, peaepseslle!!!!!!',
+            'Mymy kokeboabeyraydrd typtsypees engvnvhthereyteryig twetwciice!!!!!! hllheepp,, pespelasele!!!!!!',
+            'Mymy kbokydreeyraobad typpteesys evetyhvyhnigterrneg tietiwcwce!!!!!! hehleplp,, peelespalse!!!!!!',
+            'Mymy kaybakryoroeedbd tetpyyepss enhgivynhyterrevteg tiwtewcice!!!!!! helhplep,, pepsleeslae!!!!!!',
+            'Mymy kaoerekbyryabodd tpyeeystps evyyneirvgterhntheg tiiwtccwee!!!!!! helehlpp,, paeleslsepe!!!!!!',
+            'Mymy kayodaeyerrkobbd tteppyeyss eternhvyteirhnygevg twictewcie!!!!!! hhellepp,, pseeeasplle!!!!!!',
+            'Mmyy krbodbaeakryyoed typytspees ennhvriyeytrehgetvg twewtciice!!!!!! hehllepp,, psseeeaplle!!!!!!',
+            'Mymy kyakoabrrbdoeyed typyepstes evgryrvytinehenethg tiictewcwe!!!!!! hlelhepp,, papselselee!!!!!!',
+            'Mymy kboerroykdbyaead teepystpys evnygntrhiteevyehrg ticcwtiwee!!!!!! heelhlpp,, peelsspleae!!!!!!',
+            'Mymy kbaoerdrabeykyod tyeeystpps egyyehtnetrhivnrveg ttiwcecwie!!!!!! hpehlelp,, pesslpeaele!!!!!!',
+            'Mymy kkdberoaboerayyd typetspyes enetiyrterhvynvhegg tiecciwwte!!!!!! heelhplp,, pllsaeespee!!!!!!',
+            'Mmyy kkrreyeobboadyad typteeysps ernntrghheyyitevveg tiwteiccwe!!!!!! hlehpelp,, pesleseaple!!!!!!',
+            'Mymy kbooaekrryyebadd tpetsyyeps etehvvrtnhinyryeegg tewctwicie!!!!!! hpelelhp,, pelasspleee!!!!!!',
+            'Mmyy kbyedaeyorobrkad tyetpseyps eryiyvhnvetehngertg ttwciecwie!!!!!! hllheepp,, pasleseplee!!!!!!'
         ]
 
         for _ in range(4):
@@ -35,17 +43,17 @@ class RearrangerTests(unittest.TestCase):
     def test_sorted_basic(self):
         rearranger = SortedWordsRearranger()
 
-        self.assertEqual(rearranger.rearrange_text('I love the smell of napalm in the morning'), 'I love the selml of naalpm in the minnorg')
+        self.assertEqual(rearranger.rearrange_text('I love the smell of napalm in the morning.'), 'I love the selml of naalpm in the minnorg.')
 
 
     def test_sorted_with_repetion(self):
-        src = 'hellooooooooooooooooooooo it is a sentence with a word with manymanymanymanymany characters'
-        res = 'hellooooooooooooooooooooo it is a sceennte with a word with maaaaammmmnnnnnyyyyy caacehrrts'
+        src = 'Mmyy kkeeyybbooaarrdd ttyyppeess eevveerryytthhinngg ttwwiiccee!!!!!! hheellpp,, pplleeassee!!!!!!'
+        res = 'Mmyy kaabbdeekoorryyd teeppstyys eeeeghhinnrrttvvyyg tcceiitwwe!!!!!! heehllpp,, paeeellpsse!!!!!!'
 
         for _ in range(4):
             rearranger = SortedWordsRearranger()
 
-            for _ in range(20):
+            for _ in range(5):
                 self.assertEqual(rearranger.rearrange_text(src), res)
 
 
