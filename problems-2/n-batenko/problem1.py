@@ -1,5 +1,4 @@
 import unittest
-from math import sqrt
 
 def pif_triple(n : int):
     if (n <= 0):
