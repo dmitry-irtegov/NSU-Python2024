@@ -24,6 +24,8 @@ class Vector:
         return sum(a * b for a, b in zip(self._components, other._components))
 
     def __eq__(self, other):
+        if not isinstance(other, Vector):
+            return False
         return self._components == other._components
 
     def __len__(self):
