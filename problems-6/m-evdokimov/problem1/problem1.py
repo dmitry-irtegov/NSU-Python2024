@@ -28,22 +28,31 @@ def mixer(string, mode, how_to_print = print):
     
     if mode == 'random':
         for word in string.split():
+            punctuation_mark = ''
+            if not(word.isalpha()):
+                punctuation_mark = word[-1]
+                word = word[0:len(word)-1]
             length = len(word)
             if length > 3:
-                how_to_print(random_mix(word, length), end = ' ')
+                how_to_print(random_mix(word, length), punctuation_mark, sep = '', end = ' ')
             else:
-                how_to_print(word, end = ' ')
+                how_to_print(word, punctuation_mark, sep = '', end = ' ')
+                
     if mode == 'abc':
         for word in string.split():
+            punctuation_mark = ''
+            if not(word.isalpha()):
+                punctuation_mark = word[-1]
+                word = word[0:len(word)-1]
             length = len(word)
             if length > 3:
-                how_to_print(abc_mix(word, length), end = ' ')
+                how_to_print(abc_mix(word, length), punctuation_mark, sep = '', end = ' ')
             else:
-                how_to_print(word, end = ' ')
+                how_to_print(word, punctuation_mark, sep = '', end = ' ')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("input_string", help="enter your input string here")
     parser.add_argument("-m", "--mode", help="choose mixer mode ('random' or 'abc')")
     args = parser.parse_args()
-    mixer(args.input_string, args.mode) 
+    mixer(args.input_string, args.mode)
