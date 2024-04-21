@@ -47,10 +47,8 @@ class MyHTMLParser(HTMLParser):
             self.title_flag = True
         
         if self.link_flag and tag == 'a':
-            link_ok = False
             for atr, value in attrs:
                 if atr == 'href':
-                    link_ok = True
                     self.tag = 'link'
                     self.next_link = value
             
