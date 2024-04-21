@@ -3,7 +3,7 @@ import unittest
 
 
 def get_triples(n):
-    return [(x, y, sqrt(x ** 2 + y ** 2)) for x in range(1, n) for y in range(1, n) if
+    return [(x, y, int(sqrt(x ** 2 + y ** 2))) for x in range(1, n) for y in range(1, n) if
             sqrt(x ** 2 + y ** 2).is_integer() and sqrt(x ** 2 + y ** 2) <= n]
 
 
