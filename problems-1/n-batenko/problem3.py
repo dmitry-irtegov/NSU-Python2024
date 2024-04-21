@@ -25,7 +25,7 @@ def collatz_string():
         raise Exception("Value Error: Invalid number on input. Try positive integer.")
     
     result = ""
-    for num in list(collatz_conjecture(n)):
+    for num in tuple(collatz_conjecture(n)):
         result += str(num)
         if (num != 1):
             result += ' -> '
@@ -35,19 +35,19 @@ def collatz_string():
 class CollatzConjectureTests(unittest.TestCase):
     
     def test_1(self):
-        self.assertEqual(list(collatz_conjecture(1)), [1])
+        self.assertEqual(tuple(collatz_conjecture(1)), (1,))
 
     def test_2(self):
-        self.assertEqual(list(collatz_conjecture(2)), [2, 1])
+        self.assertEqual(tuple(collatz_conjecture(2)), (2, 1))
 
     def test_3(self):
-        self.assertEqual(list(collatz_conjecture(3)), [3, 10, 5, 16, 8, 4, 2, 1])
+        self.assertEqual(tuple(collatz_conjecture(3)), (3, 10, 5, 16, 8, 4, 2, 1))
     
     def test_19(self):
-        self.assertEqual(list(collatz_conjecture(19)), [19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1])
+        self.assertEqual(tuple(collatz_conjecture(19)), (19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1))
 
     def test_27(self):
-        self.assertEqual(list(collatz_conjecture(27)), [27, 82, 41, 124, 62, 31, 94, 47,
+        self.assertEqual(tuple(collatz_conjecture(27)), (27, 82, 41, 124, 62, 31, 94, 47,
                                                     142, 71, 214, 107, 322, 161, 484,
                                                       242, 121, 364, 182, 91, 274, 137,
                                                         412, 206, 103, 310, 155, 466, 233,
@@ -60,7 +60,7 @@ class CollatzConjectureTests(unittest.TestCase):
                                                                       4102, 2051, 6154, 3077, 9232, 4616, 2308,
                                                                         1154, 577, 1732, 866, 433, 1300, 650, 325,
                                                                           976, 488, 244, 122, 61, 184, 92, 46, 23, 70,
-                                                                            35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1])
+                                                                            35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1))
         
     def test_exception_with_input(self):
         with mock.patch.object(builtins, 'input', lambda _: 'one'):
