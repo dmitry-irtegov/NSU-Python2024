@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caesar Cipher Decoder</title>
+</head>
+<body>
+    <h1>Caesar Cipher Decoder</h1>
+    <form method="post">
+        <label for="text">Enter Encrypted Text:</label><br>
+        <input type="text" id="text" name="text" value="{{ original_text }}"><br><br>
+        <label for="language">Choose Language:</label><br>
+        <select name="language" id="language">
+            <option value="en">English</option>
+            <option value="ru">Russian</option>
+        </select><br><br>
+        <input type="submit" value="Decode">
+    </form>
+    {% if decrypted_text %}
+        <h2>Decrypted Text:</h2>
+        <p>{{ decrypted_text }}</p>
+        <p>Shift used: {{ shift }}</p>
+    {% endif %}
+</body>
+</html>
