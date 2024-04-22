@@ -1,3 +1,5 @@
+import sys
+
 
 BLOCK_SIZE = 10000  # Reading 10,000 characters at a time
 
