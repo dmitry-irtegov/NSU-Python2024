@@ -5,15 +5,17 @@ import unittest
 def factorize(x):
     multipliers = []
     upper_bound = math.ceil(math.sqrt(x + 1))
-    for i in range(2, upper_bound):
+    i = 2
+    while i <= upper_bound and x > 1:
         m = [i, 0]
         while x % i == 0:
             m[1] += 1
             x //= i
         if m[1] != 0:
             multipliers.append(m)
+        i += 1
 
-    if x != 1:
+    if x > 1:
         multipliers.append([x, 1])
 
     return multipliers
