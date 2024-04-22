@@ -1,25 +1,15 @@
 import unittest
 
 
-def prime_factorization(number):
+def prime_factorization(n):
     result = []
-    primes = []
     i = 2
-    n = number
     while i * i <= n:
-        f = True
-        for prime in primes:
-            if prime * prime > i:
-                break
-            if i % prime == 0:
-                f = False
-                break
-        if f and n % i == 0:
-            primes.append(i)
-            step = [i, 0]
-            while n % i == 0:
-                step[1] += 1
-                n //= i
+        step = [i, 0]
+        while n % i == 0:
+            step[1] += 1
+            n //= i
+        if step[1] != 0:
             result.append(step)
         i += 1
     if n != 1:
