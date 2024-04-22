@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import sys
 
-def count_bytes():
+
+def bytes_hist():
     byte_counts = {}
     bytes_amount = 0
 
@@ -28,8 +29,9 @@ def count_bytes():
 
     return byte_counts, bytes_amount
 
+
 if __name__ == '__main__':
-    counts, amount = count_bytes()
+    counts, amount = bytes_hist()
     print('Statistics:')
     for byte, count in sorted(filter(lambda pair: pair[1] > 0, counts.items()), key = lambda pair: -pair[1]):
         print(f'{hex(byte)} :: {count * 100 / amount:5.2f}% ({count})')
