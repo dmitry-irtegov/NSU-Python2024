@@ -2,7 +2,7 @@ import unittest
 import unittest.mock as mock
 import builtins
 
-def collatz_conjecture(n):
+def collatz_conjecture(n : int):
     yield n
     while True:
         if (n == 1):
