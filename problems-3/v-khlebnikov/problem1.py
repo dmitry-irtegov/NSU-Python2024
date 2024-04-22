@@ -2,47 +2,47 @@ import unittest
 
 
 class Table:
-    def __init__(self, table: list):
-        self.table = table
+    def __init__(self, table):
+        self._table = table
 
     def __str__(self):
-        return str(self.table)
+        return str(self._table)
 
     def __eq__(self, other):
         if not isinstance(other, Table):
             return False
-        return self.table == other.table
+        return self._table == other._table
 
     def tail(self, n):
         if n < 0:
             raise ValueError("Argument must be positive")
-        return Table(self.table[-n:])
+        return Table(self._table[-n:])
 
     def head(self, n):
         if n < 0:
             raise ValueError("Argument must be positive")
-        return Table(self.table[:n])
-
-    def get_column(self, n):
-        return [row[n] for row in self.table]
+        return Table(self._table[:n])
 
     def get_rows(self, indexes):
-        return Table([self.table[i] for i in indexes])
+        return Table([self._table[i] for i in indexes])
+
+    def __get_column(self, n):
+        return [row[n] for row in self._table]
 
     def get_columns(self, indexes):
-        return Table([self.get_column(i) for i in indexes])
+        return Table([self.__get_column(i) for i in indexes])
 
     def join_by_rows(self, other):
         if not isinstance(other, Table):
             return False
-        return Table(self.table + other.table)
+        return Table(self._table + other._table)
 
     def join_by_columns(self, other):
         if not isinstance(other, Table):
             return False
-        new_table = Table([row + other_row for (row, other_row) in zip(self.table, other.table)])
-        new_table.table += other.table[len(self.table):] if len(other.table) > len(self.table) else self.table[
-                                                                                                    len(other.table):]
+        new_table = Table([row + other_row for (row, other_row) in zip(self._table, other._table)])
+        new_table._table += other._table[len(self._table):] if len(other._table) > len(self._table) else self._table[
+                                                                                                         len(other._table):]
         return new_table
 
 
