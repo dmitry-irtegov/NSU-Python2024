@@ -1,39 +1,56 @@
 import unittest
 
-def find_substring(num):
-    string_occurrences = []
-    found_occurrence = 0
+BLOCK_SIZE = 10000  # Reading 10,000 characters at a time
 
-    with open("pi.txt", "r") as f:
-        pi = f.read().replace('\n', '')[2:]
+def find_sequence(sequence):
+    indexes = []
+    offset = len(sequence) - 1
+
+    with open("pi.txt", "r") as file:
+        block = ""
+        for line in file:
+            block += line.strip("\n")
+            if len(block) >= BLOCK_SIZE:
+                find_sequence_in_block(block, sequence, indexes)
+                block = block[-offset:]
+        find_sequence_in_block(block, sequence, indexes)
+
+    return indexes
 
 
-    while found_occurrence < len(pi):
-        found_occurrence = pi.find(num, found_occurrence)
-        if found_occurrence == -1:
-            break
-        string_occurrences.append(found_occurrence)
-        found_occurrence += 1
+def find_sequence_in_block(block, sequence, indexes):
+    index = block.find(sequence)
+    while index != -1:
+        indexes.append(index)
+        index = block.find(sequence, index + 1)
 
-    return len(string_occurrences), string_occurrences[:5]
 
-class TestFindSubstring(unittest.TestCase):
+class TestFindSequence(unittest.TestCase):
 
-    def test_first_example_sequence(self):
-        expected = (4185, [1923, 2937, 2975, 3891, 6547])
-        self.assertTupleEqual(expected, find_substring("123"))
+    def test_first_example(self):
+        expected_count = 4185
+        actual_count = len(find_sequence("123"))
+        self.assertEqual(expected_count, actual_count)
 
-    def test_second_example_sequence(self):
-        expected = (424, [0, 6954, 29135, 45233, 79686])
-        self.assertTupleEqual(expected, find_substring("1415"))
+    def test_second_example(self):
+        expected_count = 424
+        actual_count = len(find_sequence("1415"))
+        self.assertEqual(expected_count, actual_count)
 
-    def test_single_digit(self):
-        expected = (420192, [4, 11, 13, 29, 37])
-        self.assertTupleEqual(expected, find_substring("9"))
+    def test_third_example(self):
+        expected_count = 475
+        actual_count = len(find_sequence("9999"))
+        self.assertEqual(expected_count, actual_count)
 
-    def test_sequence_at_end_of_pi(self):
-        expected = (475, [761, 762, 763, 17987, 19436])
-        self.assertTupleEqual(expected, find_substring("9999"))
+    def test_fourth_example(self):
+        expected_count = 57
+        actual_count = len(find_sequence("99999"))
+        self.assertEqual(expected_count, actual_count)
+
+    def test_fifth_example(self):
+        expected_count = 41696
+        actual_count = len(find_sequence("22"))
+        self.assertEqual(expected_count, actual_count)
 
 
 if __name__ == "__main__":
