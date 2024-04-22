@@ -48,5 +48,3 @@ class DecomposerTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-print(decompose_to_primes(36))
