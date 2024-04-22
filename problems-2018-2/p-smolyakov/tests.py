@@ -1,4 +1,3 @@
-import bytes_hist
 import unittest
 import subprocess
 
