@@ -6,10 +6,10 @@ def prime_factorization(number):
     primes = []
     i = 2
     n = number
-    while i * i <= number and n != 1:
+    while i * i <= n:
         f = True
         for prime in primes:
-            if prime*prime > i:
+            if prime * prime > i:
                 break
             if i % prime == 0:
                 f = False
@@ -22,8 +22,8 @@ def prime_factorization(number):
                 n //= i
             result.append(step)
         i += 1
-    if len(result) == 0:
-        result.append([number, 1])
+    if n != 1:
+        result.append([n, 1])
     return result
 
 
