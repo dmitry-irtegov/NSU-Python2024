@@ -6,7 +6,7 @@ import sys
 def get_file_size(name):
     try:
         return os.stat(name).st_size
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         return -1
 
 
