@@ -11,33 +11,21 @@ def list_sorted_dir(dir_path: str) -> None:
     except BaseException as e:
         raise type(e)(f"Tried to list a directory '{dir_path}': {e}") from e
 
-    def is_file(filename: str) -> bool:
+    files: list[str] = []
+    for element in elements:
         try:
-            return os.path.isfile(construct_filepath(filename))
-        except BaseException as e:
-            raise type(e)(
-                f"Tried to get metainformation of file '{filename}': {e}"
-            ) from e
-
-    files: list[str] = list(filter(is_file, elements))
+            if os.path.isfile(construct_filepath(element)):
+                files.append(element)
+        except BaseException:
+            pass
 
     def get_file_size(filename: str) -> int:
-        try:
-            return os.stat(construct_filepath(filename)).st_size
-        except BaseException as e:
-            raise type(e)(
-                f"Tried to get metainformation of file '{filename}': {e}"
-            ) from e
+        return os.stat(construct_filepath(filename)).st_size
 
     files.sort(key=get_file_size, reverse=True)
 
     for filename in files:
-        try:
-            print(filename, os.stat(construct_filepath(filename)).st_size)
-        except BaseException as e:
-            raise type(e)(
-                f"Tried to get metainformation of file '{filename}': {e}"
-            ) from e
+        print(filename, os.stat(construct_filepath(filename)).st_size)
 
 
 def main(args: list[str]) -> int:
