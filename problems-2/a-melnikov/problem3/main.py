@@ -1,8 +1,9 @@
 import os
 import sys
+from typing import TextIO
 
 
-def list_sorted_dir(dir_path: str) -> None:
+def list_sorted_dir(dir_path: str, errfile: TextIO) -> None:
     def construct_filepath(filename: str) -> str:
         return os.path.join(dir_path, filename)
 
@@ -14,10 +15,12 @@ def list_sorted_dir(dir_path: str) -> None:
     files: list[str] = []
     for element in elements:
         try:
-            if os.path.isfile(construct_filepath(element)):
+            filepath: str = construct_filepath(element)
+            os.stat(filepath)
+            if os.path.isfile(filepath):
                 files.append(element)
         except BaseException:
-            pass
+            print(f"File '{element}' is not accessible", file=errfile)
 
     def get_file_size(filename: str) -> int:
         return os.stat(construct_filepath(filename)).st_size
@@ -34,7 +37,7 @@ def main(args: list[str]) -> int:
         return -1
 
     try:
-        list_sorted_dir(args[1])
+        list_sorted_dir(args[1], sys.stderr)
     except BaseException as e:
         print(e, file=sys.stderr)
         return -1
