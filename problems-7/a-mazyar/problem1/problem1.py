@@ -16,7 +16,7 @@ def is_wiki_normal(wiki_link: str) -> bool:
     return 'href' in wiki_link.attrs and wiki_link['href'].find("/wiki/") != -1
 
 def remove_parentheses(text: str) -> str:
-    return regex.sub("(?![^<]*<\/a>)\(([^()]|(?R))*\)", "", text)
+    return regex.sub(r"(?![^<]*<\/a>)\(([^()]|(?R))*\)", "", text)
 
 def seek_philosopy(article: str) -> str:
     result = (article, )
