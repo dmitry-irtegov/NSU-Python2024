@@ -4,7 +4,7 @@ import problem1
 test_output = []
 
 def custom_print(*ins, **args):
-    word = ins[0] + ins[1]
+    word = ins[0] + ins[1] + ins[2]
     test_output.append(word)
     
 class Test_mixer(unittest.TestCase):
@@ -15,6 +15,14 @@ class Test_mixer(unittest.TestCase):
     def test_abc(self):
         problem1.mixer("Hello,   world!", 'abc', how_to_print = custom_print)
         self.assertEqual(test_output, ['Hello,', 'wlord!'])
+        
+    def test_punctuations_abc(self):
+        problem1.mixer("((Hello,)   world!)", 'abc', how_to_print = custom_print)
+        self.assertEqual(test_output, ['((Hello,)', 'wlord!)'])
+        
+    def test_punctuations_random(self):
+        problem1.mixer("..,Hi,.,.,.   ????all!", 'abc', how_to_print = custom_print)
+        self.assertEqual(test_output, ['..,Hi,.,.,.', '????all!'])
         
     def test_short_words(self):
         problem1.mixer("Hey how are you?", 'random', how_to_print = custom_print)

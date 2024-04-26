@@ -18,7 +18,24 @@ def abc_mix(word, length):
     for index, letter in enumerate(letters):
         word_list[index+1] = letter
     return ''.join(word_list)
-    
+
+def preprocessing(word):
+    begin_index = 0
+    punctuations_start = ''
+    while not word[begin_index].isalpha():
+        begin_index = begin_index + 1
+    if begin_index > 0:
+        punctuations_start = word[0:begin_index]
+        word = word[begin_index:]
+    end_index = 0
+    punctuations_end = ''
+    length = len(word)
+    while end_index < length and word[end_index].isalpha():
+        end_index = end_index + 1
+    if end_index != len(word):
+        punctuations_end = word[end_index:]
+        word = word[0:end_index]
+    return punctuations_start, punctuations_end, word
 
 def mixer(string, mode, how_to_print = print):
     if mode == '' or mode is None:
@@ -28,27 +45,21 @@ def mixer(string, mode, how_to_print = print):
     
     if mode == 'random':
         for word in string.split():
-            punctuation_mark = ''
-            if not(word.isalpha()):
-                punctuation_mark = word[-1]
-                word = word[0:len(word)-1]
+            p_start, p_end, word = preprocessing(word)
             length = len(word)
             if length > 3:
-                how_to_print(random_mix(word, length), punctuation_mark, sep = '', end = ' ')
+                how_to_print(p_start, random_mix(word, length), p_end, sep = '', end = ' ')
             else:
-                how_to_print(word, punctuation_mark, sep = '', end = ' ')
+                how_to_print(p_start, word, p_end, sep = '', end = ' ')
                 
     if mode == 'abc':
         for word in string.split():
-            punctuation_mark = ''
-            if not(word.isalpha()):
-                punctuation_mark = word[-1]
-                word = word[0:len(word)-1]
+            p_start, p_end, word = preprocessing(word)
             length = len(word)
             if length > 3:
-                how_to_print(abc_mix(word, length), punctuation_mark, sep = '', end = ' ')
+                how_to_print(p_start, abc_mix(word, length), p_end, sep = '', end = ' ')
             else:
-                how_to_print(word, punctuation_mark, sep = '', end = ' ')
+                how_to_print(p_start, word, p_end, sep = '', end = ' ')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
