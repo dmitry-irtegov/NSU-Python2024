@@ -9,8 +9,15 @@ def decompose_to_primes(n : int):
     
     result = []
     
-    k = 1
-    for factor in range(2, int(sqrt(num)) + 1, k):
+    power = 0
+    while num % 2 == 0:
+        num //= 2
+        power += 1
+                
+    if (power != 0):
+        result.append((2, power)) 
+
+    for factor in range(3, int(sqrt(num)) + 1, 2):
         power = 0
         while num % factor == 0:
             num //= factor
@@ -20,9 +27,6 @@ def decompose_to_primes(n : int):
             continue
         else:
             result.append((factor, power))
-
-        if factor == 3: 
-            k = k + 1
 
     if abs(n) > 1 and result == []:
         return ((abs(n), 1))
