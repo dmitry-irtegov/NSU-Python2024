@@ -23,6 +23,7 @@ class TestPythagoreanTriplets(unittest.TestCase):
         actual_triplets = pythagorean_triplets(500)
         self.assertEqual(len(actual_triplets), 386)
         for triplet in actual_triplets:
+            self.assertTrue(triplet[2] > triplet[1] >= triplet[0])
             self.assertEqual(triplet[0] ** 2 + triplet[1] ** 2, triplet[2] ** 2)
             self.assertTrue(triplet[2] <= 500)
 
