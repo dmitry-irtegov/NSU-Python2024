@@ -1,5 +1,5 @@
 import unittest
-from table import load_table
+from table import Table, load_table
 
 
 class TestTableMethods(unittest.TestCase):
