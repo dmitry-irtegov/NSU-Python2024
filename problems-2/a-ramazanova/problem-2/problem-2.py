@@ -14,12 +14,12 @@ def make_dictionary(path):
                         result[translation].append(word)
                     else:
                         result[translation] = [word]
-    except Exception as e:
+    except OSError as e:
         raise OSError("Error reading " + str(e))
     try:
         with open(f'{path.replace(".txt", "")}_output.txt', 'w') as output_file:
             output_file.write('\n'.join(f'{word} - {", ".join(sorted(result[word]))}' for word in sorted(result)))
-    except Exception as e:
+    except OSError as e:
         raise OSError('Error writing ' + str(e))
 
 
