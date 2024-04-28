@@ -1,5 +1,4 @@
 from time import sleep, perf_counter
-from inspect import signature
 import unittest
 
 class FastHashCol(list):
