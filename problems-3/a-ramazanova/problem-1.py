@@ -125,7 +125,7 @@ class TestTable(unittest.TestCase):
 
     def test_invalid_data(self):
         with self.assertRaises(ValueError):
-            invalid_table = Table(self.invalid_data)
+            Table(self.invalid_data)
 
 
 if __name__ == '__main__':
