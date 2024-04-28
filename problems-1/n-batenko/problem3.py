@@ -25,7 +25,7 @@ def collatz_string():
         raise Exception("Value Error: Invalid number on input. Try positive integer.")
     
     result = ""
-    for num in tuple(collatz_conjecture(n)):
+    for num in collatz_conjecture(n):
         result += str(num)
         if (num != 1):
             result += ' -> '
@@ -62,7 +62,7 @@ class CollatzConjectureTests(unittest.TestCase):
                                                                           976, 488, 244, 122, 61, 184, 92, 46, 23, 70,
                                                                             35, 106, 53, 160, 80, 40, 20, 10, 5, 16, 8, 4, 2, 1))
         
-    def test_exception_with_input(self):
+    def test_wrong_input_exception(self):
         with mock.patch.object(builtins, 'input', lambda _: 'one'):
             with self.assertRaises(Exception) as context:
                  collatz_string()
