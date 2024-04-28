@@ -87,6 +87,5 @@ def main():
         tables = [load_table(file) for file in args.files]
         print(tables[0].append_columns(tables[1]))
 
-
 if __name__ == "__main__":
     main()
