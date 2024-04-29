@@ -4,15 +4,16 @@ import unittest
 BLOCK_SIZE = 12345
 
 
-def print_pi_positions(counter, positions):
-    print(f"Found {counter} results.")
-    if counter > 0:
+def print_pi_positions(positions):
+    count = len(positions)
+    print(f"Found {count} results.")
+    if count > 0:
         print(f"Positions: {positions[0]} ", end="")
         internal_counter = 1
-        while internal_counter < 5 and counter - internal_counter > 0:
+        while internal_counter < 5 and count - internal_counter > 0:
             print(positions[internal_counter], end=" ")
             internal_counter += 1
-        if counter > 5:
+        if count > 5:
             print("...", end="")
         print()
 
@@ -69,7 +70,7 @@ class TestPiFinder(unittest.TestCase):
         positions = find_positions_in_pi("1415", 'pi.txt')
         self.assertEqual(424, len(positions))
         self.assertEqual([0, 6954, 29135, 45233, 79686], positions[:5])
-
+    
 
 if __name__ == '__main__':
     unittest.main()
