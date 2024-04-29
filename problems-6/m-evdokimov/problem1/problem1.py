@@ -5,7 +5,7 @@ import re
 def random_mix(word, length):
     word_list = list(word)
     letters = word_list[1:length-1]
-    for index, l in enumerate(word[1:length-1]):
+    for index, letter in enumerate(word[1:length-1]):
         rand_index = random.randint(0, len(letters)-1)
         word_list[index+1] = (letters[rand_index])
         letters.pop(rand_index)
@@ -22,12 +22,12 @@ def preprocessing(word):
     punct_start = re.search(r'\W+\b', word)
     punct_end = re.search(r'\b\W+', word)
     
-    if punct_start == None:
+    if punct_start is None:
         punct_start = ''
     else:
         punct_start = punct_start[0]
         
-    if punct_end == None:
+    if punct_end is None:
         punct_end = ''
     else:
         punct_end = punct_end[0]
