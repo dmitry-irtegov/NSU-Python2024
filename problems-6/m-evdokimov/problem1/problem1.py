@@ -1,10 +1,11 @@
 import random
 import argparse
+import re
 
 def random_mix(word, length):
     word_list = list(word)
     letters = word_list[1:length-1]
-    for index, letter in enumerate(word[1:length-1]):
+    for index, l in enumerate(word[1:length-1]):
         rand_index = random.randint(0, len(letters)-1)
         word_list[index+1] = (letters[rand_index])
         letters.pop(rand_index)
@@ -12,30 +13,26 @@ def random_mix(word, length):
     
 
 def abc_mix(word, length):
-    word_list = list(word)
-    letters = word_list[1:length-1]
+    letters = list(word)[1:length-1]
     letters.sort(key = str.lower)
-    for index, letter in enumerate(letters):
-        word_list[index+1] = letter
-    return ''.join(word_list)
+    return word[0] + ''.join(letters) + word[-1]
 
 def preprocessing(word):
-    begin_index = 0
-    punctuations_start = ''
-    while not word[begin_index].isalpha():
-        begin_index = begin_index + 1
-    if begin_index > 0:
-        punctuations_start = word[0:begin_index]
-        word = word[begin_index:]
-    end_index = 0
-    punctuations_end = ''
-    length = len(word)
-    while end_index < length and word[end_index].isalpha():
-        end_index = end_index + 1
-    if end_index != len(word):
-        punctuations_end = word[end_index:]
-        word = word[0:end_index]
-    return punctuations_start, punctuations_end, word
+    letters = re.search(r'\w+', word)
+    punct_start = re.search(r'\W+\b', word)
+    punct_end = re.search(r'\b\W+', word)
+    
+    if punct_start == None:
+        punct_start = ''
+    else:
+        punct_start = punct_start[0]
+        
+    if punct_end == None:
+        punct_end = ''
+    else:
+        punct_end = punct_end[0]
+        
+    return punct_start, punct_end, letters[0]
 
 def mixer(string, mode, how_to_print = print):
     if mode == '' or mode is None:
