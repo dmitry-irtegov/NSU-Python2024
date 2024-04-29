@@ -25,7 +25,7 @@ def find_positions_in_pi(x, file_path):
         exit(1)
     else:
         with file:
-            s = "".join(map(lambda line: line.strip(), file.readlines()))
+            s = "".join(map(lambda line: line.strip(), file.readlines()))[2:]
             index = s.find(x)
             while index != -1:
                 if counter < 5:
