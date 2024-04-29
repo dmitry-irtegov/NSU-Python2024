@@ -1,4 +1,6 @@
 import os
+import sys
+import traceback
 import unittest
 
 
@@ -15,12 +17,12 @@ def make_dictionary(path):
                     else:
                         result[translation] = [word]
     except OSError as e:
-        raise OSError("Error reading " + str(e))
+        raise OSError('Error in reading file') from e
     try:
         with open(f'{path.replace(".txt", "")}_output.txt', 'w') as output_file:
             output_file.write('\n'.join(f'{word} - {", ".join(sorted(result[word]))}' for word in sorted(result)))
     except OSError as e:
-        raise OSError('Error writing ' + str(e))
+        raise OSError('Error in writing file') from e
 
 
 class TestWriteToFile(unittest.TestCase):
