@@ -40,11 +40,14 @@ def print_dict_to_file(some_dict, filename):
         raise
 
 try:   
-    latin_english_dict = revers_dict(read_dict_file('input_ask_2.txt'))
+    latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
     print_dict_to_file(latin_english_dict, 'output_task_2.txt')
 except Exception as e:
-    print(e.additional_info, file=sys.stderr)
-    print(e, file=sys.stderr)
+    if (hasattr(e, 'additional_info')):
+        print(e.additional_info, file=sys.stderr)
+        print(e, file=sys.stderr)
+    else:
+        print("Unexpected error", file=sys.stderr)
 
 
 ###
