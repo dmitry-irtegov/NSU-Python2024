@@ -1,4 +1,5 @@
 import argparse
+import humanize
 import os
 import sys
 
@@ -6,23 +7,9 @@ import sys
 def get_file_size(name):
     try:
         return os.stat(name).st_size
-    except BaseException:
-        return -1
-
-
-def bytes_to_string(b):
-    if not isinstance(b, (int, float)):
-        print("Argument must be a number", file=sys.stderr)
-        return ""
-    if b < 0:
-        return "-1"
-
-    size_unit = ['B', 'KB', 'MB', 'GB', 'TB']
-    unit = 0
-    while b >= 1024 and unit < len(size_unit) - 1:
-        b = b / 1024
-        unit = unit + 1
-    return "{:8.1f}".format(b) + " " + size_unit[unit]
+    except BaseException as e:
+        print("Cannot access " + name + ": Permission denied: ", e, file=sys.stderr)
+        return 0
 
 
 def print_files(path):
@@ -38,9 +25,10 @@ def print_files(path):
                 files[f] = get_file_size(p)
         files = sorted(files.items(), key=lambda x: x[1], reverse=True)
         for f in files:
-            print('{:{val}}'.format(f[0], val=longest_string_size) + " size: " + bytes_to_string(f[1]))
+            file_size_string = "{:8}".format(humanize.naturalsize(f[1]))
+            print('{:{val}}'.format(f[0], val=longest_string_size) + " size: " + file_size_string)
     except BaseException as e:
-        print("Caught unhandled exception while execution:" + e.filename, file=sys.stderr)
+        print("Caught unhandled exception while execution:", e, file=sys.stderr)
         exit(1)
 
 
