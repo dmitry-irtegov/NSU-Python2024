@@ -26,7 +26,7 @@ def wiki_searcher(start_link):
                 print("Философия!")
                 work_flag = False
             time.sleep(2)
-            #print(next_link)
+            print(next_link)
             content = requests.get('https://ru.wikipedia.org' + next_link).text
 
 class MyHTMLParser(HTMLParser):
@@ -53,6 +53,8 @@ class MyHTMLParser(HTMLParser):
         
         if self.link_flag and tag == 'a' and not self.table_flag:
             for atr, value in attrs:
+                if value.find('#cite') != -1:
+                    break
                 if atr == 'href':
                     self.tag = 'link'
                     self.next_link = value
@@ -83,10 +85,11 @@ class MyHTMLParser(HTMLParser):
         
         raise StopIteration(self.title, self.next_link)
 
-#start_link = 'https://ru.wikipedia.org/wiki/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%B0%D0%B2%D0%B5%D0%BB%D1%8C%D0%B5%D0%B2%D0%B0_(%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0)'
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("start_link", help="enter your start link here")
     args = parser.parse_args()
-    wiki_searcher(args.start_link)
+    try:
+        wiki_searcher(args.start_link)
+    except Exception as e:
+        print(e)
