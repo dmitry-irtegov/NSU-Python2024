@@ -23,9 +23,19 @@ def find_positions_in_pi(x, file_path):
     except FileNotFoundError:
         print(f"File '{file_path}' not found", file=sys.stderr)
         exit(1)
+    except PermissionError:
+        print(f"Cannot access file '{file_path}': permission denied", file=sys.stderr)
+        exit(1)
+    except IsADirectoryError:
+        print(f"Cannot open file '{file_path}': cause it's a directory", file=sys.stderr)
+        exit(1)
     else:
         with file:
-            s = "".join(map(lambda line: line.strip(), file.readlines()))[2:]
+            try:
+                s = "".join(map(lambda line: line.strip(), file.readlines()))[2:]
+            except IOError as e:
+                print(f"Trying to read from file '{file_path}', but IOError occured: ", e, file=sys.stderr)
+                exit(1)
             index = s.find(x)
             while index != -1:
                 if counter < 5:
