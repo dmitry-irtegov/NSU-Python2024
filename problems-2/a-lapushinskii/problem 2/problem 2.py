@@ -22,7 +22,9 @@ def read_dict_file(file_path):
                 input_dict[english] = latin_translations.split(', ')
         return input_dict
     except Exception as e:
-        raise OSError("Error reading the file: " +  str(e))
+        print("Error reading the file")
+        e.additional_info = "Error reading the file"
+        raise
     
 def print_dict_to_file(some_dict, filename):
     sorted_dict = dict(sorted(some_dict.items()))
@@ -35,7 +37,9 @@ def print_dict_to_file(some_dict, filename):
                 if latin_words: 
                     file.write(f"{latin_words[-1]}\n")
     except Exception as e:
-        raise OSError("Error saving the result: " + str(e))
+        print("Error saving the result")
+        e.additional_info = "Error saving the result"
+        raise
 
 try:   
     latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
