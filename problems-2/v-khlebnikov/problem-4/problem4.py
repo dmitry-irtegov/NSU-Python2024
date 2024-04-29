@@ -1,6 +1,8 @@
 import sys
 import unittest
 
+BLOCK_SIZE = 12345
+
 
 def print_pi_positions(counter, positions):
     print(f"Found {counter} results.")
@@ -15,9 +17,10 @@ def print_pi_positions(counter, positions):
         print()
 
 
-def find_positions_in_pi(x, file_path):
-    counter = 0
-    answers = [0] * 5
+def find_positions_in_pi(substring, file_path):
+    positions = []
+    offset = len(substring) - 1
+
     try:
         file = open(file_path, "r")
     except FileNotFoundError:
@@ -32,31 +35,40 @@ def find_positions_in_pi(x, file_path):
     else:
         with file:
             try:
-                s = "".join(map(lambda line: line.strip(), file.readlines()))[2:]
+                block = ""
+                lower_bound = 0
+                for line in file:
+                    block += line.strip()
+                    if len(block) >= BLOCK_SIZE:
+                        find_positions_in_block(block, positions, substring, lower_bound)
+                        lower_bound += len(block) - offset
+                        block = block[-offset:]
+                find_positions_in_block(block, positions, substring, lower_bound)
             except IOError as e:
                 print(f"Trying to read from file '{file_path}', but IOError occured: ", e, file=sys.stderr)
                 exit(1)
-            index = s.find(x)
-            while index != -1:
-                if counter < 5:
-                    answers[counter] = index
-                counter += 1
-                index = s.find(x, index + 1)
 
-    return counter, answers
+    return positions
+
+
+def find_positions_in_block(block, positions, substring, lower_bound):
+    index = block.find(substring)
+    while index != -1:
+        positions.append(index + lower_bound)
+        index = block.find(substring, index + 1)
 
 
 class TestPiFinder(unittest.TestCase):
 
     def test_first(self):
-        counter, positions = find_positions_in_pi("123", 'pi.txt')
-        self.assertEqual(4185, counter)
-        self.assertEqual([1923, 2937, 2975, 3891, 6547], positions)
+        positions = find_positions_in_pi("123", 'pi.txt')
+        self.assertEqual(4185, len(positions))
+        self.assertEqual([1923, 2937, 2975, 3891, 6547], positions[:5])
 
     def test_second(self):
-        counter, positions = find_positions_in_pi("1415", 'pi.txt')
-        self.assertEqual(424, counter)
-        self.assertEqual([0, 6954, 29135, 45233, 79686], positions)
+        positions = find_positions_in_pi("1415", 'pi.txt')
+        self.assertEqual(424, len(positions))
+        self.assertEqual([0, 6954, 29135, 45233, 79686], positions[:5])
 
 
 if __name__ == '__main__':
