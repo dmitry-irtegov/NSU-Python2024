@@ -20,7 +20,7 @@ def decode_caesar_with_spellcheck(ciphertext, language_name='en'):
             min_mistakes = mistakes
             best_shift = shift
 
-    return cipher_provider.decode(ciphertext, best_shift, language), best_shift
+    return cipher_provider.decode(ciphertext, best_shift, language), language.get_alphabet_power() - best_shift
 
 
 @app.route('/', methods=['GET', 'POST'])
