@@ -74,10 +74,6 @@ class TranslatorTests(unittest.TestCase):
         tr = Translator('', '')
         self.assertEqual(tr.translate(''), '')
 
-
-    def test_meaningful(self):
-        tr = Translator('', '')
-        self.assertEqual(tr.translate(''), '')
         
     def test_complex(self):
         tr = Translator('abc', 'def', 'def')
