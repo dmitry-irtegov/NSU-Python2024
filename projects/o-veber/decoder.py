@@ -2,6 +2,7 @@ import argparse
 
 from CaesarCipherProvider import CaesarCipherProvider
 
+
 def caesar_decipher(text, shift, lang):
     """
     Функция декодирует текст, закодированный с помощью шифра Цезаря.
@@ -24,6 +25,7 @@ def caesar_decipher(text, shift, lang):
             decoded[i] = letter
 
     return ''.join(decoded)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
