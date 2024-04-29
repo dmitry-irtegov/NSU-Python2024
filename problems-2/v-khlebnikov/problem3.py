@@ -6,7 +6,7 @@ import sys
 def get_file_size(name):
     try:
         return os.stat(name).st_size
-    except FileNotFoundError:
+    except BaseException:
         return -1
 
 
@@ -39,8 +39,8 @@ def print_files(path):
         files = sorted(files.items(), key=lambda x: x[1], reverse=True)
         for f in files:
             print('{:{val}}'.format(f[0], val=longest_string_size) + " size: " + bytes_to_string(f[1]))
-    except FileNotFoundError as e:
-        print("Trying to get directories in current path, but path doesn't exist: " + e.filename, file=sys.stderr)
+    except BaseException as e:
+        print("Caught unhandled exception while execution:" + e.filename, file=sys.stderr)
         exit(1)
 
 
