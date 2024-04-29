@@ -54,7 +54,7 @@ def load_table(file_path, delimiter='\t'):
             data = [line.strip().split(delimiter) for line in file.readlines()]
         return Table(data)
     except OSError as e:
-        raise OSError("Error reading " + str(e))
+        raise OSError('Error in reading file') from e
 
 
 def main():
