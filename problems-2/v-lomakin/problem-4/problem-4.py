@@ -17,18 +17,12 @@ def findPos (sub):
     while (x != -1):
         list.append(x - 1)
         x = pi.find(sub, x+1)
-    cnt = len(list)
-    print(f"Found {cnt} results.\n")
-    if cnt < 5 :
+    count = len(list)
+    print(f"Found {count} results.\n")
+    if count < 5:
         print(f"Positions: {list}\n")
-    else :
-        newList = []
-        for i in list[:5]:
-            newList.append(i)
-        print(f"Positions: {newList}\n")
-        
-    file.close()
-    return list
+    else:
+        print(f"Positions: {list[:5]}\n")
 
 class TestsFindPosition(unittest.TestCase):
     def test_qwerty(self):
@@ -54,4 +48,3 @@ class TestsFindPosition(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    origPrint(result)
