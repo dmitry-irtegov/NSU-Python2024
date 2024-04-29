@@ -18,6 +18,7 @@ def bytes_hist():
             sys.exit(1)
         except BaseException as e:
             print(f'Met {repr(e)} while reading from stdin, exiting', file=sys.stderr)
+            sys.exit(1)
 
         if not chunk:
             break
