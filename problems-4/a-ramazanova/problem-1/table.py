@@ -10,10 +10,12 @@ class Table:
         return self._data
 
     def _validate_data(self):
-        if not all(isinstance(row, list) for row in self._data):
+        if not isinstance(self._data, list) or not all(isinstance(row, list) for row in self._data):
             raise ValueError("Table data must be a list of lists")
-        if len(set(len(row) for row in self._data)) != 1:
-            raise ValueError("All rows in the table must have the same length")
+        if self._data:
+            row_len = len(self._data[0])
+            if any(len(row) != row_len for row in self._data):
+                raise ValueError("All rows in the table must have the same length")
 
     def head(self, n):
         return Table(self._data[:n])
