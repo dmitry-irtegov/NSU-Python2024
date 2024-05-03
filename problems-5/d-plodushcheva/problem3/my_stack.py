@@ -4,30 +4,30 @@ import unittest
 class Stack:
     def __init__(self, elements=None):
         if elements is None:
-            self.elements = []
+            self.__elements = []
         else:
-            self.elements = elements
+            self.__elements = elements
 
     def push(self, item):
-        self.elements.append(item)
+        self.__elements.append(item)
 
     def pop(self):
         if not self.is_empty():
-            return self.elements.pop()
+            return self.__elements.pop()
         else:
             raise IndexError("Cannot pop from an empty stack")
 
     def is_empty(self):
-        return len(self.elements) == 0
+        return len(self.__elements) == 0
 
     def peek(self):
         if not self.is_empty():
-            return self.elements[-1]
+            return self.__elements[-1]
         else:
             raise IndexError("Cannot peek on an empty stack")
 
     def __len__(self):
-        return len(self.elements)
+        return len(self.__elements)
 
 
 class TestStack(unittest.TestCase):
