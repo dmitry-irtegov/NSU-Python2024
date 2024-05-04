@@ -1,50 +1,46 @@
 import unittest
-result = ""
 
-def myPrint(x, **kvarg):
-    global result
-    if isinstance(x, str):
-        result = result + x
-
-origPrint = print
-print = myPrint
-
-def findPos (sub):
+def findpos(sub):
     with open('pi.txt', 'r') as file:
         pi = ''.join(line.strip() for line in file)
-    list = []
+    positions = []
     x = pi.find(sub)
-    while (x != -1):
-        list.append(x - 1)
-        x = pi.find(sub, x+1)
-    count = len(list)
-    print(f"Found {count} results.\n")
+    while x != -1:
+        positions.append(x - 1)
+        x = pi.find(sub, x + 1)
+    count = len(positions)
+    print(f"found {count} results.\n")
     if count < 5:
-        print(f"Positions: {list}\n")
+        print(f"positions: {positions}\n")
     else:
-        print(f"Positions: {list[:5]}\n")
+        print(f"positions: {positions[:5]}\n")
 
 class TestsFindPosition(unittest.TestCase):
+    def setUp(self):
+        global print
+        self.orig_print = print
+        print = self.myprint
+        self.result = ''
+
+    def tearDown(self):
+        global print
+        print = self.orig_print
+
+    def myprint(self, x, **kwargs):
+        if isinstance(x, str):
+            self.result += x
+
     def test_qwerty(self):
-        global result
-        findPos("123456")
-        self.assertEqual(result,"Found 2 results.\nPositions: [2458885, 3735793]\n")
-        origPrint(result)
-        result = ""
+        findpos("123456")
+        self.assertEqual(self.result, "found 2 results.\npositions: [2458885, 3735793]\n")
 
     def test_five(self):
-        global result
-        findPos("10049")
-        self.assertEqual(result,"Found 49 results.\nPositions: [81181, 81663, 164755, 166002, 227951]\n")
-        origPrint(result)
-        result = ""
+        findpos("10049")
+        self.assertEqual(self.result, "found 49 results.\npositions: [81181, 81663, 164755, 166002, 227951]\n")
 
     def test_one(self):
-        global result
-        findPos("1")
-        self.assertEqual(result,"Found 419139 results.\nPositions: [1, 3, 37, 40, 49]\n")
-        origPrint(result)
-        result = ""
+        findpos("1")
+        self.assertEqual(self.result, "found 419139 results.\npositions: [1, 3, 37, 40, 49]\n")
 
 if __name__ == '__main__':
     unittest.main()
