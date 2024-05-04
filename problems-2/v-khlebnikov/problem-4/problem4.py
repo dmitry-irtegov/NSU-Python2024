@@ -18,6 +18,13 @@ def print_pi_positions(positions):
         print()
 
 
+def find_positions_in_block(block, positions, substring, lower_bound):
+    index = block.find(substring)
+    while index != -1:
+        positions.append(index + lower_bound)
+        index = block.find(substring, index + 1)
+
+
 def find_positions_in_pi(substring, file_path):
     positions = []
     offset = len(substring) - 1
@@ -50,13 +57,6 @@ def find_positions_in_pi(substring, file_path):
                 exit(1)
 
     return positions
-
-
-def find_positions_in_block(block, positions, substring, lower_bound):
-    index = block.find(substring)
-    while index != -1:
-        positions.append(index + lower_bound)
-        index = block.find(substring, index + 1)
 
 
 class TestPiFinder(unittest.TestCase):
