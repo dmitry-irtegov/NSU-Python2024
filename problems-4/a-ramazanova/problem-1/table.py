@@ -12,11 +12,11 @@ class Table:
 
     def _validate_data(self):
         if not isinstance(self._data, list) or not all(isinstance(row, list) for row in self._data):
-            sys.stderr.write("Table data must be a list of lists")
+            raise ValueError("Table data must be a list of lists")
         if self._data:
             row_len = len(self._data[0])
             if any(len(row) != row_len for row in self._data):
-                sys.stderr.write("All rows in the table must have the same length")
+                raise ValueError("All rows in the table must have the same length")
 
     def head(self, n):
         return Table(self._data[:n])
@@ -26,7 +26,7 @@ class Table:
 
     def select_rows(self, indices):
         if any(i >= len(self._data) for i in indices):
-            sys.stderr.write(f'Row id must be >= {len(self._data)}')
+            raise ValueError(f'Id must be < {len(self._data)}')
         selected_rows = [self._data[i] for i in indices if i < len(self._data)]
         return Table(selected_rows)
 
@@ -36,16 +36,14 @@ class Table:
 
     def append_columns(self, other_table):
         if len(self._data) != len(other_table.get_data()):
-            sys.stderr.write("Tables must have the same number of rows")
-        else:
-            combined_data = [self._data[i] + other_table.get_data()[i] for i in range(len(self._data))]
-            return Table(combined_data)
+            raise ValueError("Tables must have the same number of rows")
+        combined_data = [self._data[i] + other_table.get_data()[i] for i in range(len(self._data))]
+        return Table(combined_data)
 
     def select_columns(self, fields):
-        if any(i >= len(self._data) for i in fields):
-            sys.stderr.write(f'Column id must be >= {len(self._data)}')
-        else:
-            return Table([[row[i] for i in fields] for row in self._data])
+        if any(i >= len(self._data[0]) for i in fields):
+            raise ValueError(f'Fields must be < {len(self._data[0])}')
+        return Table([[row[i] for i in fields] for row in self._data])
 
     def __str__(self):
         return '\n'.join(['\t'.join(map(str, row)) for row in self._data])
@@ -53,14 +51,11 @@ class Table:
 
 def load_table(file_path, delimiter='\t'):
     try:
-        file = open(file_path, 'r')
-    except Exception as e:
-        sys.stderr.write(f'Error with open file: {e}')
-        exit(1)
-    else:
-        with file:
+        with open(file_path, 'r') as file:
             data = [line.strip().split(delimiter) for line in file.readlines()]
         return Table(data)
+    except Exception:
+        raise
 
 
 def main():
@@ -84,19 +79,32 @@ def main():
 
     args = parser.parse_args()
 
-    if args.command == "head":
-        table = load_table(args.file)
-        print(table.head(args.n))
-    elif args.command == "tail":
-        table = load_table(args.file)
-        print(table.tail(args.n))
-    elif args.command == "cut":
-        table = load_table(args.file)
-        fields = list(map(int, args.f.split(',')))
-        print(table.select_columns(fields))
-    elif args.command == "paste":
-        tables = [load_table(file) for file in args.files]
-        print(tables[0].append_columns(tables[1]))
+    if args.command == "paste":
+        try:
+            tables = [load_table(file) for file in args.files]
+        except Exception as e:
+            sys.stderr.write(f'An error occurred while loading the tables: {e}')
+        else:
+            try:
+                print(tables[0].append_columns(tables[1]))
+            except Exception as e:
+                sys.stderr.write(f'An error occurred while appending the tables: {e}')
+    else:
+        try:
+            table = load_table(args.file)
+        except Exception as e:
+            sys.stderr.write(f'An error occurred while loading the table: {e}')
+            exit(1)
+        if args.command == "head":
+            print(table.head(args.n))
+        elif args.command == "tail":
+            print(table.tail(args.n))
+        elif args.command == "cut":
+            fields = list(map(int, args.f.split(',')))
+            try:
+                print(table.select_columns(fields))
+            except Exception as e:
+                sys.stderr.write(f'An error occurred while selecting column: {e}')
 
 
 if __name__ == "__main__":
