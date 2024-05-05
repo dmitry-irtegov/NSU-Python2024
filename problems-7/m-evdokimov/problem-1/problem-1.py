@@ -4,13 +4,20 @@ import time
 from html.parser import HTMLParser
 
 def wiki_searcher(start_link):
+    wiki_index = start_link.find('/wiki/')
+    if wiki_index == -1:
+        raise ValueError("Your start link is not from Wiki")
+    cache = {}
     philLink = '/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F'
-    content = requests.get(start_link).text
     cnt = 0
     title_list = []
-    work_flag = True
+    next_link = start_link[wiki_index:]
     
-    while work_flag:
+    while True:
+        if next_link in cache.keys():
+            content = cache[next_link]
+        else:
+            content = requests.get('https://ru.wikipedia.org' + next_link).text
         parser = MyHTMLParser()
         try:
             parser.feed(content)
@@ -20,14 +27,12 @@ def wiki_searcher(start_link):
             cnt = cnt + 1
             if title in title_list:
                 print("Цикл!")
-                work_flag = False
+                break
             title_list.append(title)
             if next_link == philLink:
                 print("Философия!")
-                work_flag = False
+                break
             time.sleep(2)
-            print(next_link)
-            content = requests.get('https://ru.wikipedia.org' + next_link).text
 
 class MyHTMLParser(HTMLParser):
     
