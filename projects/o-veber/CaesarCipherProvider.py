@@ -27,15 +27,8 @@ class CaesarCipherProvider:
                 return alphabet[new_index]
         return letter
 
-
     def get_text_with_shift_for_language_name(self, text, shift, lang_name, shift_type):
-        language = self.find_language(lang_name)
-
-        new_text = [None] * len(text)
-        for i, letter in enumerate(text):
-            new_text[i] = self.translate(letter, shift, language, shift_type)
-
-        return ''.join(new_text)
+        return self.get_text_with_shift_for_language(text, shift, self.find_language(lang_name), shift_type)
 
     def get_text_with_shift_for_language(self, text, shift, language, shift_type):
         new_text = [None] * len(text)
