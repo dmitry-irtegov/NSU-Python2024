@@ -1,28 +1,44 @@
 import os
+import subprocess
 import sys
-import traceback
 import unittest
 
 
 def make_dictionary(path):
     try:
-        with open(path, 'r') as input_file:
-            result = dict()
-            for line in input_file.readlines():
-                line = line.strip()
-                word, translations = line.split(' - ')
-                for translation in translations.split(', '):
-                    if translation in result.keys():
-                        result[translation].append(word)
-                    else:
-                        result[translation] = [word]
-    except OSError as e:
-        raise OSError('Error in reading file') from e
+        input_file = open(path, 'r')
+    except Exception as e:
+        sys.stderr.write(f'Error with opening file: {e}')
+        exit(1)
+    else:
+        try:
+            with input_file:
+                result = dict()
+                for line in input_file.readlines():
+                    line = line.strip()
+                    word, translations = line.split(' - ')
+                    for translation in translations.split(', '):
+                        if translation in result.keys():
+                            result[translation].append(word)
+                        else:
+                            result[translation] = [word]
+        except Exception as e:
+            sys.stderr.write(f'Error while reading file: {e}')
+            exit(1)
+
     try:
-        with open(f'{path.replace(".txt", "")}_output.txt', 'w') as output_file:
-            output_file.write('\n'.join(f'{word} - {", ".join(sorted(result[word]))}' for word in sorted(result)))
-    except OSError as e:
-        raise OSError('Error in writing file') from e
+        output_file = open(f'{path.replace(".txt", "")}_output.txt', 'w')
+
+    except Exception as e:
+        sys.stderr.write(f'Error with opening file: {e}')
+        exit(1)
+    else:
+        try:
+            with output_file:
+                output_file.write('\n'.join(f'{word} - {", ".join(sorted(result[word]))}' for word in sorted(result)))
+        except Exception as e:
+            sys.stderr.write(f'Error while writing file: {e}')
+            exit(1)
 
 
 class TestWriteToFile(unittest.TestCase):
@@ -55,8 +71,10 @@ class TestWriteToFile(unittest.TestCase):
             self.assertEqual(f.read(), data)
 
     def test_exception(self):
-        with self.assertRaises(OSError):
+        with self.assertRaises(SystemExit) as cm:
             make_dictionary('test4.txt')
+
+        self.assertEqual(cm.exception.code, 1)
 
 
 if __name__ == '__main__':
