@@ -1,7 +1,13 @@
 import inspect
 import unittest
 
-class Reflection:
+class Logger:
+    
+    def __make_logger(self, method):
+        def logger(self, *args):
+            self.__add_log(method[0])
+            method[1](*args)
+        return logger
     
     def __add_log(self, method):
         self.__log.append(method)
@@ -11,23 +17,14 @@ class Reflection:
         
     def get_log(self):
         return self.__log
-        
-    def __getattr__(self, attr):
-        self.__add_log(attr)
-        for met in self.__subclass_methods:
-            if met[0] == attr:
-                return met[1]
-        raise AttributeError("No Such Attribute Exception: " + attr)
     
     def __init__(self):
         self.__log = []
-        self.__subclass_methods = []
         for met in [method for method in inspect.getmembers(type(self), predicate=callable)]:
             if not met[0].startswith('_') and met[0] != 'get_log' and met[0] != 'clear_log':
-                self.__subclass_methods.append(met)
-                delattr(type(self), met[0])
+                setattr(type(self), met[0], self.__make_logger(met))
                 
-class MyClass(Reflection):
+class MyClass(Logger):
     
     def __init__(self):
         super().__init__()
