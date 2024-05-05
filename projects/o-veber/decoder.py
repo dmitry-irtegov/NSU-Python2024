@@ -1,31 +1,6 @@
 import argparse
 
-from CaesarCipherProvider import CaesarCipherProvider
-
-
-def caesar_decipher(text, shift, lang):
-    """
-    Функция декодирует текст, закодированный с помощью шифра Цезаря.
-
-    :param text: текст для декодирования
-    :param shift: величина сдвига букв (целое число)
-    :param lang: язык текста (ru или en)
-    :return: декодированный текст
-    """
-
-    language = cipher_provider.find_language(lang)
-
-    decoded = [None] * len(text)
-    for i, letter in enumerate(text):
-        if letter in language.get_alphabet():
-            index = language.get_alphabet().index(letter)
-            new_index = (index - shift) % language.get_alphabet_power()
-            decoded[i] = language.get_alphabet()[new_index]
-        else:
-            decoded[i] = letter
-
-    return ''.join(decoded)
-
+from CaesarCipherProvider import CaesarCipherProvider, ShiftType
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -36,5 +11,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     cipher_provider = CaesarCipherProvider()
-    decoded_text = caesar_decipher(args.text, args.shift, args.lang)
+    decoded_text = cipher_provider.get_text_with_shift_for_language_name(args.text, args.shift, args.lang,
+                                                                         ShiftType.DECODE)
     print("Декодированный текст:", decoded_text)
