@@ -36,17 +36,17 @@ class TestStack(unittest.TestCase):
         self.assertGreater(len(stack_1), len(stack_2))
         
     def test_two_stacks_with_list(self):
-        l = [1, 2, 3]
-        stack_1 = Stack(l)
-        l.append(4)
-        stack_2 = Stack(l)
+        elements = [1, 2, 3]
+        stack_1 = Stack(elements)
+        elements.append(4)
+        stack_2 = Stack(elements)
         self.assertLess(len(stack_1), len(stack_2))
 
     def test_two_stacks_with_tuple(self):
-        l = (1, 2, 3)
-        stack_1 = Stack(l)
-        l += (4, )
-        stack_2 = Stack(l)
+        elements = (1, 2, 3)
+        stack_1 = Stack(elements)
+        elements += (4, )
+        stack_2 = Stack(elements)
         self.assertLess(len(stack_1), len(stack_2))
 
 
@@ -83,17 +83,17 @@ class TestValidStack(unittest.TestCase):
         self.assertGreater(len(stack_1), len(stack_2))
         
     def test_two_stacks_with_list(self):
-        l = [1, 2, 3]
-        stack_1 = ValidStack(l)
-        l.append(4)
-        stack_2 = ValidStack(l)
+        elements = [1, 2, 3]
+        stack_1 = ValidStack(elements)
+        elements.append(4)
+        stack_2 = ValidStack(elements)
         self.assertLess(len(stack_1), len(stack_2))
 
     def test_two_stacks_with_tuple(self):
-        l = (1, 2, 3)
-        stack_1 = ValidStack(l)
-        l += (4, )
-        stack_2 = ValidStack(l)
+        elements = (1, 2, 3)
+        stack_1 = ValidStack(elements)
+        elements += (4, )
+        stack_2 = ValidStack(elements)
         self.assertLess(len(stack_1), len(stack_2))
 
 
