@@ -24,27 +24,31 @@ def convert_dictionary(input_file):
             else:
                 latin_english_dict[latin_word] = [english_word]
 
-    return dict(sorted(latin_english_dict.items()))
+    return latin_english_dict
+
+
+def sorted_dict(dictionary):
+    return dict(sorted(dictionary.items()))
 
 
 class TestDictionaryConversion(TestCase):
     def test_single_word(self):
-        self.assertEqual(convert_dictionary('single_word_test.txt'), {
+        self.assertEqual(sorted_dict(convert_dictionary('single_word_test.txt')), {
             'latinword': ['englishword']
         })
 
     def test_simple(self):
-        self.assertEqual(convert_dictionary('simple_test.txt'), {
+        self.assertEqual(sorted_dict(convert_dictionary('simple_test.txt')), {
             'latinword1': ['englishword1', 'englishword2'],
             'latinword2': ['englishword1'],
             'latinword3': ['englishword2']
         })
 
     def test_empty_file(self):
-        self.assertEqual(convert_dictionary('empty_test.txt'), {})
+        self.assertEqual(sorted_dict(convert_dictionary('empty_test.txt')), {})
 
     def test_long_dictionary(self):
-        self.assertEqual(convert_dictionary('long_dictionary_test.txt'), {
+        self.assertEqual(sorted_dict(convert_dictionary('long_dictionary_test.txt')), {
             'latin1': ['english1', 'english4', 'english7', 'english10', 'english13', 'english16', 'english19'],
             'latin2': ['english1', 'english2', 'english5', 'english8', 'english11', 'english14', 'english17', 'english20'],
             'latin3': ['english1', 'english3', 'english6', 'english9', 'english12', 'english15', 'english18'],
