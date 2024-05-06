@@ -15,27 +15,31 @@ def revers_dict(input_dict):
 
 def read_dict_file(file_path):
     input_dict = {}
-    with open(file_path, 'r', encoding='utf-8') as file:
-        for line in file:
-            english, latin_translations = line.strip().split(' - ')
-            input_dict[english] = latin_translations.split(', ')
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                english, latin_translations = line.strip().split(' - ')
+                input_dict[english] = latin_translations.split(', ')
+    except Exception as e:
+        e.args += ("Error reading file: ",)
+        raise e
+    
     return input_dict
     
 def print_dict_to_file(some_dict, filename):
     sorted_dict = dict(sorted(some_dict.items()))
-    with open(filename, 'w', encoding='utf-8') as file:
-        for english, latin_words in sorted_dict.items():
-            file.write(f"{english} - ")
-            for latin in latin_words[:-1]:
-                file.write(f"{latin}, ")
-            if latin_words: 
-                file.write(f"{latin_words[-1]}\n")
+    try:
+        with open(filename, 'w', encoding='utf-8') as file:
+            for english, latin_words in sorted_dict.items():
+                file.write(f"{english} - ")
+                for latin in latin_words[:-1]:
+                    file.write(f"{latin}, ")
+                if latin_words: 
+                    file.write(f"{latin_words[-1]}\n")
+    except Exception as e:
+        e.args += ("Error writing file: ",)
+        raise e
 
-try:   
-    latin_english_dict = revers_dict(read_dict_file('inputtask_2.txt'))
-    print_dict_to_file(latin_english_dict, 'output_task_2.txt')
-except Exception as e:
-    print(str(e), file=sys.stderr)
 
 ###
 
@@ -69,5 +73,14 @@ class TestDictRevers(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    try:   
+        latin_english_dict = revers_dict(read_dict_file('input_tsk_2.txt'))
+        print_dict_to_file(latin_english_dict, 'output_task_2.txt')
+    except Exception as e:
+        if (len(e.args) == 3):
+            print(e.args[2] + str(e), file=sys.stderr)
+        else:
+            print(str(e), file=sys.stderr)
+
     unittest.main()
     
