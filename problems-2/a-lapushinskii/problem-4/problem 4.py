@@ -5,18 +5,22 @@ def find_sequences(filename, sequence, chunk_size = 4096):
     overlap = len(sequence) - 1
     positions = []
     overall_index = 0
-    with open(filename, 'r') as file:
-        chunk = file.read(chunk_size).replace("\n", "")
-        previous_tail = ''
-        while chunk:
-            working_chunk = previous_tail + chunk
-            index = working_chunk.find(sequence)
-            while index != -1:
-                positions.append(overall_index + index)
-                index = working_chunk.find(sequence, index + 1)
-            overall_index += max(len(working_chunk)-overlap, 0)
-            previous_tail = working_chunk[-overlap:]
-            chunk = file.read(chunk_size).replace("\n", "")  
+    try:
+        with open(filename, 'r') as file:
+            chunk = file.read(chunk_size).replace("\n", "")
+            previous_tail = ''
+            while chunk:
+                working_chunk = previous_tail + chunk
+                index = working_chunk.find(sequence)
+                while index != -1:
+                    positions.append(overall_index + index)
+                    index = working_chunk.find(sequence, index + 1)
+                overall_index += max(len(working_chunk)-overlap, 0)
+                previous_tail = working_chunk[-overlap:]
+                chunk = file.read(chunk_size).replace("\n", "")
+    except Exception as e:
+        e.args += ("Error reading file: ",)
+        raise e
     return positions
 
 
@@ -27,10 +31,7 @@ def find_sequences_in_pi():
     if positions:
         print(f"Positions: {' '.join(map(str, positions[:5]))} ...")
 
-try:
-    find_sequences_in_pi()
-except Exception as e:
-        print(str(e), file=sys.stderr)   
+
 
 ###
 class TestPiSequence(unittest.TestCase):
@@ -58,5 +59,12 @@ class TestPiSequence(unittest.TestCase):
         self.assertEqual(2, positions_big_chunk[0])
         
 if __name__ == '__main__':
-     unittest.main()
+    try:
+        find_sequences_in_pi()
+    except Exception as e:
+        if (len(e.args) == 3):
+            print(e.args[2] + str(e), file=sys.stderr)
+        else:
+            print(str(e), file=sys.stderr)
+    unittest.main()
     
