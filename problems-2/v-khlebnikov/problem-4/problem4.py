@@ -39,8 +39,10 @@ def find_positions_in_pi(substring, file_path):
     except IsADirectoryError as e:
         e.strerror = f"Cannot open file '{file_path}': cause it's a directory: " + e.strerror
         raise e
-    else:
-        with file:
+    except Exception as e:
+        e.strerror = "Caught unhandled exception while execution: " + e.strerror
+        raise e
+    with file:
             try:
                 block = ""
                 lower_bound = 0
