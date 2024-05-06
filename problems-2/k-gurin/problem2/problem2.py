@@ -32,11 +32,11 @@ if __name__ == '__main__':
     output_file = 'output.txt'
     try:
         dictionary = read_words(input_file)
-    except OSError:
-        sys.stderr.write(f"Error while reading file: {input_file}")
+    except Exception as e:
+        sys.stderr.write(f"Error while reading file: \"{input_file}\": {str(e)}")
         exit(1)
     try:
         write_words(output_file, dictionary)
-    except OSError:
-        sys.stderr.write(f"Error while writing file: {output_file}")
+    except Exception as e:
+        sys.stderr.write(f"Error while writing file: \"{output_file}\": {str(e)}")
         exit(1)
