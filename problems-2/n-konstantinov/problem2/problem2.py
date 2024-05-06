@@ -1,8 +1,15 @@
+import sys
 from unittest import TestCase
 
 
 def convert_dictionary(input_file):
-    with open(input_file, 'r') as file:
+    try:
+        file = open(input_file, "r")
+    except Exception as e:
+        print(e, file=sys.stderr)
+        return
+
+    with file:
         lines = file.readlines()
 
     latin_english_dict = {}
