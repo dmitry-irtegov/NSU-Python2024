@@ -16,20 +16,19 @@ def findpos(sub):
         print(f"found {count} results.\npositions: {positions[:5]}\n")
 
 class TestsFindPosition(unittest.TestCase):
-    @patch('builtins.print')  # Mock the print function
+    @patch('builtins.print')
     def test_qwerty(self, mock_print):
         findpos("123456")
         mock_print.assert_called_with("found 2 results.\npositions: [2458885, 3735793]\n")
 
-    @patch('builtins.print')  # Mock the print function
+    @patch('builtins.print')
     def test_five(self, mock_print):
         findpos("10049")
         mock_print.assert_called_with("found 49 results.\npositions: [81181, 81663, 164755, 166002, 227951]\n")
 
-    @patch('builtins.print')  # Mock the print function
+    @patch('builtins.print')
     def test_one(self, mock_print):
         findpos("1")
-        # Check that the entire output is printed
         mock_print.assert_called_with("found 419139 results.\npositions: [1, 3, 37, 40, 49]\n")
 
 if __name__ == '__main__':
