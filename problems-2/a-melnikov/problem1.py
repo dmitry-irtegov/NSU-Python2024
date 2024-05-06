@@ -16,16 +16,16 @@ def generate_pythagorian_triples(n: int) -> Set[Tuple[int, int, int]]:
 
 class TestPythagorianTriples(unittest.TestCase):
 
-    def test_negative(self):
+    def test_negative(self) -> None:
         self.assertEqual(generate_pythagorian_triples(-15), set())
 
     def test_zero(self):
         self.assertEqual(generate_pythagorian_triples(0), set())
 
-    def test_one(self):
+    def test_one(self) -> None:
         self.assertEqual(generate_pythagorian_triples(2), set())
 
-    def test_big(self):
+    def test_big(self) -> None:
         self.assertEqual(
             generate_pythagorian_triples(30),
             {
