@@ -33,6 +33,10 @@ def get_file_size(name):
     except OSError as e:
         e.strerror = "Cannot access " + name + ":  " + e.strerror
         raise e
+    
+def sorted_filtered(items):
+    items = filter(lambda x: x[1] != -1, items)
+    return sorted(items, key=lambda x: x[1], reverse=True)
 
 
 def main():
@@ -58,8 +62,8 @@ def main():
         except BaseException as e:
             print("Trying to get size of file '" + file_path + "' but: " + e.strerror, file=sys.stderr)
             files[f] = -1
-                    
-    files = sorted(files.items(), key=lambda x: x[1], reverse=True)
+    
+    files = sorted_filtered(files.items())
     for f in files:
         file_size_string = "{:8}".format(humanize.naturalsize(f[1]))
         print('{:{val}}'.format(f[0], val=longest_string_size) + " size: " + file_size_string)
