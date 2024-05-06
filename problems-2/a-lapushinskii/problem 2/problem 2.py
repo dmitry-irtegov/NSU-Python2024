@@ -74,7 +74,7 @@ class TestDictRevers(unittest.TestCase):
 
 if __name__ == '__main__':
     try:   
-        latin_english_dict = revers_dict(read_dict_file('input_tsk_2.txt'))
+        latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
         print_dict_to_file(latin_english_dict, 'output_task_2.txt')
     except Exception as e:
         if (len(e.args) == 3):
