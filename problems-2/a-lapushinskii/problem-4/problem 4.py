@@ -1,4 +1,5 @@
 import unittest
+import sys
 
 def find_sequences(filename, sequence, chunk_size = 4096):
     overlap = len(sequence) - 1
