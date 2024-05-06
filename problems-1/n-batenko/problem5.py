@@ -17,7 +17,11 @@ def decompose_to_primes(n : int):
     if (power != 0):
         result.append((2, power)) 
 
-    for factor in range(3, int(sqrt(num)) + 1, 2):
+    for factor in range(3, int(sqrt(num)) + 3, 2):
+        if (1 < num <= factor):
+            result.append((num, 1))
+            break
+
         power = 0
         while num % factor == 0:
             num //= factor
@@ -40,6 +44,9 @@ class DecomposerTests(unittest.TestCase):
 
     def test_5(self):
         self.assertEqual(decompose_to_primes(5), ((5, 1)))
+    
+    def test_6(self):
+        self.assertEqual(decompose_to_primes(6), ((2, 1), (3, 1)))
 
     def test_36(self):
         self.assertEqual(decompose_to_primes(36), ((2, 2), (3, 2)))
