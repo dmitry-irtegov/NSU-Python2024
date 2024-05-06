@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 def findpos(sub):
     with open('pi.txt', 'r') as file:
@@ -9,38 +10,27 @@ def findpos(sub):
         positions.append(x - 1)
         x = pi.find(sub, x + 1)
     count = len(positions)
-    print(f"found {count} results.\n")
     if count < 5:
-        print(f"positions: {positions}\n")
+        print(f"found {count} results.\npositions: {positions}\n")
     else:
-        print(f"positions: {positions[:5]}\n")
+        print(f"found {count} results.\npositions: {positions[:5]}\n")
 
 class TestsFindPosition(unittest.TestCase):
-    def setUp(self):
-        global print
-        self.orig_print = print
-        print = self.myprint
-        self.result = ''
-
-    def tearDown(self):
-        global print
-        print = self.orig_print
-
-    def myprint(self, x, **kwargs):
-        if isinstance(x, str):
-            self.result += x
-
-    def test_qwerty(self):
+    @patch('builtins.print')  # Mock the print function
+    def test_qwerty(self, mock_print):
         findpos("123456")
-        self.assertEqual(self.result, "found 2 results.\npositions: [2458885, 3735793]\n")
+        mock_print.assert_called_with("found 2 results.\npositions: [2458885, 3735793]\n")
 
-    def test_five(self):
+    @patch('builtins.print')  # Mock the print function
+    def test_five(self, mock_print):
         findpos("10049")
-        self.assertEqual(self.result, "found 49 results.\npositions: [81181, 81663, 164755, 166002, 227951]\n")
+        mock_print.assert_called_with("found 49 results.\npositions: [81181, 81663, 164755, 166002, 227951]\n")
 
-    def test_one(self):
+    @patch('builtins.print')  # Mock the print function
+    def test_one(self, mock_print):
         findpos("1")
-        self.assertEqual(self.result, "found 419139 results.\npositions: [1, 3, 37, 40, 49]\n")
+        # Check that the entire output is printed
+        mock_print.assert_called_with("found 419139 results.\npositions: [1, 3, 37, 40, 49]\n")
 
 if __name__ == '__main__':
     unittest.main()
