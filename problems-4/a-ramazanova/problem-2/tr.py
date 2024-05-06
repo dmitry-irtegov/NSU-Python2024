@@ -2,13 +2,17 @@ import argparse
 import sys
 
 
+class InvalidArgs(Exception):
+    pass
+
+
 class Tr:
     def __init__(self, replace_from, replace_to, delete_chars=None):
         self._file_path = None
         if len(replace_from) != len(replace_to):
-            raise ValueError('Characters to replace and replacement characters must be the same length')
+            raise InvalidArgs('Characters to replace and replacement characters must be the same length')
         if len(replace_from) != len(set(replace_from)):
-            raise ValueError('Replacement characters must not be repeated')
+            raise InvalidArgs('Replacement characters must not be repeated')
         self._replace_from = replace_from
         self._replace_to = replace_to
         self._delete_chars = delete_chars
@@ -73,7 +77,7 @@ def main():
 
     try:
         tr = Tr(args.replace_from, args.replace_to, args.delete)
-    except ValueError as e:
+    except InvalidArgs as e:
         sys.stderr.write(f'The problem with the arguments: {e}')
     else:
         try:
