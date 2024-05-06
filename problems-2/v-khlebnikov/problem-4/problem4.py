@@ -1,4 +1,3 @@
-import sys
 import unittest
 
 BLOCK_SIZE = 12345
