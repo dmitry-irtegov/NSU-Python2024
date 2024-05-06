@@ -31,15 +31,15 @@ def find_positions_in_pi(substring, file_path):
 
     try:
         file = open(file_path, "r")
-    except FileNotFoundError:
-        print(f"File '{file_path}' not found", file=sys.stderr)
-        exit(1)
-    except PermissionError:
-        print(f"Cannot access file '{file_path}': permission denied", file=sys.stderr)
-        exit(1)
-    except IsADirectoryError:
-        print(f"Cannot open file '{file_path}': cause it's a directory", file=sys.stderr)
-        exit(1)
+    except FileNotFoundError as e:
+        e.strerror = f"File '{file_path}' not found: " + e.strerror
+        raise e
+    except PermissionError as e:
+        e.strerror = f"Cannot access file '{file_path}': permission denied: " + e.strerror
+        raise e
+    except IsADirectoryError as e:
+        e.strerror = f"Cannot open file '{file_path}': cause it's a directory: " + e.strerror
+        raise e
     else:
         with file:
             try:
@@ -53,8 +53,8 @@ def find_positions_in_pi(substring, file_path):
                         block = block[-offset:]
                 find_positions_in_block(block, positions, substring, lower_bound)
             except IOError as e:
-                print(f"Trying to read from file '{file_path}', but IOError occured: ", e, file=sys.stderr)
-                exit(1)
+                e.strerror = f"Cannot open file '{file_path}': cause it's a directory: " + e.strerror
+                raise e
 
     return positions
 
@@ -70,6 +70,10 @@ class TestPiFinder(unittest.TestCase):
         positions = find_positions_in_pi("1415", 'pi.txt')
         self.assertEqual(424, len(positions))
         self.assertEqual([0, 6954, 29135, 45233, 79686], positions[:5])
+
+    def test_file_not_found(self):
+        with self.assertRaises(FileNotFoundError):
+            find_positions_in_pi("123", "123")
     
 
 if __name__ == '__main__':
