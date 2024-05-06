@@ -1,4 +1,5 @@
 import random
+import re
 import unittest
 
 
@@ -21,15 +22,13 @@ def sort_word(word):
 
 
 def process_text(text, word_processor):
-    words = text.split()
+    words = re.findall(r'\w+', text)
     processed_words = []
     for word in words:
-        alphanumeric_word = ''.join(char for char in word if char.isalpha())
-        if alphanumeric_word:
-            processed_word = word_processor(alphanumeric_word)
-            word = ''.join(processed_word[j] if char.isalpha() else char for j, char in enumerate(word))
-        processed_words.append(word)
-    return ' '.join(processed_words)
+        processed_word = word_processor(word)
+        processed_words.append(processed_word)
+    processed_text = re.sub(r'\w+', lambda match: processed_words.pop(0), text)
+    return processed_text
 
 
 class TestTextProcessing(unittest.TestCase):
