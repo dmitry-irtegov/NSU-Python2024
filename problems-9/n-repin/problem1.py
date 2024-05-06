@@ -18,6 +18,13 @@ class Timer:
         self.exit_time = time.time()       
 
     def elapsed(self) -> float | None:
+        """
+        Returns `None` if called before entering context
+
+        Returns time elapsed from entering context if called inside context
+
+        Returns time spent inside context if called ouside of context
+        """
         if self.enter_time is None:
             return None
         
