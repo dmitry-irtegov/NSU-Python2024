@@ -1,0 +1,2 @@
+englishword1 - latinword1, latinword2
+englishword2 - latinword1, latinword3
