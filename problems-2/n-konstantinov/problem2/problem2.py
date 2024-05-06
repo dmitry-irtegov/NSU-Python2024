@@ -6,9 +6,7 @@ def convert_dictionary(input_file):
     try:
         file = open(input_file, "r")
     except Exception as e:
-        print(f"Error: {str(e)}", file=sys.stderr)
-        print(f"Failed to open file: {input_file}", file=sys.stderr)
-        sys.exit(1)
+        raise Exception(f"Error: {str(e)}.\nFailed to open file: {input_file}")
 
     with file:
         lines = file.readlines()
