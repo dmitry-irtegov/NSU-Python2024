@@ -1,7 +1,9 @@
 import unittest
 
+from typing import Set, Tuple
 
-def generate_pythagorian_triples(n: int) -> {(int, int, int)}:
+
+def generate_pythagorian_triples(n: int) -> Set[Tuple[int, int, int]]:
     triples = set()
     for x in range(3, n + 1):
         for y in range(x, n + 1):
