@@ -1,20 +1,6 @@
 import unittest
 
-BLOCK_SIZE = 12345
-
-
-def print_pi_positions(positions):
-    count = len(positions)
-    print(f"Found {count} results.")
-    if count > 0:
-        print(f"Positions: {positions[0]} ", end="")
-        internal_counter = 1
-        while internal_counter < 5 and count - internal_counter > 0:
-            print(positions[internal_counter], end=" ")
-            internal_counter += 1
-        if count > 5:
-            print("...", end="")
-        print()
+BLOCK_SIZE = 10000
 
 
 def find_positions_in_block(block, positions, substring, lower_bound):
@@ -30,32 +16,28 @@ def find_positions_in_pi(substring, file_path):
 
     try:
         file = open(file_path, "r")
-    except FileNotFoundError as e:
-        e.strerror = f"File '{file_path}' not found: " + e.strerror
+    except OSError as e:
+        e.strerror = f"Cannot open file '{file_path}': " + e.strerror
         raise e
-    except PermissionError as e:
-        e.strerror = f"Cannot access file '{file_path}': permission denied: " + e.strerror
-        raise e
-    except IsADirectoryError as e:
-        e.strerror = f"Cannot open file '{file_path}': cause it's a directory: " + e.strerror
-        raise e
-    except Exception as e:
-        e.strerror = "Caught unhandled exception while execution: " + e.strerror
+    except BaseException as e:
+        e.args = (f"Cannot open file '{file_path}': ", *e.args)
         raise e
     with file:
-            try:
-                block = ""
-                lower_bound = 0
-                for line in file:
-                    block += line.strip()
-                    if len(block) >= BLOCK_SIZE:
-                        find_positions_in_block(block, positions, substring, lower_bound)
-                        lower_bound += len(block) - offset
-                        block = block[-offset:]
-                find_positions_in_block(block, positions, substring, lower_bound)
-            except IOError as e:
-                e.strerror = f"Cannot open file '{file_path}': cause it's a directory: " + e.strerror
-                raise e
+        try:
+            block = ""
+            lower_bound = 0
+            for line in file:
+                block += line.strip()
+                if len(block) >= BLOCK_SIZE:
+                    find_positions_in_block(block, positions, substring, lower_bound)
+                    lower_bound += len(block) - offset
+                    block = block[-offset:]
+            find_positions_in_block(block, positions, substring, lower_bound)
+        except OSError as e:
+            e.strerror = f"Trying read from file: '{file_path}', but: " + e.strerror
+            raise e
+        except BaseException as e:
+            e.args = (f"Trying read from file: '{file_path}', but: ", *e.args)
 
     return positions
 
