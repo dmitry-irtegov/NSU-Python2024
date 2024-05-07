@@ -3,14 +3,12 @@ if __name__ == "__main__":
         while True:
             try:
                 x = input()
+                complex(x)
+                exit(0)
             except EOFError:
                 exit(0)
-                
-            try:
-                complex(x)
             except ValueError:
                 continue
-            exit(0)
     except KeyboardInterrupt:
         exit(0)
         
