@@ -1,6 +1,5 @@
-from functools import wraps, update_wrapper
-from inspect import getcallargs, signature
-from typing import Any
+from functools import update_wrapper
+from inspect import signature
 import unittest
 
 
@@ -24,8 +23,6 @@ class Cache(object):
 
 class TestCacheDecorator(unittest.TestCase):
     def test_different_functions(self):
-        cache = Cache
-
         @Cache
         def sum(a, b):
             return a + b
