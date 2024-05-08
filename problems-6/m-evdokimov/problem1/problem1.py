@@ -1,6 +1,7 @@
 import random
 import argparse
 import re
+import sys
 
 def random_mix(word, length):
     word_list = list(word)
@@ -18,27 +19,18 @@ def abc_mix(word, length):
     return word[0] + ''.join(letters) + word[-1]
 
 def preprocessing(word):
-    letters = re.search(r'\w+', word)
-    punct_start = re.search(r'\W+\b', word)
-    punct_end = re.search(r'\b\W+', word)
-    
-    if punct_start is None:
-        punct_start = ''
-    else:
-        punct_start = punct_start[0]
+    letters = re.search(r'\w+', word)[0]
+    index = word.find(letters)
+    punct_start = word[0:index]
+    punct_end = word[index + len(letters):]
         
-    if punct_end is None:
-        punct_end = ''
-    else:
-        punct_end = punct_end[0]
-        
-    return punct_start, punct_end, letters[0]
+    return punct_start, punct_end, letters
 
 def mixer(string, mode, how_to_print = print):
     if mode == '' or mode is None:
         mode = 'random'
     if mode != 'abc' and mode != 'random':
-        raise ValueError('Wrong mode name')
+        raise ValueError('Error: Wrong mode name')
     
     if mode == 'random':
         for word in string.split():
@@ -63,4 +55,7 @@ if __name__ == "__main__":
     parser.add_argument("input_string", help="enter your input string here")
     parser.add_argument("-m", "--mode", help="choose mixer mode ('random' or 'abc')")
     args = parser.parse_args()
-    mixer(args.input_string, args.mode)
+    try:
+        mixer(args.input_string, args.mode)
+    except Exception as e:
+        print(e, file=sys.stderr)
