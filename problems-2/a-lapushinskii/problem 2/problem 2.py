@@ -21,9 +21,8 @@ def read_dict_file(file_path):
                 english, latin_translations = line.strip().split(' - ')
                 input_dict[english] = latin_translations.split(', ')
     except Exception as e:
-        e.args += ("Error reading file: ",)
-        raise e
-    
+        e.additional_info = "Error reading file"
+        raise e    
     return input_dict
     
 def print_dict_to_file(some_dict, filename):
@@ -37,7 +36,7 @@ def print_dict_to_file(some_dict, filename):
                 if latin_words: 
                     file.write(f"{latin_words[-1]}\n")
     except Exception as e:
-        e.args += ("Error writing file: ",)
+        e.additional_info = "Error writing file"
         raise e
 
 
@@ -67,20 +66,18 @@ class TestDictRevers(unittest.TestCase):
         prog_ans = revers_dict(inp_dict)
         self.assertEqual(prog_ans, correct_ans)
     def test_except(self):
-        with self.assertRaises(OSError):  
+        with self.assertRaises(Exception):  
             latin_english_dict = revers_dict(read_dict_file('Probably_a_non-existent_file.txt'))
             print_dict_to_file(latin_english_dict, 'Probably_a_non-existent_file.txt')   
 
 
 if __name__ == '__main__':
     try:   
-        latin_english_dict = revers_dict(read_dict_file('input_task_2.txt'))
+        latin_english_dict = revers_dict(read_dict_file('inpt_task_2.txt'))
         print_dict_to_file(latin_english_dict, 'output_task_2.txt')
     except Exception as e:
-        if (len(e.args) == 3):
-            print(e.args[2] + str(e), file=sys.stderr)
-        else:
-            print(str(e), file=sys.stderr)
-
+        print(e.additional_info, file=sys.stderr)
+        print(str(e), file=sys.stderr)
+                
     unittest.main()
     
