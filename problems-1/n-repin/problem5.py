@@ -1,4 +1,7 @@
 import unittest
+import io
+
+from unittest.mock import patch
 
 from math import ceil, sqrt
 
@@ -25,15 +28,17 @@ def primes(number: int) -> list[tuple[int, int]]:
     return prime_list
 
 
-def format_primes_list(map: list[tuple[int, int]]) -> str:
-    terms = []
+def print_formatted_primes_list(terms: list[tuple[int, int]]):
+    if len(terms) == 0:
+        return
 
-    for item in map:
-        (p, k) = item
-        terms.append(f"{p}^{k}")
+    p, k = terms.pop(0)
+    print(f"{p}^{k}", end='')
 
-    return " * ".join(terms)
+    for p, k in terms:
+        print(f" * {p}^{k}", end='')
 
+    print()
 
 class TestPrimes(unittest.TestCase):
 
@@ -51,6 +56,18 @@ class TestPrimes(unittest.TestCase):
 
     def test_big(self):
         self.assertEqual(primes(7468834), [(2, 1), (29, 1), (131, 1), (983, 1)])
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_formatted_print_2(self, mock_stdout):
+        print_formatted_primes_list(primes(2))
+        self.assertEqual(mock_stdout.getvalue(), "2^1\n")
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_formatted_print_big(self, mock_stdout):
+        print_formatted_primes_list(primes(7468834))
+        self.assertEqual(mock_stdout.getvalue(), "2^1 * 29^1 * 131^1 * 983^1\n")
+
+
 
 if __name__ == "__main__":
     unittest.main()
