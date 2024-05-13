@@ -19,7 +19,7 @@ def eratosthenes_set(n):
     sieve = set(range(2, n+1))
     for i in range (2, n+1):
         if i in sieve :
-            sieve -= set(range(i*2, n+1, i))
+            sieve -= set(range(i*i, n+1, i))
     return sieve
 
 #Старая версия на множестве, работает гораздо быстрее
