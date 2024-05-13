@@ -19,14 +19,14 @@ def find_sequences(filename, sequence, chunk_size = 4096):
                 previous_tail = working_chunk[-overlap:]
                 chunk = file.read(chunk_size).replace("\n", "")
     except Exception as e:
-        e.args += ("Error reading file: ",)
+        e.additional_info = "Error reading file"
         raise e
     return positions
 
 
 def find_sequences_in_pi():
     sequence = input()
-    positions = find_sequences("pi.txt", sequence)
+    positions = find_sequences("p.txt", sequence)
     print(f"Found {len(positions)} results.")
     if positions:
         print(f"Positions: {' '.join(map(str, positions[:5]))} ...")
@@ -62,9 +62,7 @@ if __name__ == '__main__':
     try:
         find_sequences_in_pi()
     except Exception as e:
-        if (len(e.args) == 3):
-            print(e.args[2] + str(e), file=sys.stderr)
-        else:
-            print(str(e), file=sys.stderr)
+        print(e.additional_info, file=sys.stderr)
+        print(str(e), file=sys.stderr)
     unittest.main()
     
