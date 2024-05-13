@@ -26,7 +26,7 @@ def find_sequences(filename, sequence, chunk_size = 4096):
 
 def find_sequences_in_pi():
     sequence = input()
-    positions = find_sequences("p.txt", sequence)
+    positions = find_sequences("pi.txt", sequence)
     print(f"Found {len(positions)} results.")
     if positions:
         print(f"Positions: {' '.join(map(str, positions[:5]))} ...")
