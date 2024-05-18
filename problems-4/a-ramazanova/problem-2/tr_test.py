@@ -1,6 +1,6 @@
 import unittest
 
-from tr import Tr, InvalidArgs
+from tr import Tr
 
 
 class TestTranslateLine(unittest.TestCase):
@@ -33,13 +33,13 @@ class TestTranslateLine(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_repeated_chars(self):
-        with self.assertRaises(InvalidArgs):
+        with self.assertRaises(ValueError):
             self.tr = Tr("dvdv", "abcd")
 
     def test_different_size(self):
-        with self.assertRaises(InvalidArgs):
+        with self.assertRaises(ValueError):
             self.tr = Tr("abcd", "xyz")
-
+    
 
 if __name__ == '__main__':
     unittest.main()
