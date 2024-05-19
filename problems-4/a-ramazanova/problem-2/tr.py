@@ -66,13 +66,18 @@ def main():
 
     try:
         tr = Tr(args.replace_from, args.replace_to, args.delete)
-    except ValueError as e:
-        sys.stderr.write(f'The problem with arguments: {repr(e)}')
+    except Exception as e:
+        sys.stderr.write(f'Problem with arguments: {repr(e)}')
         exit(1)
     try:
         tr.translate_file()
     except OSError as e:
         sys.stderr.write(e.strerror)
+        exit(1)
+    except KeyboardInterrupt as e:
+        print("The process was interrupted")
+    except Exception as e:
+        sys.stderr.write(f'An error occurred during translation: {e}')
 
 
 if __name__ == "__main__":

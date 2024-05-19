@@ -39,7 +39,7 @@ class TestTranslateLine(unittest.TestCase):
     def test_different_size(self):
         with self.assertRaises(ValueError):
             self.tr = Tr("abcd", "xyz")
-    
+
 
 if __name__ == '__main__':
     unittest.main()
