@@ -2,6 +2,10 @@ import argparse
 import sys
 
 
+class InvalidInputTable(Exception):
+    pass
+
+
 class Table:
     def __init__(self, data):
         self._data = data
@@ -12,7 +16,7 @@ class Table:
 
     def _validate_data(self):
         if not isinstance(self._data, list) or not all(isinstance(row, list) for row in self._data):
-            raise ValueError("Table data must be a list of lists")
+            raise TypeError("Table data must be a list of lists")
         if self._data:
             row_len = len(self._data[0])
             if any(len(row) != row_len for row in self._data):
@@ -25,24 +29,15 @@ class Table:
         return Table(self._data[-n:])
 
     def select_rows(self, indices):
-        if any(i >= len(self._data) for i in indices):
-            raise ValueError(f'Id must be < {len(self._data)}')
-        selected_rows = [self._data[i] for i in indices if i < len(self._data)]
-        return Table(selected_rows)
+        return Table([self._data[i] for i in indices if i < len(self._data)])
 
     def append_rows(self, other_table):
-        new_data = self._data + other_table.get_data()
-        return Table(new_data)
+        return Table(self._data + other_table.get_data())
 
     def append_columns(self, other_table):
-        if len(self._data) != len(other_table.get_data()):
-            raise ValueError("Tables must have the same number of rows")
-        combined_data = [self._data[i] + other_table.get_data()[i] for i in range(len(self._data))]
-        return Table(combined_data)
+        return Table([self._data[i] + other_table.get_data()[i] for i in range(len(self._data))])
 
     def select_columns(self, fields):
-        if any(i >= len(self._data[0]) for i in fields):
-            raise ValueError(f'Fields must be < {len(self._data[0])}')
         return Table([[row[i] for i in fields] for row in self._data])
 
     def __str__(self):
@@ -52,10 +47,10 @@ class Table:
 def load_table(file_path, delimiter='\t'):
     try:
         with open(file_path, 'r') as file:
-            data = [line.strip().split(delimiter) for line in file.readlines()]
-        return Table(data)
-    except Exception:
-        raise
+            return Table([line.strip().split(delimiter) for line in file.readlines()])
+    except OSError as e:
+        e.strerror = f'An error occurred while loading the table: {e.strerror}'
+        raise e
 
 
 def main():
@@ -78,33 +73,27 @@ def main():
     paste_parser.add_argument("files", type=str, nargs=2, help="Paths to the files containing the tables to append")
 
     args = parser.parse_args()
-
-    if args.command == "paste":
-        try:
+    try:
+        if args.command == "paste":
             tables = [load_table(file) for file in args.files]
-        except Exception as e:
-            sys.stderr.write(f'An error occurred while loading the tables: {e}')
+            print(tables[0].append_columns(tables[1]))
         else:
-            try:
-                print(tables[0].append_columns(tables[1]))
-            except Exception as e:
-                sys.stderr.write(f'An error occurred while appending the tables: {e}')
-    else:
-        try:
             table = load_table(args.file)
-        except Exception as e:
-            sys.stderr.write(f'An error occurred while loading the table: {e}')
-            exit(1)
-        if args.command == "head":
-            print(table.head(args.n))
-        elif args.command == "tail":
-            print(table.tail(args.n))
-        elif args.command == "cut":
-            fields = list(map(int, args.f.split(',')))
-            try:
+            if args.command == "head":
+                print(table.head(args.n))
+            elif args.command == "tail":
+                print(table.tail(args.n))
+            elif args.command == "cut":
+                fields = list(map(int, args.f.split(',')))
                 print(table.select_columns(fields))
-            except Exception as e:
-                sys.stderr.write(f'An error occurred while selecting column: {e}')
+    except OSError as e:
+        sys.stderr.write(e.strerror)
+        exit(1)
+    except KeyboardInterrupt:
+        exit(0)
+    except Exception as e:
+        sys.stderr.write(repr(e))
+        exit(1)
 
 
 if __name__ == "__main__":
