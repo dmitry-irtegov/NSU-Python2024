@@ -77,13 +77,17 @@ def run_benchmark():
 
     @cached
     def fibs_cached(x):
-        if x == 0: return 0
-        if x == 1: return 1
+        if x == 0:
+            return 0
+        if x == 1:
+            return 1
         return fibs_cached(x - 1) + fibs_cached(x - 2)
 
     def fibs_no_cache(x):
-        if x == 0: return 0
-        if x == 1: return 1
+        if x == 0:
+            return 0
+        if x == 1:
+            return 1
         return fibs_no_cache(x - 1) + fibs_no_cache(x - 2)
 
     print(inspect.getsource(fibs_cached))
