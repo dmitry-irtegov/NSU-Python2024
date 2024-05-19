@@ -24,16 +24,17 @@ def cached(func):
 
 class CachedTest(unittest.TestCase):
     def test_cached_same_results(self):
-        payload_function = lambda x: x + 1
+        def some_function(x):
+            return x + 1
 
         @cached
-        def some_function(x):
+        def some_function1(x):
             return x + 1
 
         for arg in range(100):
             self.assertEqual(
-                payload_function(arg),
-                some_function(arg)
+                some_function(arg),
+                some_function1(arg)
             )
 
     def test_different_args(self):
