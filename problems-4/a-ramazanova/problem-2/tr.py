@@ -74,7 +74,7 @@ def main():
     except OSError as e:
         sys.stderr.write(e.strerror)
         exit(1)
-    except KeyboardInterrupt as e:
+    except KeyboardInterrupt:
         print("The process was interrupted")
     except Exception as e:
         sys.stderr.write(f'An error occurred during translation: {e}')
