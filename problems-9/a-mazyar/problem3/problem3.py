@@ -28,13 +28,18 @@ class Loggable:
 
     def __init__(self):
         self._logs = ()
-        # wrap methods in logged decorator
-        if getattr(self.__class__, 'log_not_started', True):
-            for attr in self.__class__.__dict__.values():
-                if(_is_logged(attr)):
-                    # attribute is a method
-                    setattr(self.__class__, attr.__name__, _logged(attr))
-            self.__class__.log_not_started = False
+        # Log object's class and all its base classes
+        for clazz in (self.__class__, *self.__class__.__bases__):
+            # wrap methods in logged decorator
+            if getattr(clazz, 'log_not_started', True):
+                for attr in clazz.__dict__.values():
+                    if(_is_logged(attr)):
+                        # attribute is a method
+                        if attr.__name__[:2] == '__':
+                            setattr(clazz, '_' + clazz.__name__ + attr.__name__, _logged(attr))
+                        else:
+                            setattr(clazz, attr.__name__, _logged(attr))
+                clazz.log_not_started = False
 
     def logged_calls(self):
         res = f'{self.__class__.__name__} LOG\n'
@@ -42,7 +47,11 @@ class Loggable:
             res += str(entry) + '\n'
         return res
     
-class LoggedIntWrapper(Loggable):
+class Parent():
+    def speak(self):
+        return "Good one"
+    
+class LoggedIntWrapper(Parent, Loggable):
     def __init__(self):
         super().__init__()
         self._int = 0
@@ -61,11 +70,19 @@ class LoggedIntWrapper(Loggable):
         else:
             self._int += num
         return self._int
+    
+    def __private_method(self):
+        return "very inner logic"
 
     @dont_log
     def __str__(self):
         return str(self._int)
+    
+class Child(LoggedIntWrapper):
+    log_not_started = True
 
+    def mumble(self):
+        return "tata"
 
 class LoggingTest(unittest.TestCase):
     def setUp(self):
@@ -112,7 +129,23 @@ class LoggingTest(unittest.TestCase):
 
         self.logged.__str__()
         self.assertEqual(len(self.logged._logs), 2)
-    
 
+    def test_inheritance(self):
+        self.logged.speak()
+        self.assertEqual(self.logged._logs[0], "Called method \"speak\" with \n\targs: ()\n\tkwargs: {}")
+        self.assertEqual(self.logged._logs[1], "Execution of method \"speak\" concluded with \n\tReturn value: Good one")
+
+        child = Child()
+        child.mumble()
+        self.assertEqual(child._logs[0], "Called method \"mumble\" with \n\targs: ()\n\tkwargs: {}")
+        self.assertEqual(child._logs[1], "Execution of method \"mumble\" concluded with \n\tReturn value: tata")
+
+    def test_private_method(self):
+        self.logged._LoggedIntWrapper__private_method()
+        self.assertEqual(self.logged._logs[0], "Called method \"__private_method\" with \n\targs: ()\n\tkwargs: {}")
+        self.assertEqual(self.logged._logs[1], "Execution of method \"__private_method\" concluded with \n\tReturn value: very inner logic")
+
+
+    
 if __name__ == '__main__':
     unittest.main()
