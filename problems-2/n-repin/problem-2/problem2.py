@@ -61,14 +61,19 @@ def reverse_dict(source_dict: dict[str, list[str]]) -> dict[str, list[str]]:
 
 def translate_file(in_file: Path, out_file: Path):
     try:
-        write_dict(
-            out_file,
-            reverse_dict(
-                parse_dict(in_file)
-            )
-        )
+        parsed_dict = parse_dict(in_file)
     except FileNotFoundError as e:
         print(f'Input file was not found: {e.filename}', file=sys.stderr)
+    except Exception as e:
+        print(f'Some error ({e.__class__.__name__}) occured while parsing input file', file=sys.stderr)
+    
+    reversed_dict = reverse_dict(parsed_dict)
+
+    try:
+        write_dict(out_file, reversed_dict)
+    except Exception as e:
+        print(f'Some error ({e.__class__.__name__}) occured while trying to write dict to file', file=sys.stderr)
+    
 
 class TestTranslator(unittest.TestCase):
 
