@@ -5,6 +5,7 @@ def make_dictionary(path):
     try:
         with open(path, 'r') as input_file:
             result = dict()
+            1 / 0
             for line in input_file.readlines():
                 line = line.strip()
                 word, translations = line.split(' - ')
@@ -17,7 +18,7 @@ def make_dictionary(path):
         e.strerror = f'Error with reading file: {e.strerror}'
         raise e
     except Exception as e:
-        e.additional_info = "Error with reading file:"
+        e.additional_info = "Error with reading file"
         raise e
     try:
         with open(f'{path.replace(".txt", "")}_output.txt', 'w') as output_file:
@@ -25,7 +26,7 @@ def make_dictionary(path):
     except OSError as e:
         e.strerror = f'Error with writing file: {e.strerror}'
     except Exception as e:
-        e.additional_info = "Error with writing file: "
+        e.additional_info = "Error with writing file"
         raise e
 
 
@@ -37,6 +38,5 @@ if __name__ == '__main__':
         sys.stderr.write(err.strerror)
         exit(1)
     except Exception as err:
-        sys.stderr.write(err.additional_info)
-        sys.stderr.write(repr(err))
+        sys.stderr.write(f'{err.additional_info}: {repr(err)}')
         exit(1)
