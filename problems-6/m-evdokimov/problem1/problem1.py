@@ -17,14 +17,7 @@ def abc_mix(word, length):
     letters = list(word)[1:length-1]
     letters.sort(key = str.lower)
     return word[0] + ''.join(letters) + word[-1]
-
-def preprocessing(word):
-    letters = re.search(r'\w+', word)[0]
-    index = word.find(letters)
-    punct_start = word[0:index]
-    punct_end = word[index + len(letters):]
         
-    return punct_start, punct_end, letters
 
 def mixer(string, mode, how_to_print = print):
     if mode == '' or mode is None:
@@ -33,22 +26,21 @@ def mixer(string, mode, how_to_print = print):
         raise ValueError('Error: Wrong mode name')
     
     if mode == 'random':
-        for word in string.split():
-            p_start, p_end, word = preprocessing(word)
+        for word in re.finditer(r'\w+', string):
+            word = word[0]
             length = len(word)
             if length > 3:
-                how_to_print(p_start, random_mix(word, length), p_end, sep = '', end = ' ')
-            else:
-                how_to_print(p_start, word, p_end, sep = '', end = ' ')
+                string = string.replace(word, random_mix(word, length))
+    how_to_print(string)           
                 
     if mode == 'abc':
-        for word in string.split():
-            p_start, p_end, word = preprocessing(word)
+        for word in re.finditer(r'\w+', string):
+            word = word[0]
             length = len(word)
             if length > 3:
-                how_to_print(p_start, abc_mix(word, length), p_end, sep = '', end = ' ')
-            else:
-                how_to_print(p_start, word, p_end, sep = '', end = ' ')
+                string = string.replace(word, abc_mix(word, length))
+            
+    how_to_print(string)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
