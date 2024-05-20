@@ -67,7 +67,7 @@ def main():
     try:
         tr = Tr(args.replace_from, args.replace_to, args.delete)
     except Exception as e:
-        sys.stderr.write(f'Problem with arguments: {repr(e)}')
+        sys.stderr.write(f'Problem with arguments: {e}')
         exit(1)
     try:
         tr.translate_file()
