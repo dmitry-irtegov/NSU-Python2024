@@ -29,5 +29,5 @@ if __name__ == '__main__':
     try:
         make_dictionary(file_name)
     except Exception as err:
-        sys.stderr.write(f'{err.additional_info}: {repr(err)}')
+        sys.stderr.write(f'{err.additional_info}: {err}')
         exit(1)
