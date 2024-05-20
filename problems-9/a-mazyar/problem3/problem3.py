@@ -1,5 +1,4 @@
 from types import FunctionType
-import re
 import unittest
 
 def dont_log(f):
@@ -92,7 +91,7 @@ class LoggingTest(unittest.TestCase):
     def test_exceptions(self):
         try:
             self.logged.dec()
-        except:
+        except ValueError as e:
             pass
         self.assertEqual(self.logged._logs[0], "Called method \"dec\" with \n\targs: ()\n\tkwargs: {}")
         self.assertEqual(self.logged._logs[1], "Execution of method \"dec\" concluded with \n\tValueError: Attempted assigning nagative value: -1 to IntWrapper")
@@ -100,7 +99,7 @@ class LoggingTest(unittest.TestCase):
         self.logged.inc()
         try:
             self.logged.dec()
-        except:
+        except ValueError as e:
             pass
         self.assertEqual(self.logged._logs[2], "Called method \"inc\" with \n\targs: ()\n\tkwargs: {}")
         self.assertEqual(self.logged._logs[3], "Execution of method \"inc\" concluded with \n\tReturn value: None")
