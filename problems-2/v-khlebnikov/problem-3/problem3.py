@@ -54,9 +54,8 @@ if __name__ == '__main__':
                 files[f] = get_file_size(file_path)
         except BaseException as e:
             print("Trying to get size of file '" + file_path + "' but: ", e, file=sys.stderr)
-            files[f] = -1
 
-    files = sorted_filtered(files.items())
+    files = sorted(files.items(), key=lambda x: x[1], reverse=True)
     for f in files:
         file_size_string = "{:8}".format(humanize.naturalsize(f[1]))
         print('{:{val}}'.format(f[0], val=longest_string_size) + " size: " + file_size_string)
