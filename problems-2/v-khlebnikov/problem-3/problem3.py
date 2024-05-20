@@ -26,11 +26,6 @@ def get_file_size(name):
         raise e
 
 
-def sorted_filtered(items):
-    items = filter(lambda x: x[1] != -1, items)
-    return sorted(items, key=lambda x: x[1], reverse=True)
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('path', help='directory path')
