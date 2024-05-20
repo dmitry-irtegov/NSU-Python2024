@@ -18,8 +18,8 @@ class Tr:
         try:
             with open(self._file_path, "r") as file:
                 return file.readlines()
-        except OSError as e:
-            e.strerror = f'An error occurred while reading file {self._file_path}: {e.strerror}'
+        except Exception as e:
+            e.additional_info = "An error occurred while reading file"
             raise e
 
     def _write_file(self, res):
@@ -32,9 +32,10 @@ class Tr:
                 elif mod == "new":
                     file = open(f'tr_{self._file_path}', 'w')
                     break
-            except OSError as e:
-                e.strerror = f'An error occurred while writing file {self._file_path}: {e.strerror}'
+            except Exception as e:
+                e.additional_info = "An error occurred while writing file"
                 raise e
+
         with file:
             file.writelines(res)
 
@@ -71,14 +72,11 @@ def main():
         exit(1)
     try:
         tr.translate_file()
-    except OSError as e:
-        sys.stderr.write(e.strerror)
-        exit(1)
     except KeyboardInterrupt:
         sys.stderr.write("The process was interrupted")
         exit(0)
     except Exception as e:
-        sys.stderr.write(f'An error occurred during translation: {e}')
+        sys.stderr.write(f'{e.additional_info}: {e}')
         exit(1)
 
 
