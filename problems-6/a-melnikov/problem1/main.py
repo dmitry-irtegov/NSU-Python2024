@@ -28,7 +28,7 @@ def shuffle_text(text: str, alphabetical_order: bool = False) -> str:
     state: State = State.TEXT
     first_char_idx: int = 0
 
-    for i, c in enumerate(list(text)):
+    for i, c in enumerate(text):
         if state == State.TEXT:
             if c.isalpha():
                 first_char_idx = i
