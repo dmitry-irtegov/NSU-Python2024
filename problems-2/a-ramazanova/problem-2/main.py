@@ -19,8 +19,6 @@ def make_dictionary(path):
     try:
         with open(f'{path.replace(".txt", "")}_output.txt', 'w') as output_file:
             output_file.write('\n'.join(f'{word} - {", ".join(sorted(result[word]))}' for word in sorted(result)))
-    except OSError as e:
-        e.strerror = f'Error with writing file: {e.strerror}'
     except Exception as e:
         e.additional_info = "Error with writing file"
         raise e
