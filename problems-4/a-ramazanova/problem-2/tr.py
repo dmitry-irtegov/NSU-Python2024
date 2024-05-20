@@ -76,9 +76,10 @@ def main():
         exit(1)
     except KeyboardInterrupt:
         print("The process was interrupted")
+        exit(0)
     except Exception as e:
         sys.stderr.write(f'An error occurred during translation: {e}')
-
+        exit(1)
 
 if __name__ == "__main__":
     main()
