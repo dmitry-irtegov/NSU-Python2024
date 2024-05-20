@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import TextIO
+from typing import TextIO, Tuple
 
 
 def list_sorted_dir(dir_path: str, errfile: TextIO) -> None:
@@ -12,23 +12,20 @@ def list_sorted_dir(dir_path: str, errfile: TextIO) -> None:
     except BaseException as e:
         raise type(e)(f"Tried to list a directory '{dir_path}': {e}") from e
 
-    files: list[str] = []
+    files: list[Tuple[int, str]] = []
     for element in elements:
         try:
             filepath: str = construct_filepath(element)
-            os.stat(filepath)
+            size = os.stat(filepath).st_size
             if os.path.isfile(filepath):
-                files.append(element)
-        except BaseException:
-            print(f"File '{element}' is not accessible", file=errfile)
+                files.append((size, element))
+        except BaseException as e:
+            print(f"File '{element}' is not accessible. {e}", file=errfile)
 
-    def get_file_size(filename: str) -> int:
-        return os.stat(construct_filepath(filename)).st_size
-
-    files.sort(key=get_file_size, reverse=True)
+    files.sort(key=lambda file: file[0], reverse=True)
 
     for filename in files:
-        print(filename, os.stat(construct_filepath(filename)).st_size)
+        print(filename[1], filename[0])
 
 
 def main(args: list[str]) -> int:
