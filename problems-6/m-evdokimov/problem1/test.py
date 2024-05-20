@@ -4,7 +4,7 @@ import problem1
 test_output = []
 
 def custom_print(*ins, **args):
-    word = ins[0] + ins[1] + ins[2]
+    word = ''.join(ins)
     test_output.append(word)
     
 class Test_mixer(unittest.TestCase):
