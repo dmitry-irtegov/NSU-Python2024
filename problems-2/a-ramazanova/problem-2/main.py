@@ -16,12 +16,17 @@ def make_dictionary(path):
     except OSError as e:
         e.strerror = f'Error with reading file: {e.strerror}'
         raise e
-
+    except Exception as e:
+        e.additional_info = "Error with reading file:"
+        raise e
     try:
         with open(f'{path.replace(".txt", "")}_output.txt', 'w') as output_file:
             output_file.write('\n'.join(f'{word} - {", ".join(sorted(result[word]))}' for word in sorted(result)))
     except OSError as e:
         e.strerror = f'Error with writing file: {e.strerror}'
+    except Exception as e:
+        e.additional_info = "Error with writing file: "
+        raise e
 
 
 if __name__ == '__main__':
@@ -30,5 +35,8 @@ if __name__ == '__main__':
         make_dictionary(file_name)
     except OSError as err:
         sys.stderr.write(err.strerror)
+        exit(1)
     except Exception as err:
-        sys.stderr.write(f'An error occurred while creating the dictionary: {err}')
+        sys.stderr.write(err.additional_info)
+        sys.stderr.write(repr(err))
+        exit(1)
