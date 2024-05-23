@@ -41,7 +41,7 @@
         }
 
         input[type="submit"] {
-            background-color:#000000;
+            background-color: #000000;
             color: white;
             border: none;
             cursor: pointer;
@@ -56,8 +56,8 @@
             margin-bottom: 10px;
         }
 
-        option{
-        font-family: Google Sans, sans-serif;
+        option {
+            font-family: Google Sans, sans-serif;
         }
 
         .decrypted-text {
@@ -70,15 +70,6 @@
     <form method="post">
         <label for="encrypted_text">Enter Encrypted Text:</label><br>
         <textarea name="encrypted_text" id="encrypted_text" rows="4" cols="50"></textarea><br><br>
-
-        <label for="shift">Enter Shift Value for Decryption:</label><br>
-        <input type="number" name="shift" id="shift" value="3"><br><br>
-
-        <label for="language">Select Language:</label>
-        <select name="language" id="language">
-            <option value="en">English</option>
-            <option value="ru">Russian</option>
-        </select><br><br>
 
         <input type="submit" value="Decrypt">
     </form>
