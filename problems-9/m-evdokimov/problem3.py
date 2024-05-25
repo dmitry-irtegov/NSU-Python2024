@@ -7,9 +7,11 @@ class MetaLogger(type):
         for clazz in base:
             if clazz.__name__ == 'Logger':
                 add_log = clazz._Logger__add_log
+                break
             
         for obj_name, obj in dct.items():
             if callable(obj) and not obj_name.startswith('_'):
+                print(obj_name)
                 dct[obj_name] = cls.__make_method(obj, add_log)
         return super().__new__(cls, name, base, dct)
                 
@@ -34,12 +36,23 @@ class Logger(metaclass = MetaLogger):
     
     def __init__(self):
         self.__log = []
-                
-class MyClass(Logger):
+
+class SuperClass():
+    
+    def super_method(self):
+        print("super_method_call")
+
+class MyClass(Logger, SuperClass):
     
     def __init__(self):
         super().__init__()
         self.some_list = [100, 10, 1]
+        
+    def __private_method(self):
+        return 0;
+    
+    def method_calls_private_method(self):
+        print(self.__private_method())
     
     def method1(self):
         print("m1")
@@ -66,6 +79,14 @@ class TestLogger(unittest.TestCase):
         self.logger.method1()
         self.logger.method3('hello', 'world')
         self.assertEqual(self.logger._get_log(), ['method2', 'method1', 'method3'])
+        
+    def test_private_method(self):
+        self.logger.method_calls_private_method() # _MyClass__private_method
+        self.assertEqual(self.logger._get_log(), ['method_calls_private_method'])
+        
+    def test_multiple_inheritance(self):
+        self.logger.super_method() # Вот тут тяжело 
+        self.assertEqual(self.logger._get_log(), [])
         
     def test_no_method(self):
         with self.assertRaises(AttributeError):
