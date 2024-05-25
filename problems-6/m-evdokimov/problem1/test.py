@@ -33,7 +33,7 @@ class Test_mixer(unittest.TestCase):
         problem1.mixer("VeryLongStringThatIHaveToMix", 'abc', how_to_print = self.custom_print)
         self.assertEqual(self.test_output, 'VaaeegghHiIiLMnnoorrStTtTvyx')
         
-    def test_long_string(self):
+    def test_with_hypen(self):
         problem1.mixer("Some-thing", 'abc', how_to_print = self.custom_print)
         self.assertEqual(self.test_output, 'Smoe-thing')
         

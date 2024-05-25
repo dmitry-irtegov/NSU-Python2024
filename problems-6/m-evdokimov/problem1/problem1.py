@@ -17,7 +17,16 @@ def abc_mix(word, length):
     letters = list(word)[1:length-1]
     letters.sort(key = str.lower)
     return word[0] + ''.join(letters) + word[-1]
-        
+
+def mix(mix_type, string):
+    for match in re.finditer(r'\w+', string):
+        index_start = match.start()
+        index_end = match.end()
+        word = match[0]
+        length = len(word)
+        if length > 3:
+            string = string[:index_start] + mix_type(word, length) + string[index_end:]
+    return string
 
 def mixer(string, mode, how_to_print = print):
     if mode == '' or mode is None:
@@ -26,19 +35,10 @@ def mixer(string, mode, how_to_print = print):
         raise ValueError('Error: Wrong mode name')
     
     if mode == 'random':
-        for word in re.finditer(r'\w+', string):
-            word = word[0]
-            length = len(word)
-            if length > 3:
-                string = string.replace(word, random_mix(word, length))
-    how_to_print(string)           
+        string = mix(random_mix, string)     
                 
     if mode == 'abc':
-        for word in re.finditer(r'\w+', string):
-            word = word[0]
-            length = len(word)
-            if length > 3:
-                string = string.replace(word, abc_mix(word, length))
+        string = mix(abc_mix, string)
             
     how_to_print(string)
 
