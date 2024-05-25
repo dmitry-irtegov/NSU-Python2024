@@ -1,6 +1,6 @@
 import argparse
 import requests
-import pickle
+import requests_cache
 import time
 from html.parser import HTMLParser
 
@@ -9,21 +9,16 @@ def wiki_searcher(start_link):
     if wiki_index == -1:
         raise ValueError("Your start link is not from Wiki")
     try:
-        with open("cache.pkl", mode="rb") as file:
-            cache = pickle.load(file)
-    except FileNotFoundError:
-        cache = {}
+        requests_cache.install_cache('requests_cache')
+    except BaseException as e:
+        raise e("Error with cache file")
     links_cache = {}
     philLink = '/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F'
     cnt = 0
     next_link = start_link[wiki_index:]
     
     while True:
-        if next_link in cache.keys():
-            content = cache[next_link]
-        else:
-            content = requests.get('https://ru.wikipedia.org' + next_link).text
-            cache[next_link] = content
+        content = requests.get('https://ru.wikipedia.org' + next_link).text
         parser = MyHTMLParser()
         try:
             parser.feed(content)
@@ -41,9 +36,7 @@ def wiki_searcher(start_link):
                 break
             links_cache[current_link] = title
             time.sleep(2)
-    with open("cache.pkl", mode="wb") as file:
-        pickle.dump(cache, file)
-
+    
 class MyHTMLParser(HTMLParser):
     
     tag = ''
