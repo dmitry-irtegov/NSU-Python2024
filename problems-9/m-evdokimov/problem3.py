@@ -49,7 +49,7 @@ class MyClass(Logger, SuperClass):
         self.some_list = [100, 10, 1]
         
     def __private_method(self):
-        return 0;
+        return 0
     
     def method_calls_private_method(self):
         print(self.__private_method())
