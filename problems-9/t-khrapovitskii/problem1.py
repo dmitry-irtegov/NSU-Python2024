@@ -1,6 +1,11 @@
+import random
 import time
 import resource
 import contextlib
+import unittest
+from io import StringIO
+from unittest.mock import patch
+import re
 
 
 class Timer(contextlib.AbstractContextManager):
@@ -28,7 +33,6 @@ class Timer(contextlib.AbstractContextManager):
 
 def bogosort(a: list):
     bad_shuffles = []
-    import random
     while True:
         random.shuffle(a)
         is_sorted = True
@@ -44,3 +48,37 @@ def bogosort(a: list):
 if __name__ == '__main__':
     with Timer():
         bogosort([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
+
+
+class Test(unittest.TestCase):
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_only_arithmetic(self, mock_stdout: StringIO):
+        with Timer():
+            _ = 0
+            for _ in range(1000000):
+                _ = (_ + 1) % 2
+        out = mock_stdout.getvalue()
+        match = re.match(r"\nreal\s+0m([\d.]+)s\nuser\s+0m([\d.]+)s\nsys\s+0m([\d.]+)s\n$", out)
+        assert match is not None
+        assert float(match[1]) > 0
+        assert float(match[2]) > 0
+        assert float(match[3]) < float(match[1]) / 100
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_sleep(self, mock_stdout: StringIO):
+        with Timer():
+            time.sleep(2)
+        out = mock_stdout.getvalue()
+        match = re.match(r"\nreal\s+0m([\d.]+)s\nuser\s+0m([\d.]+)s\nsys\s+0m([\d.]+)s\n$", out)
+        assert match is not None
+        assert float(match[1]) >= 2
+        assert float(match[1]) < 2.1
+
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_sys_memory_alloc(self, mock_stdout: StringIO):
+        with Timer():
+            bogosort([1, 2, 3, 4, 5, 6, 7, 8, 0])
+        out = mock_stdout.getvalue()
+        match = re.match(r"\nreal\s+0m([\d.]+)s\nuser\s+0m([\d.]+)s\nsys\s+0m([\d.]+)s\n$", out)
+        assert match is not None
+        assert float(match[3]) > 0
