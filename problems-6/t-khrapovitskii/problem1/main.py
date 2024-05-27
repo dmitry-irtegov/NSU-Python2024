@@ -1,4 +1,5 @@
 import random
+import sys
 
 from letter_shuffler import LetterShuffler
 
@@ -12,23 +13,28 @@ if __name__ == '__main__':
                         try:
                             char = original.read(1)
                         except Exception as e:
-                            print("Error when reading from text.txt\n" + str(e))
+                            print("Error when reading from text.txt\n" + str(e), file=sys.stderr)
                             exit(1)
                         if char == '':
                             break
                         try:
                             shuffler1.give_char(char)
                         except Exception as e:
-                            print("Error when writing to shuffled.txt\n" + str(e))
+                            print("Error when writing to shuffled.txt\n" + str(e), file=sys.stderr)
                             exit(1)
+                    try:
+                        shuffler1.finish()
+                    except Exception as e:
+                        print("Error when writing to shuffled.txt\n" + str(e), file=sys.stderr)
+                        exit(1)
             except Exception as e:
-                print("Error when opening shuffled.txt\n" + str(e))
+                print("Error when opening shuffled.txt\n" + str(e), file=sys.stderr)
                 exit(1)
 
             try:
                 original.seek(0)
             except Exception as e:
-                print("Error when seeking text.txt\n" + str(e))
+                print("Error when seeking text.txt\n" + str(e), file=sys.stderr)
                 exit(1)
             try:
                 with open('sorted.txt', 'w', encoding='utf-8') as sort:
@@ -37,18 +43,23 @@ if __name__ == '__main__':
                         try:
                             char = original.read(1)
                         except Exception as e:
-                            print("Error when reading from text.txt\n" + str(e))
+                            print("Error when reading from text.txt\n" + str(e), file=sys.stderr)
                             exit(1)
                         if char == '':
                             break
                         try:
                             shuffler2.give_char(char)
                         except Exception as e:
-                            print("Error when writing to sorted.txt\n" + str(e))
+                            print("Error when writing to sorted.txt\n" + str(e), file=sys.stderr)
                             exit(1)
+                    try:
+                        shuffler2.finish()
+                    except Exception as e:
+                        print("Error when writing to sorted.txt\n" + str(e), file=sys.stderr)
+                        exit(1)
             except Exception as e:
-                print("Error when opening sorted.txt\n" + str(e))
+                print("Error when opening sorted.txt\n" + str(e), file=sys.stderr)
                 exit(1)
     except Exception as e:
-        print("Error when opening text.txt\n" + str(e))
+        print("Error when opening text.txt\n" + str(e), file=sys.stderr)
         exit(1)
