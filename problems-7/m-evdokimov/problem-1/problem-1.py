@@ -43,6 +43,7 @@ class MyHTMLParser(HTMLParser):
     link_flag = False
     title_flag = False
     table_flag = False
+    no_bracket_flag = True
     title = ''
     next_link = ''
     
@@ -59,7 +60,7 @@ class MyHTMLParser(HTMLParser):
             self.tag = 'h1'
             self.title_flag = True
         
-        if self.link_flag and tag == 'a' and not self.table_flag:
+        if self.link_flag and tag == 'a' and not self.table_flag and self.no_bracket_flag:
             for atr, value in attrs:
                 if value.find('#cite') != -1:
                     break
@@ -83,6 +84,13 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
         
+        if self.link_flag:
+            if data.count('(') > data.count(')'):
+                self.no_bracket_flag = False
+            else:
+                if data.count('(') < data.count(')'):
+                    self.no_bracket_flag = True
+        
         if self.tag == 'link':
             self.close()
         
@@ -90,7 +98,6 @@ class MyHTMLParser(HTMLParser):
             self.title = data
             
     def close(self):
-        
         raise StopParsing(self.title, self.next_link)
     
 class StopParsing(Exception):
