@@ -5,7 +5,7 @@ class Loggable:
     _class_logs = ()
 
     @staticmethod
-    def dont_log(f):
+    def _dont_log(f):
         f._is_logged = False
         return f
 
@@ -77,7 +77,7 @@ class LoggedIntWrapper(Parent, Loggable):
     def __private_method(self):
         return "very inner logic"
 
-    @Loggable.dont_log
+    @Loggable._dont_log
     def __str__(self):
         return str(self._int)
     
