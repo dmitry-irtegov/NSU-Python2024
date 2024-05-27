@@ -2,6 +2,7 @@ import argparse
 import requests
 import requests_cache
 import time
+import sys
 from html.parser import HTMLParser
 
 def wiki_searcher(start_link):
@@ -18,6 +19,8 @@ def wiki_searcher(start_link):
     next_link = start_link[wiki_index:]
     
     while True:
+        if next_link.find('wikipedia.org') != -1:
+            raise LinkIsNotFromRussianWiki("Current page contains a link to Wikipedia of another language")
         content = requests.get('https://ru.wikipedia.org' + next_link).text
         parser = MyHTMLParser()
         try:
@@ -103,9 +106,13 @@ class MyHTMLParser(HTMLParser):
 class StopParsing(Exception):
     
     def __init__(self, title, next_link):
-        super().__init__(title, next_link)
         self.strerror = "No errors, just wanna stop parsing"
+        super().__init__(title, next_link)
+        
+class LinkIsNotFromRussianWiki(Exception):
     
+    def __init__(self, message):
+        super().__init__(message)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -114,4 +121,4 @@ if __name__ == "__main__":
     try:
         wiki_searcher(args.start_link)
     except Exception as e:
-        print(e)
+        print(type(e).__name__, ': ', e, file=sys.stderr, sep = '')
