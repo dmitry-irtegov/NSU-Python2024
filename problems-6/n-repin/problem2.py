@@ -45,5 +45,12 @@ class FindUrlsTest(unittest.TestCase):
         self.assertEqual(find_urls('Malformed links: hehe@mai.ru'),
                          [])
 
+    def test_numbers(self):
+        self.assertEqual(find_urls('Links with paths: http://y3a.ru and www.21213.com'),
+                         ['http://y3a.ru', 'www.21213.com'])
+
+        self.assertEqual(find_urls('Links with paths: http://y3a.ru/so2me/pa1th and www.21213.com/he/31231/a/b/c'),
+                         ['http://y3a.ru/so2me/pa1th', 'www.21213.com/he/31231/a/b/c'])
+
 if __name__ == '__main__':
     unittest.main()
