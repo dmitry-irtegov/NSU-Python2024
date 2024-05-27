@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caesar Cipher Decoder</title>
+    <style>
+        body {
+            font-family: Google Sans, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000000;
+            margin-top: 20px;
+        }
+
+        form {
+            width: 40%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea, input[type="number"], select, input[type="submit"] {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin: 6px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #000000;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #007bff;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        option {
+            font-family: Google Sans, sans-serif;
+        }
+
+        .decrypted-text {
+            font-family: Google Sans, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Caesar Cipher Decoder</h1>
+    <form method="post">
+        <label for="encrypted_text">Enter Encrypted Text:</label><br>
+        <textarea name="encrypted_text" id="encrypted_text" rows="4" cols="50"></textarea><br><br>
+
+        <input type="submit" value="Decrypt">
+    </form>
+
+    {% if decrypted_text %}
+        <h2>Decrypted Text:</h2>
+        {% if language == 'ru' %}
+            <p class="decrypted-text">{{ decrypted_text }}</p>
+        {% else %}
+            <p>{{ decrypted_text }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
