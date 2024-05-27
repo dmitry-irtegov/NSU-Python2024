@@ -18,7 +18,7 @@ def get_files(path: str) -> list:
             try:
                 file_size = os.stat(file_path).st_size
                 files.append((file, file_size))
-            except OSError as e:
+            except Exception as e:
                 print(f"Error while getting file info for '{file}': {e}")
 
     return sorted(files, key=lambda item: (-item[1], item[0]))
