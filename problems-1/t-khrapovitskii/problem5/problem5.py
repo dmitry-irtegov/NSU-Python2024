@@ -28,7 +28,7 @@ def gcd(a: int, b: int) -> int:
             b = (b - a) // 2
 
 
-def is_prime(n: int):
+def is_prime(n: int, k_repeats = 4) -> bool:
     if n < 2:
         return False
     if n < 4:
@@ -41,7 +41,7 @@ def is_prime(n: int):
         s += 1
         t //= 2
     random.seed(n)
-    for i in range(4 * int(math.log2(n))):
+    for i in range(k_repeats * int(math.log2(n))):
         a = random.randint(2, n - 2)
         x = pow(a, t, n)
         if x == 1 or x == n - 1:
