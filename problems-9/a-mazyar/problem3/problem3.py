@@ -1,30 +1,33 @@
 from types import FunctionType
 import unittest
 
-def dont_log(f):
-    f._is_logged = False
-    return f
-
-def _is_logged(func):
-    return (isinstance(func, FunctionType) and 
-            func.__name__ != "__init__" and
-            getattr(func, '_is_logged', True))
-
-def _logged(func):
-    def logged_func(self, *args, **kwargs):
-        self._logs += (f"Called method \"{func.__name__}\" with \n\targs: {args}\n\tkwargs: {kwargs}", )
-        try:
-            result = func(self, *args, **kwargs)
-        except Exception as e:
-            self._logs += (f"Execution of method \"{func.__name__}\" concluded with \n\t{e.__class__.__name__}: {e}", )
-            raise e
-        
-        self._logs += (f"Execution of method \"{func.__name__}\" concluded with \n\tReturn value: {result}", )
-        return result
-    return logged_func
-
 class Loggable:
     _class_logs = ()
+
+    @staticmethod
+    def dont_log(f):
+        f._is_logged = False
+        return f
+
+    @staticmethod
+    def _is_logged(func):
+        return (isinstance(func, FunctionType) and 
+                func.__name__ != "__init__" and
+                getattr(func, '_is_logged', True))
+
+    @staticmethod
+    def _logged(func):
+        def logged_func(self, *args, **kwargs):
+            self._logs += (f"Called method \"{func.__name__}\" with \n\targs: {args}\n\tkwargs: {kwargs}", )
+            try:
+                result = func(self, *args, **kwargs)
+            except Exception as e:
+                self._logs += (f"Execution of method \"{func.__name__}\" concluded with \n\t{e.__class__.__name__}: {e}", )
+                raise e
+            
+            self._logs += (f"Execution of method \"{func.__name__}\" concluded with \n\tReturn value: {result}", )
+            return result
+        return logged_func
 
     def __init__(self):
         self._logs = ()
@@ -33,12 +36,12 @@ class Loggable:
             # wrap methods in logged decorator
             if getattr(clazz, 'log_not_started', True):
                 for attr in clazz.__dict__.values():
-                    if(_is_logged(attr)):
+                    if(Loggable._is_logged(attr)):
                         # attribute is a method
                         if attr.__name__[:2] == '__':
-                            setattr(clazz, '_' + clazz.__name__ + attr.__name__, _logged(attr))
+                            setattr(clazz, '_' + clazz.__name__ + attr.__name__, Loggable._logged(attr))
                         else:
-                            setattr(clazz, attr.__name__, _logged(attr))
+                            setattr(clazz, attr.__name__, Loggable._logged(attr))
                 clazz.log_not_started = False
 
     def logged_calls(self):
@@ -74,7 +77,7 @@ class LoggedIntWrapper(Parent, Loggable):
     def __private_method(self):
         return "very inner logic"
 
-    @dont_log
+    @Loggable.dont_log
     def __str__(self):
         return str(self._int)
     
