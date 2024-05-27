@@ -3,25 +3,25 @@ import unittest
 
 
 class Vector:
-
+    # сделать приватным компонент
     def __init__(self, *components):
-        self.components = components
+        self.__components = components
 
     def __repr__(self):
-        return f"Vector{self.components}"
+        return f"Vector{self.__components}"
 
     def __add__(self, other):
-        if len(self.components) != len(other.components):
+        if len(self.__components) != len(other.__components):
             raise ValueError("Vectors must be of same dimensions to add")
-        return Vector(*(x + y for x, y in zip(self.components, other.components)))
+        return Vector(*(x + y for x, y in zip(self.__components, other.__components)))
 
     def __sub__(self, other):
-        if len(self.components) != len(other.components):
+        if len(self.__components) != len(other.__components):
             raise ValueError("Vectors must be of same dimensions to subtract")
-        return Vector(*(x - y for x, y in zip(self.components, other.components)))
+        return Vector(*(x - y for x, y in zip(self.__components, other.__components)))
 
     def __mul__(self, scalar):
-        return Vector(*(x * scalar for x in self.components))
+        return Vector(*(x * scalar for x in self.__components))
 
     def __rmul__(self, scalar):
         return self * scalar
@@ -29,15 +29,15 @@ class Vector:
     def __truediv__(self, scalar):
         if scalar == 0:
             raise ValueError("Cannot divide by zero")
-        return Vector(*(x / scalar for x in self.components))
+        return Vector(*(x / scalar for x in self.__components))
 
     def dot(self, other):
-        if len(self.components) != len(other.components):
+        if len(self.__components) != len(other.__components):
             raise ValueError("Vectors must be of same dimensions for dot product")
-        return sum(x * y for x, y in zip(self.components, other.components))
+        return sum(x * y for x, y in zip(self.__components, other.__components))
 
     def magnitude(self):
-        return math.sqrt(sum(x ** 2 for x in self.components))
+        return math.sqrt(sum(x ** 2 for x in self.__components))
 
     def normalized(self):
         mag = self.magnitude()
@@ -46,18 +46,18 @@ class Vector:
         return self / mag
 
     def __eq__(self, other):
-        return self.components == other.components
+        if not isinstance(other, Vector):
+            return False
+        return self.__components == other.__components
 
     def __len__(self):
-        return len(self.components)
+        return len(self.__components)
 
     def __getitem__(self, index):
-        return self.components[index]
+        return self.__components[index]
 
     def __setitem__(self, index, value):
-        components = list(self.components)
-        components[index] = value
-        self.components = tuple(components)
+        self.__components = self.__components[:index] + (value,) + self.__components[index + 1:]
 
 
 class TestVector(unittest.TestCase):
