@@ -11,7 +11,6 @@ def random_mix(word, length):
         word_list[index+1] = (letters[rand_index])
         letters.pop(rand_index)
     return ''.join(word_list)
-    
 
 def abc_mix(word, length):
     letters = list(word)[1:length-1]
@@ -19,14 +18,17 @@ def abc_mix(word, length):
     return word[0] + ''.join(letters) + word[-1]
 
 def mix(mix_type, string):
+    last_index = 0
     for match in re.finditer(r'\w+', string):
-        index_start = match.start()
-        index_end = match.end()
+        yield string[last_index:match.start()]
+        last_index = match.end()
         word = match[0]
         length = len(word)
         if length > 3:
-            string = string[:index_start] + mix_type(word, length) + string[index_end:]
-    return string
+            yield mix_type(word, length)
+        else:
+            yield word
+    yield string[last_index:]
 
 def mixer(string, mode, how_to_print = print):
     if mode == '' or mode is None:
@@ -35,12 +37,13 @@ def mixer(string, mode, how_to_print = print):
         raise ValueError('Error: Wrong mode name')
     
     if mode == 'random':
-        string = mix(random_mix, string)     
+        gen = mix(random_mix, string)     
                 
     if mode == 'abc':
-        string = mix(abc_mix, string)
-            
-    how_to_print(string)
+        gen = mix(abc_mix, string)
+    
+    for word in gen:
+        how_to_print(word, sep = '', end = '')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

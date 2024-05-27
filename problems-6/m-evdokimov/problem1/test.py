@@ -4,7 +4,7 @@ import problem1
 class Test_mixer(unittest.TestCase):
         
     def custom_print(self, *ins, **args):
-        self.test_output = ''.join(ins)
+        self.test_output = self.test_output + ''.join(ins)
     
     def setUp(self):
          self.test_output = ""
