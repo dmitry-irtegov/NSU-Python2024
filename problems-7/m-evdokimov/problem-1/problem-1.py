@@ -10,24 +10,28 @@ def wiki_searcher(start_link):
     if wiki_index == -1:
         raise ValueError("Your start link is not from Wiki")
     try:
-        requests_cache.install_cache('requests_cache')
+        session = requests_cache.CachedSession('requests_cache')
     except BaseException as e:
         raise e("Error with cache file")
     links_cache = {}
     philLink = '/wiki/%D0%A4%D0%B8%D0%BB%D0%BE%D1%81%D0%BE%D1%84%D0%B8%D1%8F'
+    random_link = '/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%A1%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0'
     cnt = 0
     next_link = start_link[wiki_index:]
     
     while True:
         if next_link.find('wikipedia.org') != -1:
             raise LinkIsNotFromRussianWiki("Current page contains a link to Wikipedia of another language")
-        content = requests.get('https://ru.wikipedia.org' + next_link).text
+        if next_link != random_link:
+            content = session.get('https://ru.wikipedia.org' + next_link).text
+        else:
+            content = requests.get('https://ru.wikipedia.org' + next_link).text
         parser = MyHTMLParser()
         try:
             parser.feed(content)
         except StopParsing as ex:
             current_link = next_link
-            title, next_link = ex.args
+            title, next_link, multiple_link = ex.args
             print(cnt, title)
             cnt = cnt + 1
             if next_link in links_cache.keys():
@@ -38,7 +42,20 @@ def wiki_searcher(start_link):
                 print("Философия!")
                 break
             links_cache[current_link] = title
-            time.sleep(2)
+            if not(session.cache.contains(url = 'https://ru.wikipedia.org' + next_link)):
+                time.sleep(1)
+            if multiple_link:
+                next_link = multiple_link_processing(next_link, session)
+                
+def multiple_link_processing(link, session):
+    content = session.get('https://ru.wikipedia.org' + link).text
+    parser = MultipleLinkParser()
+    try:
+        parser.feed(content)
+    except StopParsing as ex:
+        _, next_link, _ = ex.args
+        return next_link
+    raise MultipleLinkError("Error while processing multiple link: " + link)
     
 class MyHTMLParser(HTMLParser):
     
@@ -47,6 +64,7 @@ class MyHTMLParser(HTMLParser):
     title_flag = False
     table_flag = False
     no_bracket_flag = True
+    
     title = ''
     next_link = ''
     
@@ -70,6 +88,9 @@ class MyHTMLParser(HTMLParser):
                 if atr == 'href':
                     self.tag = 'link'
                     self.next_link = value
+            for atr, value in attrs:
+                if atr == 'class' and value == 'mw-disambig':
+                    self.tag = 'multiple_link'
             
         if self.title_flag and tag == 'span':
             self.tag = 'title'
@@ -95,21 +116,60 @@ class MyHTMLParser(HTMLParser):
                     self.no_bracket_flag = True
         
         if self.tag == 'link':
-            self.close()
+            self.close(False)
+            
+        if self.tag == 'multiple_link':
+            self.close(True)
         
         if self.tag == 'title':
             self.title = data
             
+    def close(self, multiple_link_flag):
+        raise StopParsing(self.title, self.next_link, multiple_link_flag)
+    
+class MultipleLinkParser(HTMLParser):
+    
+    previous_tag = ''
+    next_link = ''
+    
+    def handle_starttag(self, tag, attrs):
+        
+        if tag == 'ul':
+            self.previous_tag = 'ul'
+            
+        if tag == 'li' and self.previous_tag == 'ul':
+            self.previous_tag = 'li'
+            
+        if tag == 'a' and self.previous_tag == 'li':
+            for atr, value in attrs:
+                if value.find('#cite') != -1:
+                    break
+                if atr == 'href':
+                    self.previous_tag = 'link'
+                    self.next_link = value
+
+    def handle_endtag(self, tag):
+        pass
+
+    def handle_data(self, data):
+        if self.previous_tag == 'link':
+            self.close()
+            
     def close(self):
-        raise StopParsing(self.title, self.next_link)
+        raise StopParsing('', self.next_link, False)
     
 class StopParsing(Exception):
     
-    def __init__(self, title, next_link):
+    def __init__(self, title, next_link, multiple_link_flag):
         self.strerror = "No errors, just wanna stop parsing"
-        super().__init__(title, next_link)
+        super().__init__(title, next_link, multiple_link_flag)
         
 class LinkIsNotFromRussianWiki(Exception):
+    
+    def __init__(self, message):
+        super().__init__(message)
+        
+class MultipleLinkError(Exception):
     
     def __init__(self, message):
         super().__init__(message)
@@ -122,3 +182,4 @@ if __name__ == "__main__":
         wiki_searcher(args.start_link)
     except Exception as e:
         print(type(e).__name__, ': ', e, file=sys.stderr, sep = '')
+    #wiki_searcher('https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B5')
