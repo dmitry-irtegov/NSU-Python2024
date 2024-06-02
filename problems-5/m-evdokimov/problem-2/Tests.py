@@ -70,11 +70,11 @@ class TestFixedBuckets(unittest.TestCase):
         
     def test_bad_length(self):
         with self.assertRaises(ValueError):
-            buc = FixedBuckets(-1, [1, 2, 3])
+            FixedBuckets(-1, [1, 2, 3])
         
     def test_bad_type(self):
         with self.assertRaises(TypeError):
-            buc = FixedBuckets(2, 666)
+            FixedBuckets(2, 666)
   
 if __name__ == "__main__":
   unittest.main()
