@@ -12,9 +12,9 @@ cipher_app.include_router(tablecipher_api.router,
                           tags=["tablecipher"])
 
 
-#@cipher_app.exception_handler(ResponseValidationError)
-#async def validation_exception_handler(request, exc):
-#    return PlainTextResponse(str(exc), status_code=status.HTTP_400_BAD_REQUEST)
+@cipher_app.exception_handler(ResponseValidationError)
+async def validation_exception_handler(request, exc):
+    return PlainTextResponse(str(exc), status_code=status.HTTP_400_BAD_REQUEST)
 
 
 @cipher_app.get("/health")
