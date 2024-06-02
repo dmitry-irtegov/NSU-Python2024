@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Response, status
-from fastapi.exceptions import ResponseValidationError
 
 from cipher.table.service import TableCipherService
 

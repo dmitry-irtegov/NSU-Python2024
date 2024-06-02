@@ -1,7 +1,6 @@
-import re
 from abc import ABC, abstractmethod
 
-from cipher.core.entity.language import define_language, Language
+from cipher.core.entity.language import Language
 
 
 class Text(ABC):

@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
-from copy import copy
 
-from cipher.core.entity.language import Language, define_language
+from cipher.core.entity.language import Language
 
 
 class Key(ABC):
