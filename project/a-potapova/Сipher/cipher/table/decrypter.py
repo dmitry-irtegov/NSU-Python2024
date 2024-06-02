@@ -71,9 +71,9 @@ class FrequencyDecrypter(Decrypter):
         key = TableKey(key_table, language=text.language)
 
         decrypted_text = TableCipher.decrypt(text, key=key)
-        spell = SpellChecker()
+        spell = SpellChecker(language=text.language.name)
         accuracy = text_accuracy(decrypted_text, spell)
-
+        print(decrypted_text)
         swap_data = FrequencyDecrypter.SwapData(copy(key), decrypted_text, accuracy)
         prev_swap_data = swap_data
 
