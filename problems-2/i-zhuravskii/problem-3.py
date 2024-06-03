@@ -6,31 +6,24 @@ import tempfile
 
 def list_files_sorted_by_size(directory):
     try:
-        # Проверяем, существует ли директория
         if not os.path.exists(directory):
             print(f"The directory '{directory}' does not exist.")
             return
 
-        # Проверяем, является ли путь директорией
         if not os.path.isdir(directory):
             print(f"The path '{directory}' is not a directory.")
             return
 
-        # Проверяем права доступа к директории
         if not os.access(directory, os.R_OK):
             print(f"Cannot read the directory '{directory}' due to insufficient permissions.")
             return
 
-        # Получаем список всех файлов в директории
         files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
 
-        # Создаем список кортежей (имя файла, размер файла)
         files_with_sizes = [(f, os.stat(os.path.join(directory, f)).st_size) for f in files]
 
-        # Сортируем список сначала по размеру (в обратном порядке), а затем по имени файла
         files_with_sizes.sort(key=lambda x: (-x[1], x[0]))
 
-        # Выводим отсортированный список файлов с их размерами
         for file, size in files_with_sizes:
             print(f"{file}: {size} bytes")
     except Exception as e:
