@@ -1,4 +1,5 @@
 from collections.abc import Sequence
+from itertools import cycle
 from typing import overload, Any
 
 
@@ -11,14 +12,21 @@ class Cartesian(Sequence):
         self._x = tuple(x)
         self._n = n
         self._state: list = [self._x[-1]] * n
-        self._generator = self._next_state()
+        self._generator = self._next_state_head()
         self.next_state()
 
-    def _next_state(self, cur_index=0):
-        if cur_index != self._n - 1:
+    def _next_state_head(self):
+        for i in cycle(self._x):
+            self._state[0] = i
+            yield from self._next_state_body(1)
+
+    def _next_state_body(self, cur_index):
+        if cur_index == self._n:  # in case self._n = 1
+            yield
+        elif cur_index != self._n - 1:
             for i in self._x:
                 self._state[cur_index] = i
-                yield from self._next_state(cur_index + 1)
+                yield from self._next_state_body(cur_index + 1)
             self._state[cur_index] = self._x[0]
         else:
             for i in self._x:
@@ -26,13 +34,7 @@ class Cartesian(Sequence):
                 yield
 
     def next_state(self):
-        try:
-            next(self._generator)
-            return
-        except StopIteration:
-            self._generator = self._next_state()
-            self.next_state()
-            return
+        next(self._generator)
 
     @overload
     def __getitem__(self, index: int) -> Any:
