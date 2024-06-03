@@ -2,7 +2,7 @@ import unittest
 import re
 
 def find_url(line, urls):
-    for match in re.finditer(r'www\.[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,6}', line):
+    for match in re.finditer(r'www\.[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,6}|https://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,6}|http://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,6}', line):
         end = line[match.end():].find(' ')
         if end == -1:
             path = line[match.end():]
@@ -23,7 +23,7 @@ def url_finder(filename):
 class TestUrls(unittest.TestCase):
   
     def test_simple(self):
-        self.assertEqual(url_finder("input1.txt"), ['www.omim.org/entry/227220', 'www.kinopoisk1.ru/', 'www.kinopoisk2.ru/'])
+        self.assertEqual(url_finder("input1.txt"), ['http://www.omim.org/entry/227220', 'https://www.kinopoisk1.ru/', 'https://www.kinopoisk2.ru/'])
     
     def test_atTheEndOfLine(self):
         self.assertEqual(url_finder("input2.txt"), ['www.omim.org/entry/227220'])
@@ -31,8 +31,8 @@ class TestUrls(unittest.TestCase):
     def test_noLink(self):
         self.assertEqual(url_finder("input3.txt"), [])
         
-    def test_badLink(self):
-        self.assertEqual(url_finder("input4.txt"), [])
+    def test_strangeLink(self):
+        self.assertEqual(url_finder("input4.txt"), ['https://mysite.ru'])
         
     
 if __name__ == "__main__":
