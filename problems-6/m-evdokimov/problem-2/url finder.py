@@ -2,7 +2,8 @@ import unittest
 import re
 
 def find_url(line, urls):
-    for match in re.finditer(r'(https://www\.|www\.|https://)[a-zA-Z0-9\-\.]+\.[a-zA-Z0-9]', line):
+    
+    for match in re.finditer(r'((http(s)?://)?www\.|http(s)?://)(([a-zA-Z0-9]+(\-)*)+\.)+([a-zA-Z0-9]+(\-)*)*', line):
         end = line[match.end():].find(' ')
         if end == -1:
             path = line[match.end():]
@@ -23,10 +24,10 @@ def url_finder(filename):
 class TestUrls(unittest.TestCase):
   
     def test_simple(self):
-        self.assertEqual(url_finder("input1.txt"), ['https://www.omim.org/entry/227220', 'https://www.kinopoisk1.ru/', 'https://www.kinopoisk2.ru/'])
+        self.assertEqual(url_finder("input1.txt"), ['http://www.omim.org/entry/227220', 'https://www.kinopoisk1.ru/', 'https://www.kinopoisk2.ru/'])
     
     def test_atTheEndOfLine(self):
-        self.assertEqual(url_finder("input2.txt"), ['www.omim.org/entry/227220'])
+        self.assertEqual(url_finder("input2.txt"), ['www.om-im.org/entry/227220'])
         
     def test_noLink(self):
         self.assertEqual(url_finder("input3.txt"), [])
