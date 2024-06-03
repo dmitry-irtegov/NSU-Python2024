@@ -75,7 +75,6 @@ class FrequencyDecrypter(Decrypter):
         accuracy = text_accuracy(decrypted_text, spell)
         print(decrypted_text)
         swap_data = FrequencyDecrypter.SwapData(copy(key), decrypted_text, accuracy)
-        prev_swap_data = swap_data
 
         for _ in range(2):
             for k_word in range(len(text.words)):
@@ -87,13 +86,11 @@ class FrequencyDecrypter(Decrypter):
                         key.swap_decrypted_letters(swap)
                         decrypted_text = TableCipher.decrypt(text, key=key)
                         accuracy = text_accuracy(decrypted_text, spell)
-                        if accuracy < prev_swap_data.accuracy:
+                        if accuracy < swap_data.accuracy:
                             # Rollback swap
-                            swap_data = prev_swap_data
                             break
                         else:
                             # Continue
-                            prev_swap_data = swap_data
                             swap_data = FrequencyDecrypter.SwapData(key, decrypted_text, accuracy)
 
         return decrypted_text, key
