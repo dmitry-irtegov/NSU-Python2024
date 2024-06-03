@@ -1,17 +1,16 @@
 from collections.abc import Sequence
-from typing import overload
+from typing import overload, Any
 
 
-class Cartesian[_T_co](Sequence):
-
-    def __init__(self, x: Sequence[_T_co], n: int):
+class Cartesian(Sequence):
+    def __init__(self, x: Sequence, n: int):
         if len(x) < 1:
             raise ValueError("Set of possible elements should be not empty")
         if n < 1:
             raise ValueError("Number of elements should be greater than zero")
         self._x = tuple(x)
         self._n = n
-        self._state: list[_T_co] = [self._x[-1]] * n
+        self._state: list = [self._x[-1]] * n
         self._generator = self._next_state()
         self.next_state()
 
@@ -36,10 +35,14 @@ class Cartesian[_T_co](Sequence):
             return
 
     @overload
-    def __getitem__(self, index: int) -> _T_co:
+    def __getitem__(self, index: int) -> Any:
         return self._state[index]
 
-    def __getitem__(self, index: slice) -> Sequence[_T_co]:
+    @overload
+    def __getitem__(self, index: slice) -> Sequence[Any]:
+        return self._state[index]
+
+    def __getitem__(self, index):
         return self._state[index]
 
     def __len__(self):
