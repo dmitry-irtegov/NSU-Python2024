@@ -1,12 +1,9 @@
-from copy import deepcopy
-
-
 class MyStack:
     def __init__(self, elements=None):
         if elements is None:
             self.elements = []
         else:
-            self.elements = deepcopy(elements)
+            self.elements = elements.copy()
 
     def push(self, el):
         self.elements.append(el)
