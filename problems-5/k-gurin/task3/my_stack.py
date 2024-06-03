@@ -2,6 +2,8 @@ class MyStack:
     def __init__(self, elements=None):
         if elements is None:
             self.elements = []
+        elif not isinstance(elements, list):
+            raise TypeError("elements must be a list")
         else:
             self.elements = elements.copy()
 
@@ -9,10 +11,7 @@ class MyStack:
         self.elements.append(el)
 
     def pop(self):
-        if len(self.elements) == 0:
-            raise IndexError
-        else:
-            return self.elements.pop()
+        return self.elements.pop()
 
     def __len__(self):
         return len(self.elements)
