@@ -28,21 +28,22 @@ def gcd(a: int, b: int) -> int:
             b = (b - a) // 2
 
 
-def is_prime(n: int, k_repeats = 4) -> bool:
+def is_prime(n: int, a_list: list[int] | None = None) -> bool:
     if n < 2:
         return False
     if n < 4:
         return True
     if n % 2 == 0:
         return False
+    if a_list is None:
+        a_list = [random.randint(2, n - 2) for _ in range(4 * int(math.log2(n)))]
     t = n - 1
     s = 0
     while t % 2 == 0:
         s += 1
         t //= 2
-    random.seed(n)
-    for i in range(k_repeats * int(math.log2(n))):
-        a = random.randint(2, n - 2)
+    # random.seed(n)
+    for a in a_list:
         x = pow(a, t, n)
         if x == 1 or x == n - 1:
             continue
