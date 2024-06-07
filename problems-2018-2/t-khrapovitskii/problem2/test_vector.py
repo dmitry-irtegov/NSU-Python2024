@@ -38,6 +38,15 @@ class TestVector:
         compare(v, [1, 2, 10, 5])
         assert arr[2] == 3
 
+    def test_getitem_slice(self):
+        v = Vector([1, 2, 3, 5])
+        assert tuple(v[:2]) == (1, 2)
+
+    def test_setitem_slice(self):
+        v = Vector([1, 2, 3, 5])
+        v[1:4] = [9, 8, 7]
+        compare(v, [1, 9, 8, 7])
+
     def test_clone(self):
         v = Vector([1, 2])
         clone = v.clone()
