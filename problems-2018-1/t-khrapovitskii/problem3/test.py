@@ -1,5 +1,3 @@
-import sys
-
 import pytest
 from list_sieve import ListSieve
 from set_add_sieve import SetAddSieve
