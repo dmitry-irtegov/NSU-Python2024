@@ -3,7 +3,6 @@ Provides a Vector object.
 """
 
 import math
-from abc import abstractmethod
 from typing import overload, Sequence, Self, SupportsFloat, Iterable
 
 
@@ -64,7 +63,6 @@ class Vector(Sequence):
             raise TypeError(f'constructor argument must be an integer or a sequence, not \'{type(arg)}\'')
 
     @overload
-    @abstractmethod
     def __getitem__(self, index: int) -> float:
         """
         Get ith element of the vector.
@@ -82,7 +80,6 @@ class Vector(Sequence):
         ...
 
     @overload
-    @abstractmethod
     def __getitem__(self, index: slice) -> Sequence[float]:
         """
         Get range of elements of the vector.
@@ -116,7 +113,6 @@ class Vector(Sequence):
         return self._value[index]
 
     @overload
-    @abstractmethod
     def __setitem__(self, index: int, value: float) -> None:
         """
         Set one or multiple elements of the vector.
@@ -131,7 +127,6 @@ class Vector(Sequence):
         ...
 
     @overload
-    @abstractmethod
     def __setitem__(self, index: slice, value: Iterable[float]) -> None:
         """
         Set one or multiple elements of the vector.
@@ -178,7 +173,7 @@ class Vector(Sequence):
         Vector
             A clone of this vector.
         """
-        return Vector(self._value)
+        return self.__class__(self._value)
 
     def __repr__(self) -> str:
         """
@@ -322,7 +317,7 @@ class Vector(Sequence):
         """
         return self * -1
 
-    def __eq__(self, other: Self) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         Compare two vectors.
 
@@ -336,6 +331,8 @@ class Vector(Sequence):
         bool
             True if the vectors are equal, False otherwise.
         """
+        if not isinstance(other, Vector):
+            return False
         for i in zip(self._value, other._value):
             if i[0] != i[1]:
                 return False
