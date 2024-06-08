@@ -1,0 +1,29 @@
+N = 100000000
+
+ListSieve
+Memory usage before: 75M
+Initializing object: 0,136s, memory after: 838M
+Running algorithm: 16,205s, memory after: 838M
+Getting primes as a Sequence: 2,671s, memory after: 1059M
+Total time: 19,013s
+
+SetAddSieve
+Memory usage before: 76M
+Initializing object: 0.000s, memory after: 76M
+Running algorithm: 68,652s, memory after: 7061M
+Getting primes as a Sequence: 5,044s, memory after: 7299M
+Total time: 73,696s
+
+SetRemoveSieve
+Memory usage before: 95M
+Initializing object: 10,199s, memory after: 7267M
+Running algorithm: 79,388s, memory after: 7267M
+Getting primes as a Sequence: 1,066s, memory after: 7523M
+Total time: 90,653s
+
+BitArraySieve
+Memory usage before: 108M
+Initializing object: 0.030s, memory after: 108M
+Running algorithm: 20,993s, memory after: 108M
+Getting primes as a Sequence: 4,328s, memory after: 328M
+Total time: 25,351s
