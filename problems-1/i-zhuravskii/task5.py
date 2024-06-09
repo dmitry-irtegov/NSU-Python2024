@@ -28,10 +28,10 @@ def factorize_number(num):
 class TestFactorizeNumber(unittest.TestCase):
 
     def test_factorize_simple_number(self):
-        self.assertEquals([[2, 1], [3, 2], [7, 1]], factorize_number(126))
+        self.assertEqual([[2, 1], [3, 2], [7, 1]], factorize_number(126))
 
     def test_factorize_prime_degree(self):
-        self.assertEquals([[5, 4]], factorize_number(625))
+        self.assertEqual([[5, 4]], factorize_number(625))
 
     def test_factorize_negative(self):
         self.assertRaises(ValueError, factorize_number, -1)
