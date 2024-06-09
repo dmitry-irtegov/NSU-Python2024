@@ -35,11 +35,6 @@ class Storage(Mapping):
 
     def update(self, transaction_start_time: int, changes: dict[Any, Any], deleted: set[Any]) -> None:
         with self._update_lock:
-            modification_time = self.get_key_modification_time(-1)
-            print(f"\n-1 cur {self._dict.get(-1, None)} changed {changes.get(-1, None)} "
-                  f"modified {modification_time} me {transaction_start_time}")
-            print(self._key_modifications.get(-1, 0) > transaction_start_time)
-            print("ABOBA")
             for k in chain(changes.keys(), deleted):
                 if self._key_modifications.get(k, 0) > transaction_start_time:
                     raise RuntimeError(f'value of key {repr(k)} externally modified during transaction')
