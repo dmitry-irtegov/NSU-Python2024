@@ -85,7 +85,7 @@ class FrequencyDecrypter(Decrypter):
                         accuracy, decrypted_text, key = await asyncio.shield(self.specify_result(spell, swap, text))
                         if accuracy < self.swap_data.accuracy:
                             # Rollback swap
-                            print(f"{accuracy} - {curr_word} - {swap}: Continue")
+                            print(f"{accuracy} - {curr_word} - {swap}: Rollback")
                             break
                         else:
                             # Continue
