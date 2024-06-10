@@ -197,6 +197,21 @@ class Vector(Sequence):
         """
         return f'Vector[{', '.join(map(str, self._value))}]'
 
+    @staticmethod
+    def _add(s1: list[float], s2: list[float], d: list[float]):
+        for i in range(len(d)):
+            d[i] = s1[i] + s2[i]
+
+    @staticmethod
+    def _sub(s1: list[float], s2: list[float], d: list[float]):
+        for i in range(len(d)):
+            d[i] = s1[i] - s2[i]
+
+    @staticmethod
+    def _mul(s: list[float], scalar: float, d: list[float]):
+        for i in range(len(d)):
+            d[i] = s[i] * scalar
+
     def __iadd__(self, other: Self) -> Self:
         """
         Increase vector by another vector.
@@ -211,8 +226,7 @@ class Vector(Sequence):
         Vector
             Reference to self.
         """
-        for i in range(len(self._value)):
-            self._value[i] += other._value[i]
+        self._add(self._value, other._value, self._value)
         return self
 
     def __add__(self, other: Self) -> Self:
@@ -229,8 +243,8 @@ class Vector(Sequence):
         Vector
             A new vector containing sum of two vectors.
         """
-        ret = self.clone()
-        ret += other
+        ret = self.__class__(len(self))
+        self._add(self._value, other._value, ret._value)
         return ret
 
     def __isub__(self, other: Self) -> Self:
@@ -247,8 +261,7 @@ class Vector(Sequence):
         Vector
             Reference to self.
         """
-        for i in range(len(self._value)):
-            self._value[i] -= other._value[i]
+        self._sub(self._value, other._value, self._value)
         return self
 
     def __sub__(self, other: Self) -> Self:
@@ -265,8 +278,8 @@ class Vector(Sequence):
         Vector
             A new vector containing difference of two vectors.
         """
-        ret = self.clone()
-        ret -= other
+        ret = self.__class__(len(self))
+        self._sub(self._value, other._value, ret._value)
         return ret
 
     def __imul__(self, scalar: SupportsFloat) -> Self:
@@ -283,9 +296,7 @@ class Vector(Sequence):
         Vector
             Reference to self.
         """
-        scalar = float(scalar)
-        for i in range(len(self._value)):
-            self._value[i] *= scalar
+        self._mul(self._value, float(scalar), self._value)
         return self
 
     def __mul__(self, scalar: SupportsFloat) -> Self:
@@ -302,8 +313,8 @@ class Vector(Sequence):
         Vector
             A new vector containing this vector multiplied by a scalar.
         """
-        ret = self.clone()
-        ret *= scalar
+        ret = self.__class__(len(self))
+        self._mul(self._value, float(scalar), ret._value)
         return ret
 
     def __neg__(self) -> Self:
