@@ -1,9 +1,9 @@
 from url_regex import find_urls
 
 
-def compare_iterables(iterable1, iterable2):
-    for a, b in zip(iterable1, iterable2, strict=True):
-        assert a == b
+def get_parts(s: str) -> set[str]:
+    parts_idx = find_urls(s)
+    return set(map(lambda x: s[x[0]:x[1]], parts_idx))
 
 
 class TestUrl:
@@ -11,23 +11,30 @@ class TestUrl:
         assert len(tuple(find_urls(""))) == 0
 
     def test_known_scheme(self):
-        s1 = "some https://localhost/123"
-        s2 = "GET HTTP://Problem ="
-        s3 = "https:/nsu.qqqqq"
-        s4 = "htps://good.qqqqq"
-        compare_iterables(find_urls(s1), [(5, len(s1))])
-        compare_iterables(find_urls(s2), [(4, len(s2) - 2)])
-        compare_iterables(find_urls(s3), [])
-        compare_iterables(find_urls(s4), [])
+        u1 = "https://localhost/123"
+        s1 = f"some {u1}"
+        assert get_parts(s1) == {u1}
+        u2 = "HTTP://Problem"
+        s2 = f"GET {u2} ="
+        assert get_parts(s2) == {u2}
+        s3 = f"https:/nsu.qqqqq"
+        assert get_parts(s3) == set()
+        s4 = f"htps://good.qqqqq"
+        assert get_parts(s4) == set()
 
     def test_www(self):
-        s1 = "some www.nsu.qqqqq/123"
-        s2 = "GET wWw.nsu.qqqqq ="
-        s3 = "www.bad..ru"
-        compare_iterables(find_urls(s1), [(5, len(s1))])
-        compare_iterables(find_urls(s2), [(4, len(s2) - 2)])
-        compare_iterables(find_urls(s3), [(0, len(s3) - 4)])
+        u1 = "www.nsu.qqqqq/123"
+        s1 = f"some {u1}"
+        assert get_parts(s1) == {u1}
+        u2 = "wWw.nsu.qqqqq"
+        s2 = f"GET {u2} ="
+        assert get_parts(s2) == {u2}
+        u3 = "www.bad"
+        s3 = f"{u3}..ru"
+        assert get_parts(s3) == {u3}
 
     def test_multiple(self):
-        s1 = "print http://google.com,http://yandex.com"
-        compare_iterables(find_urls(s1), [(6, 23), (24, 41)])
+        u1_1 = "https://google.com"
+        u1_2 = "http://yandex.com"
+        s1 = f"print {u1_1},{u1_2}"
+        assert get_parts(s1) == {u1_1, u1_2}
