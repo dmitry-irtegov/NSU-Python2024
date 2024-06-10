@@ -5,7 +5,7 @@ def wait_numeric():
     while True:
         try:
             string = input()
-        except EOFError as e:
+        except EOFError:
             print("EOF, goodbye.")
             break
             
