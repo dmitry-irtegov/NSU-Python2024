@@ -1,5 +1,6 @@
+import asyncio
 from copy import copy
-
+from fastapi import status
 from spellchecker import SpellChecker
 
 from cipher.settings import MIN_ACCURACY_FOR_SWAP
@@ -45,6 +46,7 @@ def text_accuracy(text: TableText, spell) -> float:
 class FrequencyDecrypter(Decrypter):
     class SwapData:
         """Data about swap. For analyze key accuracy"""
+
         def __init__(self, key: TableKey, decrypted_text: TableText, accuracy: float):
             self._key: TableKey = key
             self._text: TableText = decrypted_text
@@ -62,35 +64,55 @@ class FrequencyDecrypter(Decrypter):
         def accuracy(self) -> float:
             return self._accuracy
 
-    @staticmethod
-    def decode(text: TableText) -> (TableText, TableKey):
+    def __init__(self):
+        self.swap_data: FrequencyDecrypter.SwapData = None
+        self.status = status.HTTP_404_NOT_FOUND
+
+    async def decode(self, text: TableText) -> (TableText, TableKey, status):
         """Decode text without key by frequencies of letters and spellchecker"""
+        self.status = status.HTTP_202_ACCEPTED
+        decrypted_text, key = await asyncio.shield(FrequencyDecrypter.find_result_by_frequencies(text))
+        spell = SpellChecker(language=text.language.name)
+        accuracy = text_accuracy(decrypted_text, spell)
+        print(decrypted_text)
+        self.swap_data = FrequencyDecrypter.SwapData(copy(key), decrypted_text, accuracy)
+        for _ in range(2):
+            for k_word in range(len(text.words)):
+                curr_word = self.swap_data.text.words[k_word]
+                accuracy, wrong_letters = word_accuracy(curr_word.lower(), spell)
+                if MIN_ACCURACY_FOR_SWAP < accuracy < 1:
+                    for swap in wrong_letters:
+                        accuracy, decrypted_text, key = await asyncio.shield(self.specify_result(spell, swap, text))
+                        if accuracy < self.swap_data.accuracy:
+                            # Rollback swap
+                            print(f"{accuracy} - {curr_word} - {swap}: Continue")
+                            break
+                        else:
+                            # Continue
+                            print(f"{accuracy} - {curr_word} - {swap}: Continue")
+                            self.swap_data = FrequencyDecrypter.SwapData(key, decrypted_text, accuracy)
+        self.swap_data = FrequencyDecrypter.SwapData(key, decrypted_text, accuracy)
+        self.status = status.HTTP_200_OK
+        return decrypted_text, key, self.status
+
+    async def specify_result(self, spell, swap, text):
+        key = copy(self.swap_data.key)
+        key.swap_decrypted_letters(swap)
+        decrypted_text = TableCipher.decrypt(text, key=key)
+        accuracy = text_accuracy(decrypted_text, spell)
+        return accuracy, decrypted_text, key
+
+    async def get_current_result(self) -> (TableText, TableKey, status):
+        if self.swap_data is not None:
+            return self.swap_data.text, self.swap_data.key, self.status
+        else:
+            return None, None, self.status
+
+    @staticmethod
+    async def find_result_by_frequencies(text):
         plain_freq = frequency.load_frequencies(text.language)
         text_freq = frequency.text_to_frequencies(text)
         key_table = build_cipher_key(plain_freq, text_freq)
         key = TableKey(key_table, language=text.language)
-
         decrypted_text = TableCipher.decrypt(text, key=key)
-        spell = SpellChecker(language=text.language.name)
-        accuracy = text_accuracy(decrypted_text, spell)
-        print(decrypted_text)
-        swap_data = FrequencyDecrypter.SwapData(copy(key), decrypted_text, accuracy)
-
-        for _ in range(2):
-            for k_word in range(len(text.words)):
-                curr_word = swap_data.text.words[k_word]
-                accuracy, wrong_letters = word_accuracy(curr_word.lower(), spell)
-                if MIN_ACCURACY_FOR_SWAP < accuracy < 1:
-                    for swap in wrong_letters:
-                        key = copy(swap_data.key)
-                        key.swap_decrypted_letters(swap)
-                        decrypted_text = TableCipher.decrypt(text, key=key)
-                        accuracy = text_accuracy(decrypted_text, spell)
-                        if accuracy < swap_data.accuracy:
-                            # Rollback swap
-                            break
-                        else:
-                            # Continue
-                            swap_data = FrequencyDecrypter.SwapData(key, decrypted_text, accuracy)
-
         return decrypted_text, key

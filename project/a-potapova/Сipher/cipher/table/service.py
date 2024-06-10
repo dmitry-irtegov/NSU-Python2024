@@ -1,3 +1,7 @@
+import asyncio
+
+from fastapi import status
+
 from cipher.core.entity.language import Language
 from cipher.core.service import CipherService
 from cipher.table.cipher import TableCipher
@@ -7,27 +11,52 @@ from cipher.table.entity.text import TableText
 
 
 class TableCipherService(CipherService):
-    @staticmethod
-    def keygen(language: str, **kwargs) -> str:
-        language = Language(language)
-        return str(TableCipher.keygen(language))
+    def __init__(self):
+        self.cipher = TableCipher
+        self.decrypter: FrequencyDecrypter = FrequencyDecrypter()
+        self.task = None
+        self.result: tuple[str, str, status] = None
 
-    @staticmethod
-    def encode(plaintext: str, key: str = None) -> str:
+    def keygen(self, language: str, **kwargs) -> str:
+        language = Language(language)
+        return str(self.cipher.keygen(language))
+
+    def encode(self, plaintext: str, key: str = None) -> str:
         text = TableText(plaintext)
         if key is None or key == "":
             ciphertext = text
         else:
             table_key = TableKey(key)
-            ciphertext = TableCipher.encrypt(text, key=table_key)
+            ciphertext = self.cipher.encrypt(text, key=table_key)
+        print(ciphertext)
         return str(ciphertext)
 
-    @staticmethod
-    def decode(ciphertext: str, key: str = None) -> tuple[str, str]:
+    async def decode(self, ciphertext: str, timeout: float, key: str = None) -> tuple[str, str, status]:
         text = TableText(ciphertext)
         if key is None or key == "":
-            plaintext, table_key = FrequencyDecrypter.decode(text)
+            self.task = asyncio.create_task(asyncio.wait_for(self.decrypter.decode(text),
+                                                             timeout=timeout))
+            try:
+                plaintext, table_key, result_status = await self.task
+            except (asyncio.TimeoutError, asyncio.CancelledError):
+                plaintext, table_key, result_status = await self.read()
         else:
             table_key = TableKey(key)
             plaintext = TableCipher.decrypt(text, key=table_key)
-        return str(plaintext), str(table_key)
+            result_status = status.HTTP_200_OK
+        self.result = str(plaintext), str(table_key), result_status
+        return self.result
+
+    async def read(self) -> tuple[str, str, status]:
+        if self.result is None:
+            plaintext, table_key, result_status = await self.decrypter.get_current_result()
+            self.result = str(plaintext), str(table_key), result_status
+        return self.result
+
+    async def stop(self) -> tuple[str, str, status]:
+        try:
+            self.task.cancel()
+        except (asyncio.TimeoutError, asyncio.CancelledError):
+            plaintext, table_key, result_status = self.decrypter.get_current_result()
+            self.result = str(plaintext), str(table_key), result_status
+        return await self.read()
