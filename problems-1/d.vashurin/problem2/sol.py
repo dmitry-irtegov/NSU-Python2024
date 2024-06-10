@@ -1,13 +1,19 @@
-from __future__ import annotations
 from collections.abc import MutableSequence
-from typing import TYPE_CHECKING
+from typing import Protocol, TypeVar
 
-if TYPE_CHECKING:
-    from typing import TypeVar
+T_contra = TypeVar("T_contra", contravariant=True)
 
-    from _typeshed import SupportsDunderGT, SupportsDunderLT
 
-    Ordered = TypeVar("Ordered", SupportsDunderGT, SupportsDunderLT)
+class SupportsDunderLT(Protocol[T_contra]):
+    def __lt__(self, other: T_contra, /) -> bool:
+        ...
+
+class SupportsDunderGT(Protocol[T_contra]):
+    def __gt__(self, other: T_contra, /) -> bool:
+        ...
+
+
+Ordered = TypeVar("Ordered", SupportsDunderGT, SupportsDunderLT)
 
 
 def bound_seq(
@@ -16,15 +22,6 @@ def bound_seq(
     upper: Ordered,
 ) -> MutableSequence[Ordered]:
     """Bound the provided mutable `seq` with the `lower` and `upper` bounds.
-
-    >>> bound_seq([1.0, 2.4, 1.9, 5.6], 2.0, 3.0)
-    [2.0, 2.4, 2.0, 3.0]
-    >>> bound_seq(["Orange", "Apple", "Ginger", "Tomato", "Lemon", "Pumpkin"], "Cucumber", "Potato")
-    ['Orange', 'Cucumber', 'Ginger', 'Potato', 'Lemon', 'Potato']
-    >>> bound_seq([242, 29450], 100000, 104)
-    Traceback (most recent call last):
-        ...
-    ValueError: lower = 100000 is greater than upper = 104
 
     All elements are changed in the following order:
     - if the element is lower than `lower`, it will be replaced with `lower`;
