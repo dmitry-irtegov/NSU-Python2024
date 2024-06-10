@@ -17,9 +17,9 @@ class TestUrl:
         u2 = "HTTP://Problem"
         s2 = f"GET {u2} ="
         assert get_parts(s2) == {u2}
-        s3 = f"https:/nsu.qqqqq"
+        s3 = "https:/nsu.qqqqq"
         assert get_parts(s3) == set()
-        s4 = f"htps://good.qqqqq"
+        s4 = "htps://good.qqqqq"
         assert get_parts(s4) == set()
 
     def test_www(self):
