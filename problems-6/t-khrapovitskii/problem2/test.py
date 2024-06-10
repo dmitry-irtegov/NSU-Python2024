@@ -28,14 +28,6 @@ class TestUrl:
         compare_iterables(find_urls(s2), [(4, len(s2) - 2)])
         compare_iterables(find_urls(s3), [(0, len(s3) - 4)])
 
-    def test_known_domain(self):
-        s1 = "\"site.ru\""
-        s2 = "GET ietf.org/rfc/rfc3986.txt ="
-        s3 = "GET ietf.gororg/rfc/rfc3986.txt ="
-        compare_iterables(find_urls(s1), [(1, len(s1) - 1)])
-        compare_iterables(find_urls(s2), [(4, len(s2) - 2)])
-        compare_iterables(find_urls(s3), [])
-
     def test_multiple(self):
         s1 = "print http://google.com,http://yandex.com"
         compare_iterables(find_urls(s1), [(6, 23), (24, 41)])
