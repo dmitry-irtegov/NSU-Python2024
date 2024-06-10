@@ -11,7 +11,7 @@ scheme = r"(a-z[a-z0-9+\-.]://)"
 known_schemes_iter = ['http', 'https']
 known_schemes = f"(\\b({'|'.join(known_schemes_iter)})://)"
 # language=RegExp
-reg_name = r"[{0}]+(\.[{0}]+)*".format(unreserved.replace(r'\.', r''))
+reg_name = r"[{0}]*".format(unreserved)
 host = reg_name
 authority = host
 # language=RegExp
@@ -27,5 +27,9 @@ pattern = re.compile(f"\\b({by_scheme})|({by_www})\\b", flags=re.IGNORECASE)
 # print(by_domain)
 # print(pattern.pattern)
 
-def find_urls(text: str) -> Iterable[tuple[Any, Any]]:
+def find_urls_pos_iter(text: str) -> Iterable[tuple[Any, Any]]:
     return map(lambda i: (i.start(), i.end()), re.finditer(pattern, text))
+
+
+def find_urls(text: str) -> list[str]:
+    return [text[a:b] for a, b in find_urls_pos_iter(text)]
