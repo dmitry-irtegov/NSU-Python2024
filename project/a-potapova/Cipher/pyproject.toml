@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Сipher"
+name = "Cipher"
 version = "0.1.0"
 description = ""
 authors = ["coffe <a.potapova8@g.nsu.ru>"]
