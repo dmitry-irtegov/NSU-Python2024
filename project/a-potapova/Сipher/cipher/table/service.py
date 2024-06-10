@@ -32,6 +32,8 @@ class TableCipherService(CipherService):
         return str(ciphertext)
 
     async def decode(self, ciphertext: str, timeout: float, key: str = None) -> tuple[str, str, status]:
+        self.task = None
+        self.result = None
         text = TableText(ciphertext)
         if key is None or key == "":
             self.task = asyncio.create_task(asyncio.wait_for(self.decrypter.decode(text),
@@ -54,9 +56,10 @@ class TableCipherService(CipherService):
         return self.result
 
     async def stop(self) -> tuple[str, str, status]:
-        try:
-            self.task.cancel()
-        except (asyncio.TimeoutError, asyncio.CancelledError):
-            plaintext, table_key, result_status = self.decrypter.get_current_result()
-            self.result = str(plaintext), str(table_key), result_status
+        if self.task is not None:
+            try:
+                self.task.cancel()
+            except (asyncio.TimeoutError, asyncio.CancelledError):
+                plaintext, table_key, result_status = self.decrypter.get_current_result()
+                self.result = str(plaintext), str(table_key), result_status
         return await self.read()
