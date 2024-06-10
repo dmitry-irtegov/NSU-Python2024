@@ -1,13 +1,31 @@
+import sys
+
 def wait_numeric():
     print("Please, enter a number")
     while True:
-        string = input()
-        if string.isnumeric():
+        try:
+            string = input()
+        except EOFError as e:
+            print("EOF, goodbye.")
+            break
+            
+        if is_number(string):
             print("You entered {string1}".format(string1 = string))
             break
         else:
-            print("It's not a number")
-            print("Please, enter a number")
+            print("It's not a number\nPlease, enter a number")
+            
+def is_number(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
         
 if __name__ == "__main__":
-  wait_numeric()
+    try:
+      wait_numeric()
+    except KeyboardInterrupt as e:
+        print(e)
+    except Exception as e:
+        print(e, file=sys.stderr)
