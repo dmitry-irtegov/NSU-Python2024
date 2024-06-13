@@ -50,9 +50,24 @@ class TestTranslate:
         s = 'abcdefg uvwxyz 12345'
         assert replace(s, m) == '1bcdefg uvwxy 1b345'
 
-    def test_integration(self):
+    def test_integration1(self):
         s = 'abc\ndef'
         string1 = 'abcde\\n'
         string2 = '1-6'
         m = make_replacement_map(string1, string2)
         assert replace(s, m) == '123645f'
+
+    def test_integration2(self):
+        s = 'qwertasdfghzxcvb 012345!@#,./()-='
+        string1 = 'qg4! 0.-'
+        string2 = '-3 a-e'
+        m = make_replacement_map(string1, string2)
+        assert replace(s, m) == '-wertasdf3hzxcvbbc123 5a@#,d/()e='
+
+    def test_integration_delete(self):
+        s = "AaBbCcDdEeFf...UuVvWvXxYyZz"
+        string1 = 'a-j'
+        string2 = '0-9'
+        delete = 'd-w'
+        m = make_replacement_map(string1, string2, delete=delete)
+        assert replace(s, m) == 'A0B1C2DEF...UVWXxYyZz'
