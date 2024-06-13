@@ -6,6 +6,8 @@ from sol import factorize
 @pytest.mark.parametrize(
     ["number", "factors"],
     [
+        (2, [(2, 1)]),
+        (7, [(7, 1)]),
         (6, [(2, 1), (3, 1)]),
         (9, [(3, 2)]),
         (21, [(3, 1), (7, 1)]),
