@@ -1,0 +1,36 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "wiki-philosophy"
+version = "0.1.0"
+description = ""
+authors = ["kapkekes <kapkekes@yandex.ru>"]
+packages = [{include = "wiki_philosophy", from = "source"}]
+
+[tool.poetry.scripts]
+wiki-philosophy = "wiki_philosophy.cli:entrypoint"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.32.3"
+beautifulsoup4 = "^4.12.3"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.4.8"
+mypy = "^1.10.0"
+types-requests = "^2.32.0.20240602"
+types-beautifulsoup4 = "^4.12.0.20240511"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["F", "E", "I", "ANN", "ASYNC", "B", "EM", "PT", "SIM",]
+ignore = ["ANN101", "ANN102", "ANN202"]
+fixable = ["I"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]

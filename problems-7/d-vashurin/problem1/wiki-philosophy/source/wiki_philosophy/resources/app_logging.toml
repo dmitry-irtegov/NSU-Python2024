@@ -1,0 +1,17 @@
+version = 1
+
+[formatters.default]
+class = "logging.Formatter"
+format = "{asctime}:{msecs:0^3.0f} - {message}"
+datefmt = "%S"
+style = "{"
+
+[handlers.stdout]
+class = "logging.StreamHandler"
+level = "DEBUG"
+formatter = "default"
+stream = "ext://sys.stdout"
+
+[loggers.wiki_philosophy]
+level = "INFO"
+handlers = ["stdout"]
