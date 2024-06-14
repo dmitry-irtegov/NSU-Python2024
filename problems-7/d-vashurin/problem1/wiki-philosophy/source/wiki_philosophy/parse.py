@@ -4,7 +4,6 @@ __all__ = (
     "to_article",
 )
 
-from doctest import FAIL_FAST
 from bs4 import Tag
 
 from wiki_philosophy.consts import INTERNAL_SEGMENT, WIKIPEDIA_ROOT
