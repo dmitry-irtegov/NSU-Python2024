@@ -121,3 +121,6 @@ def entrypoint() -> None:
         bootstrap()
     except KeyboardInterrupt:
         logger.info("captured Ctrl + C, exiting...")
+    except Exception as exc:
+        logger.exception("unknown exception happened, reason - %s", exc)
+        exit(1)

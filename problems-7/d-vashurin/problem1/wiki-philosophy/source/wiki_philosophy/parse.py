@@ -4,6 +4,7 @@ __all__ = (
     "to_article",
 )
 
+from doctest import FAIL_FAST
 from bs4 import Tag
 
 from wiki_philosophy.consts import INTERNAL_SEGMENT, WIKIPEDIA_ROOT
@@ -43,6 +44,9 @@ def is_normal_link(a: Tag) -> bool:
         return True
 
     if parent.name == "span" and parent.has_attr("class") and "reference" in parent.attrs["class"]:
+        return False
+
+    if not a.attrs["href"].startswith("/wiki"):
         return False
 
     return True

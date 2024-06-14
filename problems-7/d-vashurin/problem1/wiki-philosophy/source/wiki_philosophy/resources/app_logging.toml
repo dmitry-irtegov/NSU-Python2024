@@ -1,7 +1,7 @@
 version = 1
 
 [formatters.default]
-class = "logging.Formatter"
+class = "wiki_philosophy.logging.ExcFormatter"
 format = "{asctime}:{msecs:0^3.0f} - {message}"
 datefmt = "%S"
 style = "{"
