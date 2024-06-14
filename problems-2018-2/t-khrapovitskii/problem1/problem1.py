@@ -2,7 +2,6 @@ from sys import stdin
 
 
 def convert_complex(s: str) -> complex:
-    s = s.strip().replace(' ', '').replace('i', 'j').replace('I', 'j').replace(',', '.')
     return complex(s)
 
 
