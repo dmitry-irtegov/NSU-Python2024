@@ -1,4 +1,4 @@
-from collections.abc import Mapping
+from collections.abc import Mapping, Hashable
 from threading import Lock
 from typing import Any
 
@@ -6,9 +6,9 @@ from storage_transaction import StorageTransaction
 
 
 class Storage(Mapping):
-    def __init__(self, initial: dict[Any, Any] | None = None):
+    def __init__(self, initial: dict[Hashable, Any] | None = None):
         if initial is None:
-            self._dict: dict[Any, Any]
+            self._dict: dict[Hashable, Any]
         else:
             self._dict = initial.copy()
         self._transaction: StorageTransaction | None = None

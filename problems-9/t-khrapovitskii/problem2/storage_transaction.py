@@ -1,7 +1,7 @@
 from collections.abc import MutableMapping
 from contextlib import AbstractContextManager
 from threading import Lock
-from typing import Any, TYPE_CHECKING, Union
+from typing import Any, TYPE_CHECKING, Union, Hashable
 
 if TYPE_CHECKING:
     from storage import Storage
@@ -14,7 +14,7 @@ class StorageTransaction(MutableMapping, AbstractContextManager):
         self._transaction: StorageTransaction | None = None
         self._transaction_lock = Lock()
         self._transaction_run = False
-        self._dict = {}
+        self._dict: dict[Hashable, Any] = {}
 
     def __getitem__(self, __key) -> Any:
         if self._transaction_run < 0:
