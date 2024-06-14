@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from logging import Formatter, LogRecord
+from logging import Formatter
 from types import TracebackType
 from typing import Any, Literal
 
