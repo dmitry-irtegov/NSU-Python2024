@@ -35,8 +35,8 @@ def main(database: MutableMapping[str, bytes], article: str) -> ReturnCode:
         logger.info("picking a random article...")
 
         with throttler:
-            response = requests.get(to_link(article), allow_redirects=False)
             try:
+                response = requests.get(to_link(article), allow_redirects=False)
                 response.raise_for_status()
             except requests.RequestException as exc:
                 logger.exception("failed to pick an article, reason - %s", exc)
